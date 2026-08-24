@@ -10,13 +10,15 @@ import Footer from "../components/Footer";
 import ScrollReveal from "../components/ScrollReveal";
 import ScrollToTop from "../components/ScrollToTop";
 
+import "./Home.css";
 
 function Home() {
     return (
-        <>
+        <div className="home-page">
+
             <Navbar />
 
-            <main>
+            <main className="home-main">
 
                 <Hero />
 
@@ -49,7 +51,8 @@ function Home() {
             <Footer />
 
             <ScrollToTop />
-        </>
+
+        </div>
     );
 }
 

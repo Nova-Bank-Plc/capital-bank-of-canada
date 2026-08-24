@@ -1,0 +1,41 @@
+/* =========================================
+   HOME PAGE
+========================================= */
+
+.home-page {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   MAIN CONTENT
+========================================= */
+
+.home-main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .home-page {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    .home-main {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+}
