@@ -1,0 +1,280 @@
+.banking-overview {
+    background: var(--off-white);
+
+    padding: 130px 0;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.overview-container {
+    width: min(
+        var(--container),
+        calc(100% - 64px)
+    );
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(280px, 0.8fr)
+        minmax(500px, 1.2fr);
+
+    gap: 100px;
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.overview-intro {
+    padding-top: 8px;
+}
+
+.section-label {
+    margin: 0 0 25px;
+
+    color: var(--red);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 2.5px;
+}
+
+.overview-intro h2 {
+    margin: 0;
+
+    max-width: 470px;
+
+    color: var(--black);
+
+    font-family: var(--font-heading);
+
+    font-size: clamp(
+        48px,
+        5vw,
+        68px
+    );
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: -3px;
+}
+
+.overview-intro h2 span {
+    display: block;
+
+    color: var(--red);
+}
+
+.overview-description {
+    max-width: 420px;
+
+    margin: 35px 0 0;
+
+    color: var(--grey);
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   OPTIONS
+========================================= */
+
+.banking-options {
+    border-top: 1px solid var(--border);
+}
+
+.banking-option {
+    position: relative;
+
+    min-height: 190px;
+
+    padding: 28px 0;
+
+    display: grid;
+
+    grid-template-columns: 50px 1fr auto;
+
+    gap: 25px;
+
+    border-bottom: 1px solid var(--border);
+
+    transition:
+        padding-left var(--transition),
+        background var(--transition);
+}
+
+.banking-option:hover {
+    padding-left: 15px;
+
+    background: var(--white);
+}
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+.option-number {
+    color: var(--red);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   ARROW
+========================================= */
+
+.option-arrow {
+    position: absolute;
+
+    top: 26px;
+    right: 0;
+
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid var(--border);
+
+    color: var(--black);
+
+    font-size: 17px;
+
+    transition:
+        background var(--transition),
+        color var(--transition),
+        border-color var(--transition);
+}
+
+.banking-option:hover .option-arrow {
+    background: var(--red);
+
+    border-color: var(--red);
+
+    color: var(--white);
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.option-content h3 {
+    margin: 0 0 12px;
+
+    font-family: var(--font-heading);
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    letter-spacing: -1px;
+}
+
+.option-content p {
+    max-width: 400px;
+
+    margin: 0;
+
+    color: var(--grey);
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   LINK
+========================================= */
+
+.option-link {
+    align-self: end;
+
+    color: var(--red);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 950px) {
+
+    .overview-container {
+        grid-template-columns: 1fr;
+
+        gap: 70px;
+    }
+
+    .overview-intro h2 {
+        max-width: 600px;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .banking-overview {
+        padding: 90px 0;
+    }
+
+    .overview-container {
+        width: calc(100% - 32px);
+
+        gap: 50px;
+    }
+
+    .overview-intro h2 {
+        font-size: 48px;
+
+        letter-spacing: -2px;
+    }
+
+    .banking-option {
+        grid-template-columns: 35px 1fr;
+
+        gap: 15px;
+
+        padding: 25px 0;
+    }
+
+    .option-link {
+        grid-column: 2;
+
+        margin-top: 15px;
+    }
+
+}

@@ -1,0 +1,230 @@
+.final-cta {
+    position: relative;
+
+    overflow: hidden;
+
+    background: var(--charcoal);
+
+    color: var(--white);
+
+    padding: 150px 0;
+}
+
+.cta-container {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(
+        var(--container),
+        calc(100% - 64px)
+    );
+
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.cta-label {
+    margin: 0 0 30px;
+
+    color: var(--red-light);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 2.5px;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.cta-container h2 {
+    max-width: 950px;
+
+    margin: 0;
+
+    font-family: var(--font-heading);
+
+    font-size: clamp(
+        60px,
+        8vw,
+        110px
+    );
+
+    line-height: 0.88;
+
+    letter-spacing: -5px;
+
+    font-weight: 800;
+}
+
+.cta-container h2 span {
+    display: block;
+
+    color: var(--red-light);
+}
+
+
+/* =========================================
+   DESCRIPTION
+========================================= */
+
+.cta-description {
+    max-width: 520px;
+
+    margin: 40px 0 35px;
+
+    color: #B8B8B8;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.cta-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+}
+
+.cta-primary,
+.cta-secondary {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    transition:
+        gap var(--transition),
+        background var(--transition),
+        color var(--transition);
+}
+
+.cta-primary {
+    padding: 16px 22px;
+
+    background: var(--red);
+
+    color: var(--white);
+}
+
+.cta-primary:hover {
+    background: #B7192A;
+
+    gap: 25px;
+}
+
+.cta-primary span {
+    font-size: 18px;
+}
+
+.cta-secondary {
+    padding-bottom: 7px;
+
+    border-bottom: 1px solid #777;
+
+    color: var(--white);
+}
+
+.cta-secondary:hover {
+    gap: 24px;
+
+    border-color: var(--white);
+}
+
+.cta-secondary span {
+    font-size: 16px;
+}
+
+
+/* =========================================
+   BACKGROUND WORD
+========================================= */
+
+.cta-mark {
+    position: absolute;
+
+    right: -20px;
+    bottom: -55px;
+
+    font-family: var(--font-heading);
+
+    font-size: clamp(
+        180px,
+        25vw,
+        420px
+    );
+
+    line-height: 0.7;
+
+    font-weight: 800;
+
+    letter-spacing: -15px;
+
+    color:
+        rgba(255, 255, 255, 0.035);
+
+    user-select: none;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .final-cta {
+        padding: 100px 0;
+    }
+
+    .cta-container {
+        width: calc(100% - 32px);
+    }
+
+    .cta-container h2 {
+        font-size: 58px;
+
+        letter-spacing: -3px;
+    }
+
+    .cta-description {
+        font-size: 13px;
+    }
+
+    .cta-actions {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 22px;
+    }
+
+    .cta-mark {
+        right: -15px;
+
+        bottom: -20px;
+
+        font-size: 150px;
+    }
+
+}

@@ -1,0 +1,974 @@
+/* =========================================
+   CAPITAL BANK — REGISTRATION
+========================================= */
+
+.register-page {
+    min-height: 100vh;
+
+    background: #f7f8fa;
+
+    color: var(--navy);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.register-header {
+    height: 82px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 6vw;
+
+    border-bottom: 1px solid #e6e9ee;
+
+    background: var(--white);
+}
+
+.register-logo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: var(--navy);
+
+    text-decoration: none;
+}
+
+.register-logo-mark {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 9px;
+
+    background: var(--red);
+
+    color: var(--white);
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+.register-logo-text {
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+
+    line-height: 1.1;
+}
+
+.register-logo-text small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #7b8493;
+
+    font-size: 8px;
+
+    letter-spacing: 0.18em;
+}
+
+.register-header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    color: #707988;
+
+    font-size: 13px;
+}
+
+.register-header-right a {
+    color: var(--red);
+
+    text-decoration: none;
+
+    font-weight: 700;
+}
+
+.register-header-right a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.register-container {
+    width: min(
+        900px,
+        calc(100% - 40px)
+    );
+
+    margin: 0 auto;
+
+    padding: 60px 0 80px;
+}
+
+
+/* =========================================
+   PROGRESS
+========================================= */
+
+.register-progress {
+    margin-bottom: 60px;
+}
+
+.progress-top {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+
+    color: #7a8493;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+.progress-top strong {
+    color: var(--navy);
+
+    font-size: 10px;
+}
+
+.progress-track {
+    width: 100%;
+
+    height: 4px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #e2e6ec;
+}
+
+.progress-fill {
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: var(--red);
+
+    transition:
+        width 0.3s ease;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.register-heading {
+    max-width: 680px;
+
+    margin-bottom: 50px;
+}
+
+.register-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 15px;
+
+    color: var(--red);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.18em;
+}
+
+.register-heading h1 {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-size: clamp(
+        2.4rem,
+        5vw,
+        4rem
+    );
+
+    line-height: 1.05;
+
+    letter-spacing: -0.045em;
+}
+
+.register-heading p {
+    max-width: 600px;
+
+    margin: 18px 0 0;
+
+    color: #6d7685;
+
+    font-size: 15px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.register-form {
+    padding: 40px;
+
+    border: 1px solid #e3e7ed;
+
+    border-radius: 12px;
+
+    background: var(--white);
+
+    box-shadow:
+        0 12px 40px
+        rgba(20, 32, 52, 0.05);
+}
+
+.form-section-heading {
+    display: flex;
+
+    gap: 18px;
+
+    margin-bottom: 35px;
+}
+
+.form-section-heading > span {
+    width: 34px;
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--navy);
+
+    color: var(--white);
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+.form-section-heading h2 {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-size: 22px;
+
+    letter-spacing: -0.02em;
+}
+
+.form-section-heading p {
+    margin: 7px 0 0;
+
+    color: #7b8493;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   FORM GRID
+========================================= */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 25px 20px;
+}
+
+.register-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.register-field label {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    color: var(--navy);
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.register-field label span {
+    color: #9aa2af;
+
+    font-size: 10px;
+
+    font-weight: 500;
+}
+
+.register-field input {
+    width: 100%;
+
+    height: 54px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d8dee7;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: var(--navy);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.register-field input::placeholder {
+    color: #a0a8b5;
+}
+
+.register-field input:focus {
+    border-color: var(--red);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(194, 35, 35, 0.08);
+}
+
+.field-error {
+    color: var(--red);
+
+    font-size: 10px;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.register-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 40px;
+
+    padding-top: 30px;
+
+    border-top: 1px solid #e8ebef;
+}
+
+.register-back {
+    color: #6d7685;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.register-back:hover {
+    color: var(--navy);
+}
+
+.register-continue {
+    min-width: 150px;
+
+    height: 52px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: var(--red);
+
+    color: var(--white);
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 9px 22px
+        rgba(194, 35, 35, 0.17);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.register-continue span {
+    font-size: 17px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.register-continue:hover {
+    background: var(--red-dark);
+
+    transform: translateY(-2px);
+}
+
+.register-continue:hover span {
+    transform: translateX(4px);
+}
+
+
+/* =========================================
+   SECURITY
+========================================= */
+
+.register-security {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    max-width: 600px;
+
+    margin: 30px auto 0;
+
+    padding: 16px;
+
+    border: 1px solid #e4e8ed;
+
+    border-radius: 8px;
+
+    background: #fff;
+}
+
+.security-mark {
+    width: 25px;
+    height: 25px;
+
+    flex: 0 0 25px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #edf6ee;
+
+    color: #2e7d32;
+
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+.register-security strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--navy);
+
+    font-size: 11px;
+}
+
+.register-security p {
+    margin: 0;
+
+    color: #7b8493;
+
+    font-size: 10px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .register-header {
+        height: 72px;
+
+        padding: 0 20px;
+    }
+
+    .register-header-right span {
+        display: none;
+    }
+
+    .register-container {
+        width: calc(100% - 30px);
+
+        padding: 35px 0 50px;
+    }
+
+    .register-progress {
+        margin-bottom: 42px;
+    }
+
+    .register-heading {
+        margin-bottom: 32px;
+    }
+
+    .register-heading h1 {
+        font-size: 2.3rem;
+    }
+
+    .register-heading p {
+        font-size: 13px;
+    }
+
+    .register-form {
+        padding: 25px 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .form-section-heading {
+        gap: 12px;
+    }
+
+    .form-section-heading h2 {
+        font-size: 19px;
+    }
+
+    .register-actions {
+        gap: 15px;
+    }
+
+    .register-continue {
+        min-width: 130px;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    .register-logo-text {
+        font-size: 12px;
+    }
+
+    .register-logo-mark {
+        width: 36px;
+        height: 36px;
+
+        font-size: 18px;
+    }
+
+    .register-heading h1 {
+        font-size: 2rem;
+    }
+
+    .register-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .register-continue {
+        width: 100%;
+    }
+
+    .register-back {
+        text-align: center;
+    }
+
+}
+
+/* =========================================
+   SELECT FIELDS
+========================================= */
+
+.register-field select {
+    width: 100%;
+
+    height: 54px;
+
+    padding: 0 15px;
+
+    border: 1px solid #d8dee7;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    background: #fff;
+
+    color: var(--navy);
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.register-field select:focus {
+    border-color: var(--red);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(194, 35, 35, 0.08);
+}
+
+
+/* =========================================
+   FULL WIDTH FIELD
+========================================= */
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* =========================================
+   PASSWORD HINT
+========================================= */
+
+.password-hint {
+    color: #7b8493;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   REVIEW
+========================================= */
+
+.review-card {
+    border: 1px solid #e3e7ed;
+
+    border-radius: 12px;
+
+    background: var(--white);
+
+    box-shadow:
+        0 12px 40px
+        rgba(20, 32, 52, 0.05);
+
+    overflow: hidden;
+}
+
+.review-section {
+    padding: 28px 35px;
+
+    border-bottom: 1px solid #e8ebef;
+}
+
+.review-section:last-child {
+    border-bottom: 0;
+}
+
+.review-heading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.review-heading span {
+    color: var(--navy);
+
+    font-size: 13px;
+
+    font-weight: 750;
+}
+
+.review-heading button {
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--red);
+
+    cursor: pointer;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.review-heading button:hover {
+    text-decoration: underline;
+}
+
+.review-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.review-grid div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.review-grid small {
+    color: #8a93a1;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+.review-grid strong {
+    color: var(--navy);
+
+    font-size: 13px;
+
+    font-weight: 650;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+
+/* =========================================
+   SUCCESS SCREEN
+========================================= */
+
+.register-success {
+    width: min(
+        650px,
+        calc(100% - 40px)
+    );
+
+    min-height: calc(100vh - 82px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.success-icon {
+    width: 70px;
+    height: 70px;
+
+    display: grid;
+
+    place-items: center;
+
+    margin-bottom: 25px;
+
+    border-radius: 50%;
+
+    background: #edf6ee;
+
+    color: #2e7d32;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+.register-success .register-eyebrow {
+    margin-bottom: 12px;
+}
+
+.register-success h1 {
+    max-width: 600px;
+
+    margin: 0;
+
+    color: var(--navy);
+
+    font-size: clamp(
+        2.3rem,
+        5vw,
+        3.8rem
+    );
+
+    line-height: 1.08;
+
+    letter-spacing: -0.04em;
+}
+
+.register-success p {
+    max-width: 530px;
+
+    margin: 20px 0 30px;
+
+    color: #6d7685;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+.success-home {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 50px;
+
+    padding: 0 24px;
+
+    border-radius: 7px;
+
+    background: var(--red);
+
+    color: var(--white);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 9px 22px
+        rgba(194, 35, 35, 0.17);
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.success-home span {
+    font-size: 17px;
+}
+
+.success-home:hover {
+    background: var(--red-dark);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   MOBILE REVIEW
+========================================= */
+
+@media (max-width: 650px) {
+
+    .review-section {
+        padding: 22px 20px;
+    }
+
+    .review-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .register-success {
+        width: calc(100% - 30px);
+
+        min-height: calc(100vh - 72px);
+    }
+
+    .register-success h1 {
+        font-size: 2.3rem;
+    }
+
+}

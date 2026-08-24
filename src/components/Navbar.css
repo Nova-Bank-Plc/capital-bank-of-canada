@@ -1,0 +1,684 @@
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    z-index: 1000;
+}
+
+.navbar-container {
+    position: relative;
+
+    z-index: 1002;
+
+    width: min(
+        var(--container),
+        calc(100% - 64px)
+    );
+
+    min-height: 88px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 40px;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.bank-logo {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    color: var(--black);
+
+    flex-shrink: 0;
+}
+
+.logo-mark {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    background: var(--red);
+
+    color: var(--white);
+
+    font-family: var(--font-heading);
+
+    font-size: 21px;
+
+    font-weight: 800;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+
+    font-family: var(--font-heading);
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    line-height: 1;
+}
+
+.logo-text small {
+    margin-top: 5px;
+
+    font-family: var(--font-body);
+
+    font-size: 7px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.8px;
+
+    color: var(--grey);
+}
+
+
+/* =========================================
+   DESKTOP NAVIGATION
+========================================= */
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+
+    gap: 34px;
+
+    margin-left: auto;
+}
+
+.main-navigation a {
+    position: relative;
+
+    color: var(--charcoal);
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    transition:
+        color var(--transition);
+}
+
+.main-navigation a::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -7px;
+
+    width: 0;
+    height: 2px;
+
+    background: var(--red);
+
+    transition:
+        width var(--transition);
+}
+
+.main-navigation a:hover {
+    color: var(--red);
+}
+
+.main-navigation a:hover::after {
+    width: 100%;
+}
+
+
+/* =========================================
+   DESKTOP ACTIONS
+========================================= */
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+}
+
+.sign-in {
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: var(--black);
+
+    transition:
+        color var(--transition);
+}
+
+.sign-in:hover {
+    color: var(--red);
+}
+
+.open-account {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px 18px;
+
+    background: var(--red);
+
+    color: var(--white);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    transition:
+        background var(--transition),
+        transform var(--transition);
+}
+
+.open-account span {
+    font-size: 17px;
+
+    line-height: 0;
+}
+
+.open-account:hover {
+    background: var(--red-dark);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   MOBILE BUTTON
+========================================= */
+
+.mobile-menu-button {
+    display: none;
+
+    width: 44px;
+    height: 44px;
+
+    margin-left: auto;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    position: relative;
+}
+
+.mobile-menu-button span {
+    position: absolute;
+
+    left: 11px;
+
+    width: 22px;
+    height: 2px;
+
+    background: var(--black);
+
+    transition:
+        transform 0.3s ease,
+        top 0.3s ease,
+        background 0.3s ease;
+}
+
+.mobile-menu-button span:first-child {
+    top: 17px;
+}
+
+.mobile-menu-button span:last-child {
+    top: 25px;
+}
+
+
+/* Animated X */
+
+.mobile-menu-button.active span:first-child {
+    top: 21px;
+
+    transform: rotate(45deg);
+
+    background: var(--white);
+}
+
+.mobile-menu-button.active span:last-child {
+    top: 21px;
+
+    transform: rotate(-45deg);
+
+    background: var(--white);
+}
+
+
+/* =========================================
+   MOBILE OVERLAY
+========================================= */
+
+.mobile-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+    height: 100%;
+
+    border: 0;
+
+    padding: 0;
+
+    background:
+        rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+}
+
+.mobile-overlay.active {
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+.mobile-menu {
+    position: fixed;
+
+    top: 0;
+    right: 0;
+
+    z-index: 1001;
+
+    width: min(
+        440px,
+        88vw
+    );
+
+    height: 100vh;
+
+    background: var(--charcoal);
+
+    color: var(--white);
+
+    transform:
+        translateX(100%);
+
+    visibility: hidden;
+
+    transition:
+        transform 0.45s
+            cubic-bezier(
+                0.22,
+                1,
+                0.36,
+                1
+            ),
+        visibility 0.45s ease;
+
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+    transform:
+        translateX(0);
+
+    visibility: visible;
+}
+
+
+/* =========================================
+   MOBILE MENU INNER
+========================================= */
+
+.mobile-menu-inner {
+    min-height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 28px 28px 25px;
+}
+
+
+/* =========================================
+   MOBILE MENU HEADER
+========================================= */
+
+.mobile-menu-heading {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding-bottom: 28px;
+
+    border-bottom: 1px solid
+        rgba(255, 255, 255, 0.12);
+}
+
+.mobile-menu-heading span {
+    color: var(--red-light);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+.mobile-menu-heading button {
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+    place-items: center;
+
+    border: 1px solid
+        rgba(255, 255, 255, 0.18);
+
+    background: transparent;
+
+    color: var(--white);
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        border-color var(--transition);
+}
+
+.mobile-menu-heading button:hover {
+    background: var(--red);
+
+    border-color: var(--red);
+}
+
+
+/* =========================================
+   MOBILE LINKS
+========================================= */
+
+.mobile-navigation {
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 25px 0;
+}
+
+.mobile-navigation a {
+    display: grid;
+
+    grid-template-columns: 35px 1fr auto;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 17px 0;
+
+    border-bottom: 1px solid
+        rgba(255, 255, 255, 0.09);
+
+    color: var(--white);
+
+    font-family: var(--font-heading);
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    letter-spacing: -1px;
+
+    transition:
+        color var(--transition),
+        padding-left var(--transition);
+}
+
+.mobile-navigation a:hover {
+    color: var(--red-light);
+
+    padding-left: 7px;
+}
+
+.mobile-navigation a span {
+    color: #777;
+
+    font-family: var(--font-body);
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.mobile-navigation a b {
+    color: var(--red-light);
+
+    font-family: var(--font-body);
+
+    font-size: 20px;
+
+    font-weight: 400;
+}
+
+
+/* =========================================
+   MOBILE ACTIONS
+========================================= */
+
+.mobile-menu-actions {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: auto;
+
+    padding-top: 25px;
+}
+
+.mobile-sign-in,
+.mobile-open-account {
+    min-height: 52px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+.mobile-sign-in {
+    border: 1px solid
+        rgba(255, 255, 255, 0.2);
+
+    color: var(--white);
+
+    transition:
+        background var(--transition),
+        border-color var(--transition);
+}
+
+.mobile-sign-in:hover {
+    border-color: var(--white);
+
+    background:
+        rgba(255, 255, 255, 0.05);
+}
+
+.mobile-open-account {
+    gap: 15px;
+
+    background: var(--red);
+
+    color: var(--white);
+
+    transition:
+        background var(--transition);
+}
+
+.mobile-open-account:hover {
+    background: var(--red-dark);
+}
+
+.mobile-open-account span {
+    font-size: 17px;
+}
+
+
+/* =========================================
+   MOBILE FOOTER
+========================================= */
+
+.mobile-menu-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 30px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid
+        rgba(255, 255, 255, 0.09);
+
+    color: #666;
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+}
+
+.mobile-menu-footer span:last-child {
+    color: var(--red-light);
+}
+
+
+/* =========================================
+   TABLET / MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .navbar-container {
+        width: min(
+            var(--container),
+            calc(100% - 32px)
+        );
+
+        min-height: 82px;
+    }
+
+    .main-navigation,
+    .navbar-actions {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        display: block;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 520px) {
+
+    .navbar-container {
+        min-height: 76px;
+    }
+
+    .logo-mark {
+        width: 34px;
+        height: 34px;
+
+        font-size: 19px;
+    }
+
+    .logo-text {
+        font-size: 12px;
+
+        letter-spacing: 1.7px;
+    }
+
+    .logo-text small {
+        font-size: 6px;
+
+        letter-spacing: 1.4px;
+    }
+
+    .mobile-menu {
+        width: 100%;
+    }
+
+    .mobile-menu-inner {
+        padding:
+            24px 20px 22px;
+    }
+
+    .mobile-navigation a {
+        font-size: 25px;
+    }
+
+}
