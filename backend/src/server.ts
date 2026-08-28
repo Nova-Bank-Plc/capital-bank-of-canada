@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDatabase } from "./config/database.js";
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use("/api/auth", authRoutes);
 
 app.get("/api/health", (_req, res) => {
     res.json({
