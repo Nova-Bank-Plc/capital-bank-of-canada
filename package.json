@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run build:frontend && npm run build:backend",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:frontend": "tsc -b && vite build",
+    "build:backend": "npm --prefix backend install && npm --prefix backend run build",
+    "start": "node backend/dist/server.js"
   },
   "dependencies": {
     "lucide-react": "^1.31.0",
