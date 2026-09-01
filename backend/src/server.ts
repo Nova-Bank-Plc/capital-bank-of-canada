@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
 
-
 import { connectDatabase } from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
 
@@ -13,7 +12,9 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-// Needed because this project uses ES modules
+// ================================
+// MIDDLEWARE
+// ================================
 
 app.use(
     cors({
@@ -46,7 +47,7 @@ const publicPath = path.join(__dirname, "../public");
 app.use(express.static(publicPath));
 
 // React Router fallback
-app.get("*", (_req, res) => {
+app.get("/{*splat}", (_req, res) => {
     res.sendFile(path.join(publicPath, "index.html"));
 });
 
