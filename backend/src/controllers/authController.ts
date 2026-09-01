@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 export const register = async (req: Request, res: Response) => {
@@ -70,3 +71,75 @@ export const register = async (req: Request, res: Response) => {
         });
     }
 };
+export const login = async (req: Request, res: Response) => {
+    try {
+        const { clientNumber, email, password } = req.body;
+
+        const loginIdentifier = clientNumber || email;
+
+        if (!loginIdentifier || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Email/client number and password are required.",
+            });
+        }
+
+        const normalizedEmail = loginIdentifier.toLowerCase().trim();
+
+        const user = await User.findOne({
+            email: normalizedEmail,
+        });
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid login credentials.",
+            });
+        }
+
+        const passwordMatches = await bcrypt.compare(
+            password,
+            user.password
+        );
+
+        if (!passwordMatches) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid login credentials.",
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                userId: user._id.toString(),
+                email: user.email,
+            },
+            process.env.JWT_SECRET || "capital-bank-development-secret",
+            {
+                expiresIn: "7d",
+            }
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Login successful.",
+            token,
+            user: {
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                phone: user.phone,
+            },
+        });
+    } catch (error) {
+        console.error("Login error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Unable to login.",
+        });
+    }
+};
+
+

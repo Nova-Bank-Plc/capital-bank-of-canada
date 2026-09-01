@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "./Login.css";
 
+
 function Login() {
 
     const [showPassword, setShowPassword] =
@@ -10,10 +11,6 @@ function Login() {
 
     const [rememberMe, setRememberMe] =
         useState(false);
-
-        const navigate = useNavigate();
-
-const { login } = useAuth();
 
     const [clientNumber, setClientNumber] =
         useState("");
@@ -27,58 +24,129 @@ const { login } = useAuth();
     const [isLoading, setIsLoading] =
         useState(false);
 
+    const navigate = useNavigate();
 
-    const handleSubmit = (
-    event: FormEvent<HTMLFormElement>
-) => {
-
-    event.preventDefault();
-
-    setError("");
+    const { login } = useAuth();
 
 
-    if (!clientNumber.trim()) {
+    const handleSubmit = async (
+        event: FormEvent<HTMLFormElement>
+    ) => {
 
-        setError(
-            "Please enter your client number or email."
-        );
+        event.preventDefault();
 
-        return;
-    }
-
-
-    if (!password) {
-
-        setError(
-            "Please enter your password."
-        );
-
-        return;
-    }
+        setError("");
 
 
-    setIsLoading(true);
+        if (!clientNumber.trim()) {
+
+            setError(
+                "Please enter your client number or email."
+            );
+
+            return;
+        }
 
 
-    /*
-     * TEMPORARY LOGIN
-     *
-     * Real authentication will be connected
-     * to the backend later.
-     */
+        if (!password) {
 
-    setTimeout(() => {
+            setError(
+                "Please enter your password."
+            );
 
-        login();
+            return;
+        }
 
-        setIsLoading(false);
 
-        navigate("/dashboard");
+        setIsLoading(true);
 
-    }, 800);
-};
+
+        try {
+
+            const response = await fetch(
+                "https://acceptable-comfort-production-46c5.up.railway.app/api/auth/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+
+                    body: JSON.stringify({
+                        clientNumber:
+                            clientNumber.trim(),
+
+                        password,
+                    }),
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to sign in. Please check your credentials."
+                );
+            }
+
+
+            login(
+                data.token,
+                data.user
+            );
+
+
+            if (rememberMe) {
+
+                localStorage.setItem(
+                    "capital-remember-me",
+                    "true"
+                );
+
+            } else {
+
+                localStorage.removeItem(
+                    "capital-remember-me"
+                );
+            }
+
+
+            navigate("/dashboard");
+
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            setError(
+                error instanceof Error
+                    ? error.message
+                    : "Unable to sign in. Please try again."
+            );
+
+
+        } finally {
+
+            setIsLoading(false);
+
+        }
+    };
+
+
     return (
         <main className="login-page">
+
 
             {/* =========================================
                 BRAND PANEL
@@ -98,6 +166,7 @@ const { login } = useAuth();
                         </span>
 
                         <div>
+
                             <strong>
                                 CAPITAL
                             </strong>
@@ -105,6 +174,7 @@ const { login } = useAuth();
                             <span>
                                 BANK OF CANADA
                             </span>
+
                         </div>
 
                     </Link>
@@ -185,6 +255,7 @@ const { login } = useAuth();
             </section>
 
 
+
             {/* =========================================
                 LOGIN PANEL
             ========================================= */}
@@ -220,6 +291,7 @@ const { login } = useAuth();
                     </Link>
 
 
+
                     {/* HEADING */}
 
                     <div className="login-heading">
@@ -239,12 +311,15 @@ const { login } = useAuth();
                     </div>
 
 
+
                     {/* FORM */}
 
-                  <form
-    className="login-form"
-    onSubmit={handleSubmit}
->
+                    <form
+                        className="login-form"
+                        onSubmit={handleSubmit}
+                    >
+
+
                         {/* CLIENT NUMBER */}
 
                         <div className="form-field">
@@ -269,6 +344,7 @@ const { login } = useAuth();
                             />
 
                         </div>
+
 
 
                         {/* PASSWORD */}
@@ -328,16 +404,19 @@ const { login } = useAuth();
                                     }
                                     disabled={isLoading}
                                 >
+
                                     {
                                         showPassword
                                             ? "Hide"
                                             : "Show"
                                     }
+
                                 </button>
 
                             </div>
 
                         </div>
+
 
 
                         {/* REMEMBER ME */}
@@ -364,6 +443,7 @@ const { login } = useAuth();
                         </label>
 
 
+
                         {/* ERROR */}
 
                         {error && (
@@ -386,6 +466,7 @@ const { login } = useAuth();
                         )}
 
 
+
                         {/* LOGIN BUTTON */}
 
                         <button
@@ -394,20 +475,24 @@ const { login } = useAuth();
                             disabled={isLoading}
                         >
 
-                            {isLoading
-                                ? "Signing in..."
-                                : "Sign in"
+                            {
+                                isLoading
+                                    ? "Signing in..."
+                                    : "Sign in"
                             }
 
                             {!isLoading && (
+
                                 <span>
                                     →
                                 </span>
+
                             )}
 
                         </button>
 
                     </form>
+
 
 
                     {/* REGISTER */}
@@ -422,13 +507,17 @@ const { login } = useAuth();
                             to="/register"
                             className="open-account"
                         >
+
                             Open an account
+
                             <span>
                                 →
                             </span>
+
                         </Link>
 
                     </div>
+
 
 
                     {/* SECURITY MESSAGE */}
@@ -461,5 +550,6 @@ const { login } = useAuth();
         </main>
     );
 }
+
 
 export default Login;

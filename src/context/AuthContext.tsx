@@ -6,9 +6,19 @@ import {
     type ReactNode,
 } from "react";
 
+interface User {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone?: string;
+}
+
 interface AuthContextType {
+    user: User | null;
+    token: string | null;
     isAuthenticated: boolean;
-    login: () => void;
+    login: (token: string, user: User) => void;
     logout: () => void;
 }
 
@@ -24,54 +34,96 @@ export function AuthProvider({
     children,
 }: AuthProviderProps) {
 
-    const [isAuthenticated, setIsAuthenticated] =
-        useState<boolean>(() => {
+    const [user, setUser] = useState<User | null>(null);
 
-            return localStorage.getItem(
-                "capital-authenticated"
-            ) === "true";
-
-        });
+    const [token, setToken] = useState<string | null>(
+        null
+    );
 
 
     useEffect(() => {
 
-        if (isAuthenticated) {
+        const storedToken =
+            localStorage.getItem("capital-bank-token");
 
-            localStorage.setItem(
-                "capital-authenticated",
-                "true"
-            );
+        const storedUser =
+            localStorage.getItem("capital-bank-user");
 
-        } else {
+        if (storedToken && storedUser) {
 
-            localStorage.removeItem(
-                "capital-authenticated"
-            );
+            try {
 
+                const parsedUser: User =
+                    JSON.parse(storedUser);
+
+                setToken(storedToken);
+                setUser(parsedUser);
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to restore login session:",
+                    error
+                );
+
+                localStorage.removeItem(
+                    "capital-bank-token"
+                );
+
+                localStorage.removeItem(
+                    "capital-bank-user"
+                );
+            }
         }
 
-    }, [isAuthenticated]);
+    }, []);
 
 
-    const login = () => {
+    const login = (
+        newToken: string,
+        newUser: User
+    ) => {
 
-        setIsAuthenticated(true);
+        setToken(newToken);
+        setUser(newUser);
 
+        localStorage.setItem(
+            "capital-bank-token",
+            newToken
+        );
+
+        localStorage.setItem(
+            "capital-bank-user",
+            JSON.stringify(newUser)
+        );
     };
 
 
     const logout = () => {
 
-        setIsAuthenticated(false);
+        setToken(null);
+        setUser(null);
 
+        localStorage.removeItem(
+            "capital-bank-token"
+        );
+
+        localStorage.removeItem(
+            "capital-bank-user"
+        );
+
+        localStorage.removeItem(
+            "capital-remember-me"
+        );
     };
 
 
     return (
         <AuthContext.Provider
             value={{
-                isAuthenticated,
+                user,
+                token,
+                isAuthenticated: Boolean(token),
                 login,
                 logout,
             }}
@@ -89,9 +141,8 @@ export function useAuth() {
     if (!context) {
 
         throw new Error(
-            "useAuth must be used inside AuthProvider"
+            "useAuth must be used inside an AuthProvider"
         );
-
     }
 
     return context;

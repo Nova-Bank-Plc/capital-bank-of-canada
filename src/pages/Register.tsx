@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Register.css";
 
+
 interface FormData {
+
     firstName: string;
     middleName: string;
     lastName: string;
@@ -23,7 +25,9 @@ interface FormData {
     password: string;
 }
 
+
 const initialFormData: FormData = {
+
     firstName: "",
     middleName: "",
     lastName: "",
@@ -44,9 +48,11 @@ const initialFormData: FormData = {
     password: "",
 };
 
+
 function Register() {
 
-    const [step, setStep] = useState(1);
+    const [step, setStep] =
+        useState(1);
 
     const [formData, setFormData] =
         useState<FormData>(initialFormData);
@@ -56,6 +62,13 @@ function Register() {
 
     const [submitted, setSubmitted] =
         useState(false);
+
+    const [isSubmitting, setIsSubmitting] =
+        useState(false);
+
+    const [submitError, setSubmitError] =
+        useState("");
+
 
 
     const updateField = (
@@ -69,7 +82,9 @@ function Register() {
         }));
 
         setShowErrors(false);
+        setSubmitError("");
     };
+
 
 
     const validateStep = () => {
@@ -124,45 +139,140 @@ function Register() {
     };
 
 
+
     const handleContinue = (
         event: React.FormEvent<HTMLFormElement>
     ) => {
 
         event.preventDefault();
 
+        setSubmitError("");
+
+
         if (!validateStep()) {
+
             setShowErrors(true);
+
             return;
         }
 
+
         setShowErrors(false);
 
+
         if (step < 5) {
-            setStep((current) => current + 1);
+
+            setStep(
+                (current) => current + 1
+            );
         }
     };
+
 
 
     const handleBack = () => {
 
         if (step > 1) {
-            setStep((current) => current - 1);
+
+            setStep(
+                (current) => current - 1
+            );
+
             setShowErrors(false);
+            setSubmitError("");
         }
-
     };
 
 
-    const handleSubmit = () => {
 
-        setSubmitted(true);
+    const handleSubmit = async () => {
 
+        setSubmitError("");
+        setIsSubmitting(true);
+
+
+        try {
+
+            const response = await fetch(
+                "https://acceptable-comfort-production-46c5.up.railway.app/api/auth/register",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+
+                    body: JSON.stringify({
+
+                        firstName:
+                            formData.firstName.trim(),
+
+                        lastName:
+                            formData.lastName.trim(),
+
+                        email:
+                            formData.email
+                                .toLowerCase()
+                                .trim(),
+
+                        phone:
+                            formData.phone.trim(),
+
+                        password:
+                            formData.password,
+
+                    }),
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                setSubmitError(
+                    data.message ||
+                    "Unable to create your account."
+                );
+
+                return;
+            }
+
+
+            setSubmitted(true);
+
+
+        } catch (error) {
+
+            console.error(
+                "Registration error:",
+                error
+            );
+
+
+            setSubmitError(
+                "Unable to connect to Capital Bank. Please try again."
+            );
+
+
+        } finally {
+
+            setIsSubmitting(false);
+
+        }
     };
+
 
 
     if (submitted) {
 
         return (
+
             <main className="register-page">
 
                 <header className="register-header">
@@ -171,17 +281,21 @@ function Register() {
                         to="/"
                         className="register-logo"
                     >
+
                         <span className="register-logo-mark">
                             C
                         </span>
 
                         <span className="register-logo-text">
+
                             CAPITAL
 
                             <small>
                                 BANK OF CANADA
                             </small>
+
                         </span>
+
                     </Link>
 
                 </header>
@@ -213,8 +327,13 @@ function Register() {
                         to="/"
                         className="success-home"
                     >
+
                         Return to homepage
-                        <span>→</span>
+
+                        <span>
+                            →
+                        </span>
+
                     </Link>
 
                 </div>
@@ -224,10 +343,15 @@ function Register() {
     }
 
 
+
     return (
+
         <main className="register-page">
 
-            {/* HEADER */}
+
+            {/* =========================================
+                HEADER
+            ========================================= */}
 
             <header className="register-header">
 
@@ -235,18 +359,23 @@ function Register() {
                     to="/"
                     className="register-logo"
                 >
+
                     <span className="register-logo-mark">
                         C
                     </span>
 
                     <span className="register-logo-text">
+
                         CAPITAL
 
                         <small>
                             BANK OF CANADA
                         </small>
+
                     </span>
+
                 </Link>
+
 
                 <div className="register-header-right">
 
@@ -263,11 +392,17 @@ function Register() {
             </header>
 
 
-            {/* MAIN CONTAINER */}
+
+            {/* =========================================
+                MAIN CONTAINER
+            ========================================= */}
 
             <div className="register-container">
 
-                {/* PROGRESS */}
+
+                {/* =========================================
+                    PROGRESS
+                ========================================= */}
 
                 <div className="register-progress">
 
@@ -283,12 +418,14 @@ function Register() {
 
                     </div>
 
+
                     <div className="progress-track">
 
                         <div
                             className="progress-fill"
                             style={{
-                                width: `${step * 20}%`,
+                                width:
+                                    `${step * 20}%`,
                             }}
                         />
 
@@ -297,7 +434,10 @@ function Register() {
                 </div>
 
 
-                {/* STEP 1 */}
+
+                {/* =========================================
+                    STEP 1
+                ========================================= */}
 
                 {step === 1 && (
 
@@ -354,6 +494,7 @@ function Register() {
 
                                 <div className="form-grid">
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="firstName">
@@ -363,7 +504,9 @@ function Register() {
                                         <input
                                             id="firstName"
                                             type="text"
-                                            value={formData.firstName}
+                                            value={
+                                                formData.firstName
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "firstName",
@@ -376,25 +519,35 @@ function Register() {
 
                                         {showErrors &&
                                             !formData.firstName.trim() && (
+
                                                 <small className="field-error">
                                                     First name is required.
                                                 </small>
+
                                             )}
 
                                     </div>
 
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="middleName">
+
                                             Middle name
-                                            <span>Optional</span>
+
+                                            <span>
+                                                Optional
+                                            </span>
+
                                         </label>
 
                                         <input
                                             id="middleName"
                                             type="text"
-                                            value={formData.middleName}
+                                            value={
+                                                formData.middleName
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "middleName",
@@ -408,6 +561,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="lastName">
@@ -417,7 +571,9 @@ function Register() {
                                         <input
                                             id="lastName"
                                             type="text"
-                                            value={formData.lastName}
+                                            value={
+                                                formData.lastName
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "lastName",
@@ -430,12 +586,15 @@ function Register() {
 
                                         {showErrors &&
                                             !formData.lastName.trim() && (
+
                                                 <small className="field-error">
                                                     Last name is required.
                                                 </small>
+
                                             )}
 
                                     </div>
+
 
 
                                     <div className="register-field">
@@ -447,7 +606,9 @@ function Register() {
                                         <input
                                             id="dateOfBirth"
                                             type="date"
-                                            value={formData.dateOfBirth}
+                                            value={
+                                                formData.dateOfBirth
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "dateOfBirth",
@@ -459,9 +620,11 @@ function Register() {
 
                                         {showErrors &&
                                             !formData.dateOfBirth && (
+
                                                 <small className="field-error">
                                                     Date of birth is required.
                                                 </small>
+
                                             )}
 
                                     </div>
@@ -484,8 +647,13 @@ function Register() {
                                     type="submit"
                                     className="register-continue"
                                 >
+
                                     Continue
-                                    <span>→</span>
+
+                                    <span>
+                                        →
+                                    </span>
+
                                 </button>
 
                             </div>
@@ -493,11 +661,13 @@ function Register() {
                         </form>
 
                     </>
-
                 )}
 
 
-                {/* STEP 2 */}
+
+                {/* =========================================
+                    STEP 2
+                ========================================= */}
 
                 {step === 2 && (
 
@@ -552,6 +722,7 @@ function Register() {
 
                                 <div className="form-grid">
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="email">
@@ -561,7 +732,9 @@ function Register() {
                                         <input
                                             id="email"
                                             type="email"
-                                            value={formData.email}
+                                            value={
+                                                formData.email
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "email",
@@ -575,6 +748,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="phone">
@@ -584,7 +758,9 @@ function Register() {
                                         <input
                                             id="phone"
                                             type="tel"
-                                            value={formData.phone}
+                                            value={
+                                                formData.phone
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "phone",
@@ -598,6 +774,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field full-width">
 
                                         <label htmlFor="address">
@@ -607,7 +784,9 @@ function Register() {
                                         <input
                                             id="address"
                                             type="text"
-                                            value={formData.address}
+                                            value={
+                                                formData.address
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "address",
@@ -621,6 +800,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="city">
@@ -630,7 +810,9 @@ function Register() {
                                         <input
                                             id="city"
                                             type="text"
-                                            value={formData.city}
+                                            value={
+                                                formData.city
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "city",
@@ -644,6 +826,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="province">
@@ -652,7 +835,9 @@ function Register() {
 
                                         <select
                                             id="province"
-                                            value={formData.province}
+                                            value={
+                                                formData.province
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "province",
@@ -660,6 +845,7 @@ function Register() {
                                                 )
                                             }
                                         >
+
                                             <option value="">
                                                 Select province
                                             </option>
@@ -703,7 +889,6 @@ function Register() {
                                             <option value="SK">
                                                 Saskatchewan
                                             </option>
-                            
 
                                             <option value="NT">
                                                 Northwest Territories
@@ -722,6 +907,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="postalCode">
@@ -731,7 +917,9 @@ function Register() {
                                         <input
                                             id="postalCode"
                                             type="text"
-                                            value={formData.postalCode}
+                                            value={
+                                                formData.postalCode
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "postalCode",
@@ -763,8 +951,13 @@ function Register() {
                                     type="submit"
                                     className="register-continue"
                                 >
+
                                     Continue
-                                    <span>→</span>
+
+                                    <span>
+                                        →
+                                    </span>
+
                                 </button>
 
                             </div>
@@ -772,11 +965,13 @@ function Register() {
                         </form>
 
                     </>
-
                 )}
 
 
-                {/* STEP 3 */}
+
+                {/* =========================================
+                    STEP 3
+                ========================================= */}
 
                 {step === 3 && (
 
@@ -831,6 +1026,7 @@ function Register() {
 
                                 <div className="form-grid">
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="employmentStatus">
@@ -839,7 +1035,9 @@ function Register() {
 
                                         <select
                                             id="employmentStatus"
-                                            value={formData.employmentStatus}
+                                            value={
+                                                formData.employmentStatus
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "employmentStatus",
@@ -847,6 +1045,7 @@ function Register() {
                                                 )
                                             }
                                         >
+
                                             <option value="">
                                                 Select status
                                             </option>
@@ -876,6 +1075,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field">
 
                                         <label htmlFor="annualIncome">
@@ -884,7 +1084,9 @@ function Register() {
 
                                         <select
                                             id="annualIncome"
-                                            value={formData.annualIncome}
+                                            value={
+                                                formData.annualIncome
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "annualIncome",
@@ -892,6 +1094,7 @@ function Register() {
                                                 )
                                             }
                                         >
+
                                             <option value="">
                                                 Select range
                                             </option>
@@ -921,6 +1124,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field full-width">
 
                                         <label htmlFor="accountPurpose">
@@ -929,7 +1133,9 @@ function Register() {
 
                                         <select
                                             id="accountPurpose"
-                                            value={formData.accountPurpose}
+                                            value={
+                                                formData.accountPurpose
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "accountPurpose",
@@ -937,6 +1143,7 @@ function Register() {
                                                 )
                                             }
                                         >
+
                                             <option value="">
                                                 Select purpose
                                             </option>
@@ -984,8 +1191,13 @@ function Register() {
                                     type="submit"
                                     className="register-continue"
                                 >
+
                                     Continue
-                                    <span>→</span>
+
+                                    <span>
+                                        →
+                                    </span>
+
                                 </button>
 
                             </div>
@@ -993,11 +1205,13 @@ function Register() {
                         </form>
 
                     </>
-
                 )}
 
 
-                {/* STEP 4 */}
+
+                {/* =========================================
+                    STEP 4
+                ========================================= */}
 
                 {step === 4 && (
 
@@ -1052,6 +1266,7 @@ function Register() {
 
                                 <div className="form-grid">
 
+
                                     <div className="register-field full-width">
 
                                         <label htmlFor="username">
@@ -1061,7 +1276,9 @@ function Register() {
                                         <input
                                             id="username"
                                             type="text"
-                                            value={formData.username}
+                                            value={
+                                                formData.username
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "username",
@@ -1075,6 +1292,7 @@ function Register() {
                                     </div>
 
 
+
                                     <div className="register-field full-width">
 
                                         <label htmlFor="password">
@@ -1084,7 +1302,9 @@ function Register() {
                                         <input
                                             id="password"
                                             type="password"
-                                            value={formData.password}
+                                            value={
+                                                formData.password
+                                            }
                                             onChange={(event) =>
                                                 updateField(
                                                     "password",
@@ -1121,8 +1341,13 @@ function Register() {
                                     type="submit"
                                     className="register-continue"
                                 >
+
                                     Review application
-                                    <span>→</span>
+
+                                    <span>
+                                        →
+                                    </span>
+
                                 </button>
 
                             </div>
@@ -1130,11 +1355,13 @@ function Register() {
                         </form>
 
                     </>
-
                 )}
 
 
-                {/* STEP 5 */}
+
+                {/* =========================================
+                    STEP 5
+                ========================================= */}
 
                 {step === 5 && (
 
@@ -1158,7 +1385,11 @@ function Register() {
                         </div>
 
 
+
                         <div className="review-card">
+
+
+                            {/* PERSONAL */}
 
                             <div className="review-section">
 
@@ -1177,9 +1408,11 @@ function Register() {
 
                                 </div>
 
+
                                 <div className="review-grid">
 
                                     <div>
+
                                         <small>
                                             Full name
                                         </small>
@@ -1189,9 +1422,12 @@ function Register() {
                                             {formData.middleName}{" "}
                                             {formData.lastName}
                                         </strong>
+
                                     </div>
 
+
                                     <div>
+
                                         <small>
                                             Date of birth
                                         </small>
@@ -1199,12 +1435,16 @@ function Register() {
                                         <strong>
                                             {formData.dateOfBirth}
                                         </strong>
+
                                     </div>
 
                                 </div>
 
                             </div>
 
+
+
+                            {/* CONTACT */}
 
                             <div className="review-section">
 
@@ -1223,9 +1463,11 @@ function Register() {
 
                                 </div>
 
+
                                 <div className="review-grid">
 
                                     <div>
+
                                         <small>
                                             Email
                                         </small>
@@ -1233,9 +1475,12 @@ function Register() {
                                         <strong>
                                             {formData.email}
                                         </strong>
+
                                     </div>
 
+
                                     <div>
+
                                         <small>
                                             Phone
                                         </small>
@@ -1243,26 +1488,31 @@ function Register() {
                                         <strong>
                                             {formData.phone}
                                         </strong>
+
                                     </div>
 
+
                                     <div>
+
                                         <small>
                                             Address
                                         </small>
 
                                         <strong>
-                                            {formData.address},
-                                            {" "}
-                                            {formData.city},
-                                            {" "}
+                                            {formData.address},{" "}
+                                            {formData.city},{" "}
                                             {formData.province}
                                         </strong>
+
                                     </div>
 
                                 </div>
 
                             </div>
 
+
+
+                            {/* FINANCIAL */}
 
                             <div className="review-section">
 
@@ -1281,9 +1531,11 @@ function Register() {
 
                                 </div>
 
+
                                 <div className="review-grid">
 
                                     <div>
+
                                         <small>
                                             Employment
                                         </small>
@@ -1291,9 +1543,12 @@ function Register() {
                                         <strong>
                                             {formData.employmentStatus}
                                         </strong>
+
                                     </div>
 
+
                                     <div>
+
                                         <small>
                                             Annual income
                                         </small>
@@ -1301,12 +1556,16 @@ function Register() {
                                         <strong>
                                             {formData.annualIncome}
                                         </strong>
+
                                     </div>
 
                                 </div>
 
                             </div>
 
+
+
+                            {/* ONLINE BANKING */}
 
                             <div className="review-section">
 
@@ -1325,9 +1584,11 @@ function Register() {
 
                                 </div>
 
+
                                 <div className="review-grid">
 
                                     <div>
+
                                         <small>
                                             Username
                                         </small>
@@ -1335,6 +1596,7 @@ function Register() {
                                         <strong>
                                             {formData.username}
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -1344,33 +1606,76 @@ function Register() {
                         </div>
 
 
+
+                        {/* SUBMISSION ERROR */}
+
+                        {submitError && (
+
+                            <div
+                                className="login-error"
+                                role="alert"
+                            >
+
+                                <span>
+                                    !
+                                </span>
+
+                                <p>
+                                    {submitError}
+                                </p>
+
+                            </div>
+
+                        )}
+
+
+
+                        {/* ACTIONS */}
+
                         <div className="register-actions">
 
                             <button
                                 type="button"
                                 className="register-back"
                                 onClick={handleBack}
+                                disabled={isSubmitting}
                             >
                                 ← Back
                             </button>
+
 
                             <button
                                 type="button"
                                 className="register-continue"
                                 onClick={handleSubmit}
+                                disabled={isSubmitting}
                             >
-                                Submit application
-                                <span>→</span>
+
+                                {isSubmitting
+                                    ? "Submitting..."
+                                    : "Submit application"
+                                }
+
+                                {!isSubmitting && (
+
+                                    <span>
+                                        →
+                                    </span>
+
+                                )}
+
                             </button>
 
                         </div>
 
                     </>
-
                 )}
 
 
-                {/* SECURITY */}
+
+                {/* =========================================
+                    SECURITY
+                ========================================= */}
 
                 <div className="register-security">
 
@@ -1399,5 +1704,6 @@ function Register() {
         </main>
     );
 }
+
 
 export default Register;
