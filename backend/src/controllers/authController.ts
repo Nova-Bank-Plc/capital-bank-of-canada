@@ -1,10 +1,21 @@
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import crypto from "crypto";
 
-export const register = async (req: Request, res: Response) => {
+import User from "../models/User.js";
+import Account from "../models/Account.js";
+
+
+export const register = async (
+    req: Request,
+    res: Response
+) => {
+
+    const session = await User.startSession();
+
     try {
+
         const {
             firstName,
             lastName,
@@ -13,7 +24,14 @@ export const register = async (req: Request, res: Response) => {
             password,
         } = req.body;
 
-        if (!firstName || !lastName || !email || !phone || !password) {
+        if (
+            !firstName ||
+            !lastName ||
+            !email ||
+            !phone ||
+            !password
+        ) {
+
             return res.status(400).json({
                 success: false,
                 message: "All fields are required.",
@@ -21,125 +39,310 @@ export const register = async (req: Request, res: Response) => {
         }
 
         if (password.length < 8) {
+
             return res.status(400).json({
                 success: false,
-                message: "Password must be at least 8 characters long.",
+                message:
+                    "Password must be at least 8 characters long.",
             });
         }
 
-        const normalizedEmail = email.toLowerCase().trim();
+        const normalizedEmail =
+            email.toLowerCase().trim();
 
-        const existingUser = await User.findOne({
-            email: normalizedEmail,
-        });
+        const existingUser =
+            await User.findOne({
+                email: normalizedEmail,
+            });
 
         if (existingUser) {
+
             return res.status(409).json({
                 success: false,
-                message: "An account with this email already exists.",
+                message:
+                    "An account with this email already exists.",
             });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 12);
+        const hashedPassword =
+            await bcrypt.hash(password, 12);
 
-        const user = await User.create({
-            firstName: firstName.trim(),
-            lastName: lastName.trim(),
-            email: normalizedEmail,
-            phone: phone.trim(),
-            password: hashedPassword,
-        });
+        let createdUserId: string | null = null;
 
-        return res.status(201).json({
-            success: true,
-            message: "Account created successfully.",
-            user: {
-                id: user._id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                phone: user.phone,
-                createdAt: user.createdAt,
-            },
-        });
-    } catch (error) {
-        console.error("Registration error:", error);
+        await session.withTransaction(
+            async () => {
 
-        return res.status(500).json({
-            success: false,
-            message: "Unable to create account.",
-        });
-    }
-};
-export const login = async (req: Request, res: Response) => {
-    try {
-        const { clientNumber, email, password } = req.body;
+                const users =
+                    await User.create(
+                        [
+                            {
+                                firstName:
+                                    firstName.trim(),
 
-        const loginIdentifier = clientNumber || email;
+                                lastName:
+                                    lastName.trim(),
 
-        if (!loginIdentifier || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Email/client number and password are required.",
-            });
-        }
+                                email:
+                                    normalizedEmail,
 
-        const normalizedEmail = loginIdentifier.toLowerCase().trim();
+                                phone:
+                                    phone.trim(),
 
-        const user = await User.findOne({
-            email: normalizedEmail,
-        });
+                                password:
+                                    hashedPassword,
+                            },
+                        ],
+                        {
+                            session,
+                        }
+                    );
 
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid login credentials.",
-            });
-        }
+                const createdUser =
+                    users[0];
 
-        const passwordMatches = await bcrypt.compare(
-            password,
-            user.password
-        );
+                if (!createdUser) {
+                    throw new Error(
+                        "User creation failed."
+                    );
+                }
 
-        if (!passwordMatches) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid login credentials.",
-            });
-        }
+                createdUserId =
+                    createdUser._id.toString();
 
-        const token = jwt.sign(
-            {
-                userId: user._id.toString(),
-                email: user.email,
-            },
-            process.env.JWT_SECRET || "capital-bank-development-secret",
-            {
-                expiresIn: "7d",
+                const accountNumber =
+                    "CA" +
+                    crypto
+                        .randomBytes(8)
+                        .toString("hex")
+                        .toUpperCase();
+
+                await Account.create(
+                    [
+                        {
+                            userId:
+                                createdUser._id,
+
+                            accountType:
+                                "Chequing Account",
+
+                            accountNumber,
+
+                            balance: 0,
+
+                            currency: "CAD",
+
+                            status: "active",
+                        },
+                    ],
+                    {
+                        session,
+                    }
+                );
             }
         );
 
-        return res.status(200).json({
+        if (!createdUserId) {
+
+            return res.status(500).json({
+                success: false,
+                message:
+                    "Unable to create account.",
+            });
+        }
+
+        const createdUser =
+            await User.findById(
+                createdUserId
+            );
+
+        if (!createdUser) {
+
+            return res.status(500).json({
+                success: false,
+                message:
+                    "Unable to retrieve newly created account.",
+            });
+        }
+
+        return res.status(201).json({
+
             success: true,
-            message: "Login successful.",
-            token,
+
+            message:
+                "Account created successfully.",
+
             user: {
-                id: user._id,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                phone: user.phone,
+
+                id:
+                    createdUser._id.toString(),
+
+                firstName:
+                    createdUser.firstName,
+
+                lastName:
+                    createdUser.lastName,
+
+                email:
+                    createdUser.email,
+
+                phone:
+                    createdUser.phone,
+
+                createdAt:
+                    createdUser.createdAt,
             },
         });
+
     } catch (error) {
-        console.error("Login error:", error);
+
+        console.error(
+            "Registration error:",
+            error
+        );
 
         return res.status(500).json({
+
             success: false,
-            message: "Unable to login.",
+
+            message:
+                "Unable to create account.",
         });
+
+    } finally {
+
+        await session.endSession();
     }
 };
 
+
+export const login = async (
+    req: Request,
+    res: Response
+) => {
+
+    try {
+
+        const {
+            clientNumber,
+            email,
+            password,
+        } = req.body;
+
+        const loginIdentifier =
+            clientNumber || email;
+
+        if (
+            !loginIdentifier ||
+            !password
+        ) {
+
+            return res.status(400).json({
+
+                success: false,
+
+                message:
+                    "Email/client number and password are required.",
+            });
+        }
+
+        const normalizedEmail =
+            loginIdentifier
+                .toLowerCase()
+                .trim();
+
+        const user =
+            await User.findOne({
+                email: normalizedEmail,
+            });
+
+        if (!user) {
+
+            return res.status(401).json({
+
+                success: false,
+
+                message:
+                    "Invalid login credentials.",
+            });
+        }
+
+        const passwordMatches =
+            await bcrypt.compare(
+                password,
+                user.password
+            );
+
+        if (!passwordMatches) {
+
+            return res.status(401).json({
+
+                success: false,
+
+                message:
+                    "Invalid login credentials.",
+            });
+        }
+
+        const token =
+            jwt.sign(
+                {
+                    userId:
+                        user._id.toString(),
+
+                    email:
+                        user.email,
+                },
+
+                process.env.JWT_SECRET ||
+                    "capital-bank-development-secret",
+
+                {
+                    expiresIn: "7d",
+                }
+            );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message:
+                "Login successful.",
+
+            token,
+
+            user: {
+
+                id:
+                    user._id.toString(),
+
+                firstName:
+                    user.firstName,
+
+                lastName:
+                    user.lastName,
+
+                email:
+                    user.email,
+
+                phone:
+                    user.phone,
+            },
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Login error:",
+            error
+        );
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                "Unable to login.",
+        });
+    }
+};
 

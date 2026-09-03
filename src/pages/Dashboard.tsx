@@ -1,7 +1,60 @@
-import { useState } from "react";
+import {
+    useEffect,
+    useState,
+} from "react";
+
 import { Link } from "react-router-dom";
+
 import { useAuth } from "../context/AuthContext";
+
 import "./Dashboard.css";
+
+
+// ======================================
+// API DATA TYPES
+// ======================================
+
+interface ApiAccount {
+    _id: string;
+    userId: string;
+    accountType: string;
+    accountNumber: string;
+    balance: number;
+    currency: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
+interface ApiTransaction {
+    _id: string;
+    userId: string;
+    accountId: string;
+    name: string;
+    transactionType: string;
+    amount: number;
+    direction: "credit" | "debit";
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
+interface DashboardResponse {
+    success: boolean;
+
+    data: {
+        accounts: ApiAccount[];
+        transactions: ApiTransaction[];
+        totalBalance: number;
+    };
+}
+
+
+// ======================================
+// DISPLAY TYPES
+// ======================================
 
 interface Account {
     type: string;
@@ -10,65 +63,344 @@ interface Account {
     change: string;
 }
 
+
 interface Transaction {
+    id: string;
     name: string;
     date: string;
     type: string;
     amount: string;
-    positive?: boolean;
+    positive: boolean;
 }
 
-const accounts: Account[] = [
-    {
-        type: "Everyday Chequing",
-        number: "•••• 4821",
-        balance: "$12,450.80",
-        change: "+$2,840.00 this month",
-    },
-    {
-        type: "High Interest Savings",
-        number: "•••• 7314",
-        balance: "$8,250.40",
-        change: "+$450.00 this month",
-    },
-];
 
-const transactions: Transaction[] = [
-    {
-        name: "Maple Market",
-        date: "Aug 20, 2026",
-        type: "Purchase",
-        amount: "-$84.62",
-    },
-    {
-        name: "Payroll Deposit",
-        date: "Aug 19, 2026",
-        type: "Deposit",
-        amount: "+$3,450.00",
-        positive: true,
-    },
-    {
-        name: "Northern Utilities",
-        date: "Aug 18, 2026",
-        type: "Bill payment",
-        amount: "-$142.30",
-    },
-    {
-        name: "Capital Bank Transfer",
-        date: "Aug 16, 2026",
-        type: "Transfer",
-        amount: "-$500.00",
-    },
-];
+// ======================================
+// API BASE URL
+// ======================================
+
+const API_BASE_URL =
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:5000";
+
+
+// ======================================
+// CURRENCY FORMATTER
+// ======================================
+
+const formatCurrency = (
+    amount: number,
+    currency = "CAD"
+) => {
+    return new Intl.NumberFormat(
+        "en-CA",
+        {
+            style: "currency",
+            currency,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }
+    ).format(amount);
+};
+
+
+// ======================================
+// DATE FORMATTER
+// ======================================
+
+const formatTransactionDate = (
+    date: string
+) => {
+    return new Intl.DateTimeFormat(
+        "en-CA",
+        {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+        }
+    ).format(new Date(date));
+};
+
+
+// ======================================
+// ACCOUNT NUMBER FORMATTER
+// ======================================
+
+const formatAccountNumber = (
+    accountNumber: string
+) => {
+    if (!accountNumber) {
+        return "••••";
+    }
+
+    const lastFour =
+        accountNumber.slice(-4);
+
+    return `•••• ${lastFour}`;
+};
+
+
+// ======================================
+// DASHBOARD
+// ======================================
 
 function Dashboard() {
-    const { logout } = useAuth();
 
-    const [sidebarOpen, setSidebarOpen] =
-        useState(false);
+   const { user, token, logout } = useAuth();
 
-    const [showBalance, setShowBalance] =
-        useState(true);
+
+    const [
+        sidebarOpen,
+        setSidebarOpen,
+    ] = useState(false);
+
+
+    const [
+        showBalance,
+        setShowBalance,
+    ] = useState(true);
+
+
+    const [
+        accounts,
+        setAccounts,
+    ] = useState<Account[]>([]);
+
+
+    const [
+        transactions,
+        setTransactions,
+    ] = useState<Transaction[]>([]);
+
+
+    const [
+        totalBalance,
+        setTotalBalance,
+    ] = useState(0);
+
+
+    const [
+        loading,
+        setLoading,
+    ] = useState(true);
+
+
+    const [
+        error,
+        setError,
+    ] = useState("");
+
+
+
+    // ======================================
+    // LOAD DASHBOARD DATA
+    // ======================================
+
+    useEffect(() => {
+
+        const loadDashboard =
+            async () => {
+
+                try {
+
+                    setLoading(true);
+                    setError("");
+
+
+
+                    if (!token) {
+
+                        setError(
+                            "Your session has expired. Please sign in again."
+                        );
+
+                        return;
+                    }
+
+
+                    const response =
+                        await fetch(
+                            `${API_BASE_URL}/api/dashboard`,
+                            {
+                                method: "GET",
+
+                                headers: {
+                                    Authorization:
+                                        `Bearer ${token}`,
+
+                                    "Content-Type":
+                                        "application/json",
+                                },
+                            }
+                        );
+
+
+                    const result =
+                        await response.json();
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            result.message ||
+                            "Unable to load dashboard."
+                        );
+                    }
+
+
+                    const data =
+                        result as DashboardResponse;
+
+
+                    if (!data.success) {
+
+                        throw new Error(
+                            "Unable to load dashboard information."
+                        );
+                    }
+
+
+                    // ==================================
+                    // TOTAL BALANCE
+                    // ==================================
+
+                    setTotalBalance(
+                        data.data.totalBalance
+                    );
+
+
+                    // ==================================
+                    // ACCOUNTS
+                    // ==================================
+
+                    const formattedAccounts =
+                        data.data.accounts.map(
+                            (account) => ({
+                                type:
+                                    account.accountType,
+
+                                number:
+                                    formatAccountNumber(
+                                        account.accountNumber
+                                    ),
+
+                                balance:
+                                    formatCurrency(
+                                        account.balance,
+                                        account.currency
+                                    ),
+
+                                change:
+                                    account.status ===
+                                    "active"
+                                        ? "Active account"
+                                        : account.status,
+                            })
+                        );
+
+
+                    setAccounts(
+                        formattedAccounts
+                    );
+
+
+                    // ==================================
+                    // TRANSACTIONS
+                    // ==================================
+
+                    const formattedTransactions =
+                        data.data.transactions.map(
+                            (transaction) => {
+
+                                const positive =
+                                    transaction.direction ===
+                                    "credit";
+
+
+                                const signedAmount =
+                                    positive
+                                        ? transaction.amount
+                                        : -transaction.amount;
+
+
+                                return {
+                                    id:
+                                        transaction._id,
+
+                                    name:
+                                        transaction.name,
+
+                                    date:
+                                        formatTransactionDate(
+                                            transaction.createdAt
+                                        ),
+
+                                    type:
+                                        transaction.transactionType,
+
+                                    amount:
+                                        `${signedAmount >= 0 ? "+" : ""}${formatCurrency(
+                                            signedAmount
+                                        )}`,
+
+                                    positive,
+                                };
+                            }
+                        );
+
+
+                    setTransactions(
+                        formattedTransactions
+                    );
+
+
+                } catch (requestError) {
+
+                    console.error(
+                        "Dashboard request error:",
+                        requestError
+                    );
+
+
+                    setError(
+                        requestError instanceof Error
+                            ? requestError.message
+                            : "Unable to load dashboard information."
+                    );
+
+
+                } finally {
+
+                    setLoading(false);
+
+                }
+            };
+
+
+        loadDashboard();
+
+    }, []);
+
+
+
+    // ======================================
+    // TODAY
+    // ======================================
+
+    const today =
+        new Intl.DateTimeFormat(
+            "en-CA",
+            {
+                month: "long",
+                day: "numeric",
+                year: "numeric",
+            }
+        ).format(new Date());
+
+
+    const firstName =
+        user?.firstName ||
+        "there";
+
 
 
     return (
@@ -86,7 +418,9 @@ function Dashboard() {
                         type="button"
                         className="dashboard-menu-button"
                         onClick={() =>
-                            setSidebarOpen(!sidebarOpen)
+                            setSidebarOpen(
+                                !sidebarOpen
+                            )
                         }
                         aria-label="Toggle navigation"
                     >
@@ -105,11 +439,13 @@ function Dashboard() {
                         </span>
 
                         <span className="dashboard-logo-text">
+
                             CAPITAL
 
                             <small>
                                 BANK OF CANADA
                             </small>
+
                         </span>
 
                     </Link>
@@ -127,6 +463,7 @@ function Dashboard() {
                         ⌕
                     </button>
 
+
                     <button
                         type="button"
                         className="dashboard-icon-button notification"
@@ -143,11 +480,12 @@ function Dashboard() {
                     >
 
                         <span className="profile-avatar">
-                            AH
+                            {user?.firstName?.charAt(0) || "C"}
+                            {user?.lastName?.charAt(0) || "B"}
                         </span>
 
                         <span className="profile-name">
-                            Adam
+                            {firstName}
                         </span>
 
                         <span className="profile-arrow">
@@ -161,6 +499,7 @@ function Dashboard() {
             </header>
 
 
+
             <div className="dashboard-layout">
 
                 {/* =========================================
@@ -169,7 +508,9 @@ function Dashboard() {
 
                 <aside
                     className={`dashboard-sidebar ${
-                        sidebarOpen ? "open" : ""
+                        sidebarOpen
+                            ? "open"
+                            : ""
                     }`}
                 >
 
@@ -271,6 +612,7 @@ function Dashboard() {
                     </div>
 
 
+
                     <div className="sidebar-section sidebar-bottom">
 
                         <span className="sidebar-label">
@@ -281,52 +623,64 @@ function Dashboard() {
                         <nav className="dashboard-navigation">
 
                             <a href="#settings">
+
                                 <span className="nav-icon">
                                     ⚙
                                 </span>
 
                                 Settings
+
                             </a>
 
 
                             <a href="#help">
+
                                 <span className="nav-icon">
                                     ?
                                 </span>
 
                                 Help centre
+
                             </a>
 
                         </nav>
 
 
-                       <button
-    type="button"
-    className="sidebar-signout"
-    onClick={logout}
->
-    <span>
-        ↪
-    </span>
+                        <button
+                            type="button"
+                            className="sidebar-signout"
+                            onClick={logout}
+                        >
 
-    Sign out
-</button>
+                            <span>
+                                ↪
+                            </span>
+
+                            Sign out
+
+                        </button>
 
                     </div>
 
                 </aside>
 
 
+
                 {/* =========================================
                     MAIN CONTENT
                 ========================================= */}
 
-                <section className="dashboard-content">
+                <section
+                    className="dashboard-content"
+                    id="dashboard"
+                >
 
                     <div className="dashboard-container">
 
 
-                        {/* PAGE INTRO */}
+                        {/* =================================
+                            PAGE INTRO
+                        ================================= */}
 
                         <div className="dashboard-intro">
 
@@ -336,9 +690,11 @@ function Dashboard() {
                                     PERSONAL BANKING
                                 </span>
 
+
                                 <h1>
-                                    Good morning, Adam.
+                                    Good morning, {firstName}.
                                 </h1>
+
 
                                 <p>
                                     Here's what's happening
@@ -355,7 +711,7 @@ function Dashboard() {
                                 </span>
 
                                 <strong>
-                                    AUGUST 21, 2026
+                                    {today}
                                 </strong>
 
                             </div>
@@ -363,29 +719,76 @@ function Dashboard() {
                         </div>
 
 
-                        {/* QUICK ACTIONS */}
+
+                        {/* =================================
+                            ERROR
+                        ================================= */}
+
+                        {error && (
+
+                            <div
+                                role="alert"
+                                style={{
+                                    marginBottom: "24px",
+                                    padding: "16px",
+                                    borderRadius: "12px",
+                                    background: "#fff1f1",
+                                    color: "#b42318",
+                                    border: "1px solid #f3c2c2",
+                                }}
+                            >
+                                {error}
+                            </div>
+
+                        )}
+
+
+
+                        {/* =================================
+                            QUICK ACTIONS
+                        ================================= */}
 
                         <div className="dashboard-actions">
 
                             <button type="button">
-                                <span>↗</span>
+
+                                <span>
+                                    ↗
+                                </span>
+
                                 Transfer money
+
                             </button>
 
+
                             <button type="button">
-                                <span>◇</span>
+
+                                <span>
+                                    ◇
+                                </span>
+
                                 Pay a bill
+
                             </button>
 
+
                             <button type="button">
-                                <span>＋</span>
+
+                                <span>
+                                    +
+                                </span>
+
                                 Open an account
+
                             </button>
 
                         </div>
 
 
-                        {/* ACCOUNTS */}
+
+                        {/* =================================
+                            ACCOUNTS
+                        ================================= */}
 
                         <section
                             className="dashboard-section"
@@ -411,7 +814,9 @@ function Dashboard() {
                                     type="button"
                                     className="balance-toggle"
                                     onClick={() =>
-                                        setShowBalance(!showBalance)
+                                        setShowBalance(
+                                            !showBalance
+                                        )
                                     }
                                 >
                                     {showBalance
@@ -423,23 +828,106 @@ function Dashboard() {
                             </div>
 
 
+
+                            {/* =================================
+                                TOTAL BALANCE
+                            ================================= */}
+
+                            <div
+                                style={{
+                                    marginBottom: "24px",
+                                }}
+                            >
+
+                                <span
+                                    style={{
+                                        display: "block",
+                                        fontSize: "0.75rem",
+                                        fontWeight: 600,
+                                        letterSpacing: "0.08em",
+                                        textTransform: "uppercase",
+                                        opacity: 0.65,
+                                        marginBottom: "6px",
+                                    }}
+                                >
+                                    TOTAL BALANCE
+                                </span>
+
+
+                                <strong
+                                    style={{
+                                        display: "block",
+                                        fontSize: "2rem",
+                                        lineHeight: 1.1,
+                                    }}
+                                >
+                                    {loading
+                                        ? "Loading..."
+                                        : showBalance
+                                            ? formatCurrency(
+                                                totalBalance
+                                            )
+                                            : "••••••••"
+                                    }
+                                </strong>
+
+                            </div>
+
+
+
                             <div className="account-grid">
 
-                                {accounts.map((account) => (
+                                {loading ? (
 
-                                    <article
-                                        className="account-card"
-                                        key={account.number}
-                                    >
+                                    <>
+
+                                        <article className="account-card">
+                                            <div className="account-card-top">
+                                                <span className="account-type">
+                                                    Loading account...
+                                                </span>
+                                            </div>
+
+                                            <div className="account-balance">
+                                                <span>
+                                                    AVAILABLE BALANCE
+                                                </span>
+
+                                                <strong>
+                                                    Loading...
+                                                </strong>
+                                            </div>
+                                        </article>
+
+
+                                        <article className="account-card">
+                                            <div className="account-card-top">
+                                                <span className="account-type">
+                                                    Loading account...
+                                                </span>
+                                            </div>
+
+                                            <div className="account-balance">
+                                                <span>
+                                                    AVAILABLE BALANCE
+                                                </span>
+
+                                                <strong>
+                                                    Loading...
+                                                </strong>
+                                            </div>
+                                        </article>
+
+                                    </>
+
+                                ) : accounts.length === 0 ? (
+
+                                    <article className="account-card">
 
                                         <div className="account-card-top">
 
                                             <span className="account-type">
-                                                {account.type}
-                                            </span>
-
-                                            <span className="account-number">
-                                                {account.number}
+                                                No accounts
                                             </span>
 
                                         </div>
@@ -453,7 +941,7 @@ function Dashboard() {
 
                                             <strong>
                                                 {showBalance
-                                                    ? account.balance
+                                                    ? "$0.00"
                                                     : "••••••••"
                                                 }
                                             </strong>
@@ -464,25 +952,86 @@ function Dashboard() {
                                         <div className="account-card-bottom">
 
                                             <span>
-                                                {account.change}
+                                                No active accounts found
                                             </span>
-
-                                            <button type="button">
-                                                View account →
-                                            </button>
 
                                         </div>
 
                                     </article>
 
-                                ))}
+                                ) : (
+
+                                    accounts.map(
+                                        (account) => (
+
+                                            <article
+                                                className="account-card"
+                                                key={
+                                                    account.number
+                                                }
+                                            >
+
+                                                <div className="account-card-top">
+
+                                                    <span className="account-type">
+                                                        {account.type}
+                                                    </span>
+
+                                                    <span className="account-number">
+                                                        {account.number}
+                                                    </span>
+
+                                                </div>
+
+
+                                                <div className="account-balance">
+
+                                                    <span>
+                                                        AVAILABLE BALANCE
+                                                    </span>
+
+
+                                                    <strong>
+
+                                                        {showBalance
+                                                            ? account.balance
+                                                            : "••••••••"
+                                                        }
+
+                                                    </strong>
+
+                                                </div>
+
+
+                                                <div className="account-card-bottom">
+
+                                                    <span>
+                                                        {account.change}
+                                                    </span>
+
+
+                                                    <button type="button">
+                                                        View account →
+                                                    </button>
+
+                                                </div>
+
+                                            </article>
+
+                                        )
+                                    )
+
+                                )}
 
                             </div>
 
                         </section>
 
 
-                        {/* TRANSACTIONS */}
+
+                        {/* =================================
+                            TRANSACTIONS
+                        ================================= */}
 
                         <section
                             className="dashboard-section"
@@ -514,55 +1063,106 @@ function Dashboard() {
                             </div>
 
 
+
                             <div className="transactions-card">
 
-                                {transactions.map(
-                                    (transaction) => (
+                                {loading ? (
 
-                                        <div
-                                            className="transaction-row"
-                                            key={
-                                                transaction.name +
-                                                transaction.date
-                                            }
-                                        >
-
-                                            <div className="transaction-icon">
-                                                {transaction.positive
-                                                    ? "+"
-                                                    : "−"
-                                                }
-                                            </div>
-
-
-                                            <div className="transaction-info">
-
-                                                <strong>
-                                                    {transaction.name}
-                                                </strong>
-
-                                                <span>
-                                                    {transaction.date}
-                                                    {" • "}
-                                                    {transaction.type}
-                                                </span>
-
-                                            </div>
-
-
-                                            <strong
-                                                className={
-                                                    transaction.positive
-                                                        ? "transaction-positive"
-                                                        : "transaction-amount"
-                                                }
-                                            >
-                                                {transaction.amount}
+                                    <div
+                                        className="transaction-row"
+                                    >
+                                        <div className="transaction-info">
+                                            <strong>
+                                                Loading transactions...
                                             </strong>
+
+                                            <span>
+                                                Please wait
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                ) : transactions.length === 0 ? (
+
+                                    <div
+                                        className="transaction-row"
+                                    >
+
+                                        <div className="transaction-icon">
+                                            —
+                                        </div>
+
+                                        <div className="transaction-info">
+
+                                            <strong>
+                                                No recent transactions
+                                            </strong>
+
+                                            <span>
+                                                Your transaction activity
+                                                will appear here.
+                                            </span>
 
                                         </div>
 
+                                    </div>
+
+                                ) : (
+
+                                    transactions.map(
+                                        (transaction) => (
+
+                                            <div
+                                                className="transaction-row"
+                                                key={
+                                                    transaction.id
+                                                }
+                                            >
+
+                                                <div className="transaction-icon">
+
+                                                    {transaction.positive
+                                                        ? "+"
+                                                        : "−"
+                                                    }
+
+                                                </div>
+
+
+                                                <div className="transaction-info">
+
+                                                    <strong>
+                                                        {transaction.name}
+                                                    </strong>
+
+                                                    <span>
+
+                                                        {transaction.date}
+
+                                                        {" • "}
+
+                                                        {transaction.type}
+
+                                                    </span>
+
+                                                </div>
+
+
+                                                <strong
+                                                    className={
+                                                        transaction.positive
+                                                            ? "transaction-positive"
+                                                            : "transaction-amount"
+                                                    }
+                                                >
+                                                    {transaction.amount}
+                                                </strong>
+
+                                            </div>
+
+                                        )
                                     )
+
                                 )}
 
                             </div>
@@ -570,13 +1170,17 @@ function Dashboard() {
                         </section>
 
 
-                        {/* SECURITY BANNER */}
+
+                        {/* =================================
+                            SECURITY BANNER
+                        ================================= */}
 
                         <section className="dashboard-security">
 
                             <div className="security-shield">
                                 ✓
                             </div>
+
 
                             <div>
 
@@ -592,11 +1196,13 @@ function Dashboard() {
 
                             </div>
 
+
                             <button type="button">
                                 Security centre →
                             </button>
 
                         </section>
+
 
                     </div>
 
@@ -607,5 +1213,6 @@ function Dashboard() {
         </main>
     );
 }
+
 
 export default Dashboard;

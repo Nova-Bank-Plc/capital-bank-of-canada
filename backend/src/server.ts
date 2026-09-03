@@ -5,6 +5,7 @@ import path from "path";
 
 import { connectDatabase } from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 dotenv.config();
 
@@ -30,6 +31,8 @@ app.use(express.json());
 // ================================
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/dashboard", dashboardRoutes);
 
 app.get("/api/health", (_req, res) => {
     res.json({
