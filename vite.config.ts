@@ -5,6 +5,15 @@ import path from "path";
 export default defineConfig({
     plugins: [react()],
 
+    server: {
+        proxy: {
+            "/api": {
+                target: "http://localhost:5000",
+                changeOrigin: true,
+            },
+        },
+    },
+
     build: {
         outDir: path.resolve(__dirname, "backend/public"),
         emptyOutDir: true,

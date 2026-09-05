@@ -6,8 +6,10 @@ import {
     type ReactNode,
 } from "react";
 
+
 interface User {
     id: string;
+    clientNumber: string;
     firstName: string;
     lastName: string;
     email: string;

@@ -7,6 +7,24 @@ import User from "../models/User.js";
 import Account from "../models/Account.js";
 
 
+/* =========================================
+   CLIENT NUMBER GENERATOR
+========================================= */
+
+function generateClientNumber(): string {
+
+    const number = Math.floor(
+        10000000 + Math.random() * 90000000
+    );
+
+    return `CCB-${number}`;
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
 export const register = async (
     req: Request,
     res: Response
@@ -24,6 +42,11 @@ export const register = async (
             password,
         } = req.body;
 
+
+        /* ================================
+           VALIDATION
+        ================================= */
+
         if (
             !firstName ||
             !lastName ||
@@ -38,6 +61,7 @@ export const register = async (
             });
         }
 
+
         if (password.length < 8) {
 
             return res.status(400).json({
@@ -47,13 +71,20 @@ export const register = async (
             });
         }
 
+
         const normalizedEmail =
             email.toLowerCase().trim();
+
+
+        /* ================================
+           CHECK EXISTING USER
+        ================================= */
 
         const existingUser =
             await User.findOne({
                 email: normalizedEmail,
             });
+
 
         if (existingUser) {
 
@@ -64,10 +95,47 @@ export const register = async (
             });
         }
 
+
+        /* ================================
+           HASH PASSWORD
+        ================================= */
+
         const hashedPassword =
             await bcrypt.hash(password, 12);
 
+
+        /* ================================
+           GENERATE CLIENT NUMBER
+        ================================= */
+
+        let clientNumber = "";
+
+        let clientNumberExists = true;
+
+
+        while (clientNumberExists) {
+
+            clientNumber =
+                generateClientNumber();
+
+
+            const existingClient =
+                await User.findOne({
+                    clientNumber,
+                });
+
+
+            clientNumberExists =
+                Boolean(existingClient);
+        }
+
+
         let createdUserId: string | null = null;
+
+
+        /* ================================
+           DATABASE TRANSACTION
+        ================================= */
 
         await session.withTransaction(
             async () => {
@@ -76,6 +144,8 @@ export const register = async (
                     await User.create(
                         [
                             {
+                                clientNumber,
+
                                 firstName:
                                     firstName.trim(),
 
@@ -97,17 +167,26 @@ export const register = async (
                         }
                     );
 
+
                 const createdUser =
                     users[0];
 
+
                 if (!createdUser) {
+
                     throw new Error(
                         "User creation failed."
                     );
                 }
 
+
                 createdUserId =
                     createdUser._id.toString();
+
+
+                /* ================================
+                   CREATE FIRST BANK ACCOUNT
+                ================================= */
 
                 const accountNumber =
                     "CA" +
@@ -115,6 +194,7 @@ export const register = async (
                         .randomBytes(8)
                         .toString("hex")
                         .toUpperCase();
+
 
                 await Account.create(
                     [
@@ -141,6 +221,11 @@ export const register = async (
             }
         );
 
+
+        /* ================================
+           VERIFY USER CREATION
+        ================================= */
+
         if (!createdUserId) {
 
             return res.status(500).json({
@@ -150,10 +235,12 @@ export const register = async (
             });
         }
 
+
         const createdUser =
             await User.findById(
                 createdUserId
             );
+
 
         if (!createdUser) {
 
@@ -163,6 +250,11 @@ export const register = async (
                     "Unable to retrieve newly created account.",
             });
         }
+
+
+        /* ================================
+           SUCCESS RESPONSE
+        ================================= */
 
         return res.status(201).json({
 
@@ -175,6 +267,9 @@ export const register = async (
 
                 id:
                     createdUser._id.toString(),
+
+                clientNumber:
+                    createdUser.clientNumber,
 
                 firstName:
                     createdUser.firstName,
@@ -191,6 +286,7 @@ export const register = async (
                 createdAt:
                     createdUser.createdAt,
             },
+
         });
 
     } catch (error) {
@@ -200,20 +296,27 @@ export const register = async (
             error
         );
 
+
         return res.status(500).json({
 
             success: false,
 
             message:
                 "Unable to create account.",
+
         });
 
     } finally {
 
         await session.endSession();
+
     }
 };
 
+
+/* =========================================
+   LOGIN
+========================================= */
 
 export const login = async (
     req: Request,
@@ -228,8 +331,14 @@ export const login = async (
             password,
         } = req.body;
 
+
+        /* ================================
+           VALIDATION
+        ================================= */
+
         const loginIdentifier =
             clientNumber || email;
+
 
         if (
             !loginIdentifier ||
@@ -241,19 +350,43 @@ export const login = async (
                 success: false,
 
                 message:
-                    "Email/client number and password are required.",
+                    "Client number/email and password are required.",
+
             });
         }
 
-        const normalizedEmail =
+
+        const normalizedIdentifier =
             loginIdentifier
                 .toLowerCase()
                 .trim();
 
+
+        /* ================================
+           FIND USER
+        ================================= */
+
         const user =
             await User.findOne({
-                email: normalizedEmail,
+
+                $or: [
+
+                    {
+                        email:
+                            normalizedIdentifier,
+                    },
+
+                    {
+                        clientNumber:
+                            loginIdentifier
+                                .trim()
+                                .toUpperCase(),
+                    },
+
+                ],
+
             });
+
 
         if (!user) {
 
@@ -263,14 +396,21 @@ export const login = async (
 
                 message:
                     "Invalid login credentials.",
+
             });
         }
+
+
+        /* ================================
+           CHECK PASSWORD
+        ================================= */
 
         const passwordMatches =
             await bcrypt.compare(
                 password,
                 user.password
             );
+
 
         if (!passwordMatches) {
 
@@ -280,17 +420,27 @@ export const login = async (
 
                 message:
                     "Invalid login credentials.",
+
             });
         }
 
+
+        /* ================================
+           CREATE JWT
+        ================================= */
+
         const token =
             jwt.sign(
+
                 {
                     userId:
                         user._id.toString(),
 
                     email:
                         user.email,
+
+                    clientNumber:
+                        user.clientNumber,
                 },
 
                 process.env.JWT_SECRET ||
@@ -299,7 +449,13 @@ export const login = async (
                 {
                     expiresIn: "7d",
                 }
+
             );
+
+
+        /* ================================
+           LOGIN SUCCESS
+        ================================= */
 
         return res.status(200).json({
 
@@ -315,6 +471,9 @@ export const login = async (
                 id:
                     user._id.toString(),
 
+                clientNumber:
+                    user.clientNumber,
+
                 firstName:
                     user.firstName,
 
@@ -326,7 +485,9 @@ export const login = async (
 
                 phone:
                     user.phone,
+
             },
+
         });
 
     } catch (error) {
@@ -336,13 +497,16 @@ export const login = async (
             error
         );
 
+
         return res.status(500).json({
 
             success: false,
 
             message:
                 "Unable to login.",
-        });
-    }
-};
 
+        });
+
+    }
+
+};

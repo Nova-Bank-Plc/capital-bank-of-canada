@@ -123,6 +123,15 @@ const formatTransactionDate = (
 };
 
 
+const currentHour = new Date().getHours();
+
+const greeting =
+    currentHour < 12
+        ? "Good morning"
+        : currentHour < 18
+            ? "Good afternoon"
+            : "Good evening";
+
 // ======================================
 // ACCOUNT NUMBER FORMATTER
 // ======================================
@@ -694,8 +703,10 @@ function Dashboard() {
 
 
                                 <h1>
-                                    Good morning, {firstName}.
-                                </h1>
+
+                               {greeting}, {firstName}.
+
+                              </h1>
 
 
                                 <p>

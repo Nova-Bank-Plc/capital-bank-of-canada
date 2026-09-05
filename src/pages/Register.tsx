@@ -51,8 +51,9 @@ const initialFormData: FormData = {
 
 function Register() {
 
-    const [step, setStep] =
-        useState(1);
+    const [clientNumber, setClientNumber] = useState("");
+
+    const [step, setStep] = useState(1);
 
     const [formData, setFormData] =
         useState<FormData>(initialFormData);
@@ -70,6 +71,9 @@ function Register() {
         useState("");
 
 
+    /* =========================================
+       UPDATE FORM FIELD
+    ========================================= */
 
     const updateField = (
         field: keyof FormData,
@@ -86,6 +90,9 @@ function Register() {
     };
 
 
+    /* =========================================
+       VALIDATE CURRENT STEP
+    ========================================= */
 
     const validateStep = () => {
 
@@ -139,6 +146,9 @@ function Register() {
     };
 
 
+    /* =========================================
+       CONTINUE TO NEXT STEP
+    ========================================= */
 
     const handleContinue = (
         event: React.FormEvent<HTMLFormElement>
@@ -169,6 +179,9 @@ function Register() {
     };
 
 
+    /* =========================================
+       GO BACK
+    ========================================= */
 
     const handleBack = () => {
 
@@ -184,6 +197,9 @@ function Register() {
     };
 
 
+    /* =========================================
+       SUBMIT REGISTRATION
+    ========================================= */
 
     const handleSubmit = async () => {
 
@@ -226,9 +242,12 @@ function Register() {
             );
 
 
-            const data =
-                await response.json();
+            const data = await response.json();
 
+
+            /* =========================================
+               HANDLE API ERROR
+            ========================================= */
 
             if (
                 !response.ok ||
@@ -243,6 +262,31 @@ function Register() {
                 return;
             }
 
+
+            /* =========================================
+               GET CLIENT NUMBER FROM USER OBJECT
+            ========================================= */
+
+            const newClientNumber =
+                data.user?.clientNumber;
+
+
+            if (!newClientNumber) {
+
+                console.error(
+                    "Registration succeeded but no client number was returned:",
+                    data
+                );
+
+                setSubmitError(
+                    "Your account was created, but we could not retrieve your client number. Please contact Capital Bank support."
+                );
+
+                return;
+            }
+
+
+            setClientNumber(newClientNumber);
 
             setSubmitted(true);
 
@@ -268,6 +312,9 @@ function Register() {
     };
 
 
+    /* =========================================
+       SUCCESS SCREEN
+    ========================================= */
 
     if (submitted) {
 
@@ -307,21 +354,83 @@ function Register() {
                         ✓
                     </div>
 
+
                     <span className="register-eyebrow">
-                        APPLICATION RECEIVED
+                        ACCOUNT CREATED
                     </span>
 
+
                     <h1>
-                        Thank you for choosing
-                        Capital Bank.
+                        Welcome to Capital Bank of Canada.
                     </h1>
 
+
                     <p>
-                        Your account application has been
-                        received. We will review the information
-                        provided and guide you through the next
-                        steps.
+                        Your account has been created
+                        successfully.
                     </p>
+
+
+                    {/* =====================================
+                        CLIENT NUMBER
+                    ===================================== */}
+
+                    <div className="client-number-card">
+
+                        <span>
+                            YOUR CLIENT NUMBER
+                        </span>
+
+
+                        <strong>
+                            {clientNumber}
+                        </strong>
+
+
+                        <p>
+                            Keep this number safe. You will
+                            use it to sign in to your online
+                            banking account.
+                        </p>
+
+                    </div>
+
+
+                    {/* =====================================
+                        CUSTOMER NAME
+                    ===================================== */}
+
+                    <div className="registration-welcome">
+
+                        <strong>
+                            {formData.firstName}{" "}
+                            {formData.lastName}
+                        </strong>
+
+                        <span>
+                            Capital Bank client
+                        </span>
+
+                    </div>
+
+
+                    {/* =====================================
+                        SIGN IN
+                    ===================================== */}
+
+                    <Link
+                        to="/login"
+                        className="register-success-button"
+                    >
+
+                        Continue to sign in
+
+                        <span>
+                            →
+                        </span>
+
+                    </Link>
+
 
                     <Link
                         to="/"
@@ -343,6 +452,9 @@ function Register() {
     }
 
 
+    /* =========================================
+       REGISTRATION FORM
+    ========================================= */
 
     return (
 
@@ -745,6 +857,15 @@ function Register() {
                                             autoComplete="email"
                                         />
 
+                                        {showErrors &&
+                                            !formData.email.trim() && (
+
+                                                <small className="field-error">
+                                                    Email address is required.
+                                                </small>
+
+                                            )}
+
                                     </div>
 
 
@@ -770,6 +891,15 @@ function Register() {
                                             placeholder="+1 (000) 000-0000"
                                             autoComplete="tel"
                                         />
+
+                                        {showErrors &&
+                                            !formData.phone.trim() && (
+
+                                                <small className="field-error">
+                                                    Phone number is required.
+                                                </small>
+
+                                            )}
 
                                     </div>
 
@@ -797,6 +927,15 @@ function Register() {
                                             autoComplete="street-address"
                                         />
 
+                                        {showErrors &&
+                                            !formData.address.trim() && (
+
+                                                <small className="field-error">
+                                                    Residential address is required.
+                                                </small>
+
+                                            )}
+
                                     </div>
 
 
@@ -822,6 +961,15 @@ function Register() {
                                             placeholder="City"
                                             autoComplete="address-level2"
                                         />
+
+                                        {showErrors &&
+                                            !formData.city.trim() && (
+
+                                                <small className="field-error">
+                                                    City is required.
+                                                </small>
+
+                                            )}
 
                                     </div>
 
@@ -904,6 +1052,15 @@ function Register() {
 
                                         </select>
 
+                                        {showErrors &&
+                                            !formData.province && (
+
+                                                <small className="field-error">
+                                                    Province is required.
+                                                </small>
+
+                                            )}
+
                                     </div>
 
 
@@ -929,6 +1086,15 @@ function Register() {
                                             placeholder="A1A 1A1"
                                             autoComplete="postal-code"
                                         />
+
+                                        {showErrors &&
+                                            !formData.postalCode.trim() && (
+
+                                                <small className="field-error">
+                                                    Postal code is required.
+                                                </small>
+
+                                            )}
 
                                     </div>
 
@@ -1072,6 +1238,15 @@ function Register() {
 
                                         </select>
 
+                                        {showErrors &&
+                                            !formData.employmentStatus && (
+
+                                                <small className="field-error">
+                                                    Employment status is required.
+                                                </small>
+
+                                            )}
+
                                     </div>
 
 
@@ -1121,6 +1296,15 @@ function Register() {
 
                                         </select>
 
+                                        {showErrors &&
+                                            !formData.annualIncome && (
+
+                                                <small className="field-error">
+                                                    Annual income is required.
+                                                </small>
+
+                                            )}
+
                                     </div>
 
 
@@ -1169,6 +1353,15 @@ function Register() {
                                             </option>
 
                                         </select>
+
+                                        {showErrors &&
+                                            !formData.accountPurpose && (
+
+                                                <small className="field-error">
+                                                    Account purpose is required.
+                                                </small>
+
+                                            )}
 
                                     </div>
 
@@ -1289,6 +1482,15 @@ function Register() {
                                             autoComplete="username"
                                         />
 
+                                        {showErrors &&
+                                            !formData.username.trim() && (
+
+                                                <small className="field-error">
+                                                    Username is required.
+                                                </small>
+
+                                            )}
+
                                     </div>
 
 
@@ -1319,6 +1521,16 @@ function Register() {
                                             Password must contain at least
                                             8 characters.
                                         </small>
+
+                                        {showErrors &&
+                                            formData.password.length < 8 && (
+
+                                                <small className="field-error">
+                                                    Password must contain at least
+                                                    8 characters.
+                                                </small>
+
+                                            )}
 
                                     </div>
 
@@ -1501,7 +1713,8 @@ function Register() {
                                         <strong>
                                             {formData.address},{" "}
                                             {formData.city},{" "}
-                                            {formData.province}
+                                            {formData.province}{" "}
+                                            {formData.postalCode}
                                         </strong>
 
                                     </div>
@@ -1559,6 +1772,19 @@ function Register() {
 
                                     </div>
 
+
+                                    <div>
+
+                                        <small>
+                                            Account purpose
+                                        </small>
+
+                                        <strong>
+                                            {formData.accountPurpose}
+                                        </strong>
+
+                                    </div>
+
                                 </div>
 
                             </div>
@@ -1607,7 +1833,9 @@ function Register() {
 
 
 
-                        {/* SUBMISSION ERROR */}
+                        {/* =====================================
+                            SUBMISSION ERROR
+                        ===================================== */}
 
                         {submitError && (
 
@@ -1630,7 +1858,9 @@ function Register() {
 
 
 
-                        {/* ACTIONS */}
+                        {/* =====================================
+                            ACTIONS
+                        ===================================== */}
 
                         <div className="register-actions">
 
@@ -1640,7 +1870,9 @@ function Register() {
                                 onClick={handleBack}
                                 disabled={isSubmitting}
                             >
+
                                 ← Back
+
                             </button>
 
 
@@ -1655,6 +1887,7 @@ function Register() {
                                     ? "Submitting..."
                                     : "Submit application"
                                 }
+
 
                                 {!isSubmitting && (
 
@@ -1707,3 +1940,4 @@ function Register() {
 
 
 export default Register;
+
