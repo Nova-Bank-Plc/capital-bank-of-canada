@@ -194,7 +194,7 @@ function Register() {
         try {
 
             const response = await fetch(
-                "https://acceptable-comfort-production-46c5.up.railway.app/api/auth/register",
+                "https://capital-bank-of-canada.onrender.com/api/auth/register",
                 {
                     method: "POST",
 
