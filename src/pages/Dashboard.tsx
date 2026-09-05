@@ -140,10 +140,13 @@ const formatAccountNumber = (
     accountNumber: string
 ) => {
     if (!accountNumber) {
-        return "Not available";
+        return "••••";
     }
 
-    return accountNumber;
+    const lastFour =
+        accountNumber.slice(-4);
+
+    return `•••• ${lastFour}`;
 };
 
 
