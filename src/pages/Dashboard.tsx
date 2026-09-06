@@ -514,167 +514,189 @@ function Dashboard() {
 
             <div className="dashboard-layout">
 
-                {/* =========================================
-                    SIDEBAR
-                ========================================= */}
+              {/* =========================================
+    SIDEBAR
+========================================= */}
 
-                <aside
-                    className={`dashboard-sidebar ${
-                        sidebarOpen
-                            ? "open"
-                            : ""
-                    }`}
-                >
+{sidebarOpen && (
+    <button
+        type="button"
+        className="dashboard-sidebar-overlay"
+        aria-label="Close navigation"
+        onClick={() => setSidebarOpen(false)}
+    />
+)}
 
-                    <div className="sidebar-section">
+<aside
+    className={`dashboard-sidebar ${
+        sidebarOpen ? "open" : ""
+    }`}
+>
 
-                        <span className="sidebar-label">
-                            BANKING
-                        </span>
+    <div className="sidebar-section">
 
+        <span className="sidebar-label">
+            BANKING
+        </span>
 
-                        <nav className="dashboard-navigation">
+        <nav className="dashboard-navigation">
 
-                            <a
-                                href="#dashboard"
-                                className="active"
-                                onClick={() =>
-                                    setSidebarOpen(false)
-                                }
-                            >
-                                <span className="nav-icon">
-                                    ▦
-                                </span>
+            {/* DASHBOARD */}
+            <a
+                href="#dashboard"
+                className="active"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ▦
+                </span>
 
-                                Dashboard
-                            </a>
-
-
-                            <a
-                                href="#accounts"
-                                onClick={() =>
-                                    setSidebarOpen(false)
-                                }
-                            >
-                                <span className="nav-icon">
-                                    ◫
-                                </span>
-
-                                Accounts
-                            </a>
+                Dashboard
+            </a>
 
 
-                            <Link
-                                 to="/dashboard/transfers"
-                                onClick={() =>
-                                    setSidebarOpen(false)
-                                }
-                            >
-                                <span className="nav-icon">
-                                    ⇄
-                                </span>
+            {/* ACCOUNTS */}
+            <a
+                href="#accounts"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ◫
+                </span>
 
-                                Transfers
-                            </Link>
-
-
-                            <a
-                                href="#payments"
-                                onClick={() =>
-                                    setSidebarOpen(false)
-                                }
-                            >
-                                <span className="nav-icon">
-                                    ◇
-                                </span>
-
-                                Payments
-                            </a>
+                Accounts
+            </a>
 
 
-                            <a
-                                href="#transactions"
-                                onClick={() =>
-                                    setSidebarOpen(false)
-                                }
-                            >
-                                <span className="nav-icon">
-                                    ≡
-                                </span>
+            {/* TRANSFERS */}
+            <Link
+                to="/dashboard/transfers"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ⇄
+                </span>
 
-                                Transactions
-                            </a>
-
-
-                            <a
-                                href="#cards"
-                                onClick={() =>
-                                    setSidebarOpen(false)
-                                }
-                            >
-                                <span className="nav-icon">
-                                    ▭
-                                </span>
-
-                                Cards
-                            </a>
-
-                        </nav>
-
-                    </div>
+                Transfers
+            </Link>
 
 
+            {/* PAYMENTS */}
+            <a
+                href="#payments"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ◇
+                </span>
 
-                    <div className="sidebar-section sidebar-bottom">
-
-                        <span className="sidebar-label">
-                            SUPPORT
-                        </span>
-
-
-                        <nav className="dashboard-navigation">
-
-                            <a href="#settings">
-
-                                <span className="nav-icon">
-                                    ⚙
-                                </span>
-
-                                Settings
-
-                            </a>
+                Payments
+            </a>
 
 
-                            <a href="#help">
+            {/* TRANSACTIONS */}
+            <a
+                href="#transactions"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ≡
+                </span>
 
-                                <span className="nav-icon">
-                                    ?
-                                </span>
-
-                                Help centre
-
-                            </a>
-
-                        </nav>
+                Transactions
+            </a>
 
 
-                        <button
-                            type="button"
-                            className="sidebar-signout"
-                            onClick={logout}
-                        >
+            {/* CARDS */}
+            <a
+                href="#cards"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ▭
+                </span>
 
-                            <span>
-                                ↪
-                            </span>
+                Cards
+            </a>
 
-                            Sign out
+        </nav>
 
-                        </button>
+    </div>
 
-                    </div>
 
-                </aside>
+    {/* =========================================
+        SUPPORT
+    ========================================= */}
+
+    <div className="sidebar-section sidebar-bottom">
+
+        <span className="sidebar-label">
+            SUPPORT
+        </span>
+
+
+        <nav className="dashboard-navigation">
+
+            {/* SETTINGS */}
+            <a
+                href="#settings"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ⚙
+                </span>
+
+                Settings
+            </a>
+
+
+            {/* HELP */}
+            <a
+                href="#help"
+                onClick={() =>
+                    setSidebarOpen(false)
+                }
+            >
+                <span className="nav-icon">
+                    ?
+                </span>
+
+                Help centre
+            </a>
+
+        </nav>
+
+
+        {/* SIGN OUT */}
+        <button
+            type="button"
+            className="sidebar-signout"
+            onClick={logout}
+        >
+            <span>
+                ↪
+            </span>
+
+            Sign out
+        </button>
+
+    </div>
+
+</aside>
 
 
 

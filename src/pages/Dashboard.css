@@ -901,6 +901,14 @@
 
 
 /* =========================================
+   SIDEBAR OVERLAY
+========================================= */
+
+.dashboard-sidebar-overlay {
+    display: none;
+}
+
+/* =========================================
    MOBILE
 ========================================= */
 
@@ -908,15 +916,19 @@
 
     .dashboard-menu-button {
         display: block;
+
+        flex-shrink: 0;
+    }
+
+    .dashboard-header-left {
+        gap: 14px;
     }
 
     .dashboard-sidebar {
         position: fixed;
 
         top: 72px;
-
         left: 0;
-
         bottom: 0;
 
         z-index: 90;
@@ -941,14 +953,43 @@
 
 }
 
+
 @media (max-width: 650px) {
 
     .dashboard-header {
+        height: 65px;
+
         padding: 0 15px;
+    }
+
+    .dashboard-header-left {
+        gap: 10px;
     }
 
     .dashboard-logo-text {
         display: none;
+    }
+
+    .dashboard-logo-mark {
+        width: 34px;
+        height: 34px;
+
+        font-size: 17px;
+    }
+
+    .dashboard-header-actions {
+        gap: 6px;
+    }
+
+    .dashboard-icon-button {
+        width: 34px;
+        height: 34px;
+
+        font-size: 16px;
+    }
+
+    .dashboard-profile {
+        margin-left: 2px;
     }
 
     .profile-name,
@@ -956,124 +997,338 @@
         display: none;
     }
 
+    .profile-avatar {
+        width: 29px;
+        height: 29px;
+    }
+
     .dashboard-container {
         width: calc(100% - 30px);
 
-        padding-top: 35px;
+        padding-top: 32px;
     }
 
     .dashboard-intro {
         align-items: flex-start;
-
         flex-direction: column;
 
-        gap: 18px;
+        gap: 16px;
+
+        margin-bottom: 24px;
+    }
+
+    .dashboard-intro h1 {
+        font-size: 2.15rem;
+    }
+
+    .dashboard-intro p {
+        font-size: 11px;
+
+        line-height: 1.6;
     }
 
     .dashboard-date {
         align-items: flex-start;
     }
 
+    .dashboard-actions {
+        gap: 8px;
+
+        margin-bottom: 32px;
+    }
+
+    .dashboard-actions button,
+    .dashboard-actions .quick-action,
+    .dashboard-action-link {
+        min-height: 42px;
+
+        padding: 0 13px;
+
+        font-size: 9px;
+    }
+
     .account-grid {
         grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .account-card {
+        min-height: 200px;
+
+        padding: 22px;
+    }
+
+    .account-balance {
+        margin: 19px 0;
+    }
+
+    .account-balance strong {
+        font-size: 29px;
+    }
+
+    .dashboard-section {
+        margin-bottom: 34px;
     }
 
     .dashboard-section-heading {
         align-items: flex-start;
-
         flex-direction: column;
+
+        gap: 9px;
+    }
+
+    .dashboard-section-heading h2 {
+        font-size: 19px;
     }
 
     .transaction-row {
+        min-height: 70px;
+
         padding: 0 15px;
+
+        gap: 11px;
+    }
+
+    .transaction-icon {
+        width: 32px;
+        height: 32px;
+
+        font-size: 14px;
     }
 
     .transaction-info span {
         font-size: 8px;
     }
 
+    .transaction-amount,
+    .transaction-positive {
+        font-size: 10px;
+    }
+
     .dashboard-security {
         align-items: flex-start;
 
-        flex-wrap: wrap;
+        gap: 12px;
+
+        padding: 18px;
     }
 
     .dashboard-security button {
-        margin-left: 53px;
+        margin-left: 50px;
     }
 
 }
+
 
 @media (max-width: 420px) {
 
-    .dashboard-icon-button {
-        display: none;
+    .dashboard-header {
+        padding: 0 10px;
+    }
+
+    .dashboard-header-left {
+        gap: 7px;
+    }
+
+    .dashboard-menu-button {
+        width: 34px;
+        height: 34px;
+    }
+
+    .dashboard-menu-button span {
+        width: 18px;
+    }
+
+    .dashboard-logo-mark {
+        width: 32px;
+        height: 32px;
+
+        font-size: 16px;
     }
 
     .dashboard-header-actions {
-        gap: 0;
+        gap: 4px;
+    }
+
+    /*
+       Keep dashboard controls visible
+       on small phones.
+    */
+
+    .dashboard-icon-button {
+        display: grid;
+
+        width: 32px;
+        height: 32px;
+
+        font-size: 14px;
+    }
+
+    .dashboard-profile {
+        padding: 2px;
+    }
+
+    .profile-avatar {
+        width: 28px;
+        height: 28px;
+    }
+
+    .dashboard-container {
+        width: calc(100% - 24px);
+
+        padding-top: 27px;
+    }
+
+    .dashboard-eyebrow {
+        font-size: 8px;
+    }
+
+    .dashboard-intro {
+        gap: 13px;
+
+        margin-bottom: 21px;
+    }
+
+    .dashboard-intro h1 {
+        font-size: 1.85rem;
+    }
+
+    .dashboard-intro p {
+        margin-top: 8px;
+
+        font-size: 10px;
+    }
+
+    .dashboard-actions {
+        gap: 7px;
+
+        margin-bottom: 29px;
+    }
+
+    .dashboard-actions button,
+    .dashboard-actions .quick-action,
+    .dashboard-action-link {
+        min-height: 40px;
+
+        padding: 0 11px;
+
+        font-size: 8px;
+    }
+
+    .dashboard-actions span {
+        font-size: 14px;
     }
 
     .account-card {
-        padding: 20px;
+        min-height: 190px;
+
+        padding: 19px;
+    }
+
+    .account-type {
+        font-size: 11px;
+    }
+
+    .account-number {
+        font-size: 8px;
+
+        overflow-wrap: anywhere;
+    }
+
+    .account-balance {
+        margin: 17px 0;
+    }
+
+    .account-balance span {
+        font-size: 7px;
     }
 
     .account-balance strong {
-        font-size: 27px;
+        font-size: 26px;
+    }
+
+    .account-card-bottom {
+        padding-top: 14px;
+    }
+
+    .account-card-bottom span,
+    .account-card-bottom button {
+        font-size: 8px;
+    }
+
+    .dashboard-section {
+        margin-bottom: 30px;
+    }
+
+    .dashboard-section-heading h2 {
+        font-size: 18px;
+    }
+
+    .transaction-row {
+        min-height: 66px;
+
+        padding: 0 12px;
+
+        gap: 9px;
+    }
+
+    .transaction-icon {
+        width: 30px;
+        height: 30px;
+
+        font-size: 13px;
+    }
+
+    .transaction-info strong {
+        font-size: 10px;
+    }
+
+    .transaction-info span {
+        font-size: 7px;
+    }
+
+    .transaction-amount,
+    .transaction-positive {
+        font-size: 9px;
+    }
+
+    .dashboard-security {
+        padding: 16px;
+    }
+
+    .security-shield {
+        width: 34px;
+        height: 34px;
+
+        font-size: 14px;
+    }
+
+    .dashboard-security strong {
+        font-size: 10px;
+    }
+
+    .dashboard-security p {
+        font-size: 8px;
+    }
+
+    .dashboard-security button {
+        margin-left: 46px;
+
+        font-size: 8px;
     }
 
 }
 
-
-.account-view-link {
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.account-view-link:hover {
-    text-decoration: underline;
-}
-
-
-.dashboard-action-link {
-    min-height: 40px;
-
-    display: flex;
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 0 15px;
-
-    box-sizing: border-box;
-
-    border: 1px solid var(--red);
-    border-radius: 6px;
-
-    background: var(--red);
-    color: var(--white);
-
+.dashboard-sidebar-overlay {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 80;
+    display: block;
+    border: 0;
+    background: rgba(5, 27, 70, 0.18);
     cursor: pointer;
-
-    font-family: inherit;
-    font-size: 10px;
-    font-weight: 650;
-
-    text-decoration: none;
-
-    transition:
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.dashboard-action-link:hover {
-    transform: translateY(-2px);
-}
-
-
-.dashboard-action-link span {
-    font-size: 15px;
 }
