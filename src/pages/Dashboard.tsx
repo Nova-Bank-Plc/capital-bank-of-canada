@@ -564,8 +564,8 @@ function Dashboard() {
                             </a>
 
 
-                            <a
-                                href="#transfers"
+                            <Link
+                                 to="/dashboard/transfers"
                                 onClick={() =>
                                     setSidebarOpen(false)
                                 }
@@ -575,7 +575,7 @@ function Dashboard() {
                                 </span>
 
                                 Transfers
-                            </a>
+                            </Link>
 
 
                             <a
@@ -764,15 +764,13 @@ function Dashboard() {
 
                         <div className="dashboard-actions">
 
-                            <button type="button">
-
-                                <span>
-                                    ↗
-                                </span>
-
+                            <Link
+                                to="/dashboard/transfers"
+                                className="quick-action"
+                      >
+                               <span>↗</span>
                                 Transfer money
-
-                            </button>
+                              </Link>
 
 
                             <button type="button">
@@ -981,8 +979,8 @@ function Dashboard() {
                                             <article
                                                 className="account-card"
                                                 key={
-                                                    account.number
-                                                }
+                                                    account.id
+                                    }
                                             >
 
                                                 <div className="account-card-top">

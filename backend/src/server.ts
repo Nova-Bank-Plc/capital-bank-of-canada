@@ -7,6 +7,7 @@ import { connectDatabase } from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
+import transferRoutes from "./routes/transferRoutes.js";
 
 dotenv.config();
 
@@ -36,6 +37,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 app.use("/api/accounts", accountRoutes);
+
+app.use(
+    "/api/transfers",
+    transferRoutes
+);
 
 app.get("/api/health", (_req, res) => {
     res.json({

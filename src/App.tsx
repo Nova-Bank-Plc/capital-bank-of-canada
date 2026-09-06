@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import AccountDetails from "./pages/AccountDetails";
+import Transfer from "./pages/Transfer";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -52,6 +53,15 @@ function App() {
             <AccountDetails />
         </ProtectedRoute>
     }
+/>
+
+                        <Route
+                          path="/dashboard/transfers"
+                         element={
+                              <ProtectedRoute>
+                                <Transfer />
+                             </ProtectedRoute>
+                     }
 />
 
                     <Route
