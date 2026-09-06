@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
+import AccountDetails from "./pages/AccountDetails";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -43,6 +44,15 @@ function App() {
 
 
                     {/* PROTECTED BANKING AREA */}
+
+                    <Route
+    path="/dashboard/accounts/:accountId"
+    element={
+        <ProtectedRoute>
+            <AccountDetails />
+        </ProtectedRoute>
+    }
+/>
 
                     <Route
                         path="/dashboard"

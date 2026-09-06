@@ -57,6 +57,7 @@ interface DashboardResponse {
 // ======================================
 
 interface Account {
+    id: string;
     type: string;
     number: string;
     balance: string;
@@ -280,31 +281,34 @@ function Dashboard() {
                     // ACCOUNTS
                     // ==================================
 
-                    const formattedAccounts =
-                        data.data.accounts.map(
-                            (account) => ({
-                                type:
-                                    account.accountType,
+                    
+                        const formattedAccounts =
+    data.data.accounts.map(
+        (account) => ({
+            id:
+                account._id,
 
-                                number:
-                                    formatAccountNumber(
-                                        account.accountNumber
-                                    ),
+            type:
+                account.accountType,
 
-                                balance:
-                                    formatCurrency(
-                                        account.balance,
-                                        account.currency
-                                    ),
+            number:
+                formatAccountNumber(
+                    account.accountNumber
+                ),
 
-                                change:
-                                    account.status ===
-                                    "active"
-                                        ? "Active account"
-                                        : account.status,
-                            })
-                        );
+            balance:
+                formatCurrency(
+                    account.balance,
+                    account.currency
+                ),
 
+            change:
+                account.status ===
+                "active"
+                    ? "Active account"
+                    : account.status,
+        })
+    );
 
                     setAccounts(
                         formattedAccounts
@@ -1020,9 +1024,13 @@ function Dashboard() {
                                                     </span>
 
 
-                                                    <button type="button">
-                                                        View account →
-                                                    </button>
+                                                <Link
+    to={`/dashboard/accounts/${account.id}`}
+    className="account-view-link"
+>
+    View account →
+</Link>
+   
 
                                                 </div>
 

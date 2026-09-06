@@ -1017,3 +1017,15 @@
     }
 
 }
+
+
+.account-view-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.account-view-link:hover {
+    text-decoration: underline;
+}
