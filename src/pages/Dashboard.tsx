@@ -426,19 +426,19 @@ function Dashboard() {
 
                 <div className="dashboard-header-left">
 
-                    <button
-                        type="button"
-                        className="dashboard-menu-button"
-                        onClick={() =>
-                            setSidebarOpen(
-                                !sidebarOpen
-                            )
-                        }
-                        aria-label="Toggle navigation"
-                    >
-                        <span></span>
-                        <span></span>
-                    </button>
+                   <button
+    type="button"
+    className="dashboard-menu-button"
+    onClick={() =>
+        setSidebarOpen(!sidebarOpen)
+    }
+    aria-label="Toggle navigation"
+    aria-expanded={sidebarOpen}
+>
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
 
                     <Link

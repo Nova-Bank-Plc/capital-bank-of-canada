@@ -101,30 +101,52 @@
     letter-spacing: 0.13em;
 }
 
+/* =========================================
+   DASHBOARD MOBILE MENU BUTTON
+========================================= */
+
 .dashboard-menu-button {
-    display: none;
+    display: none !important;
 
-    width: 38px;
-    height: 38px;
+    width: 42px !important;
+    height: 42px !important;
 
-    border: 0;
+    flex-shrink: 0 !important;
 
-    background: transparent;
+    padding: 0 !important;
+    margin: 0 !important;
 
-    cursor: pointer;
+    border: 0 !important;
+    border-radius: 8px !important;
+
+    background: var(--navy) !important;
+
+    cursor: pointer !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+
+    gap: 4px !important;
+
+    position: relative !important;
+    z-index: 200 !important;
 }
 
 .dashboard-menu-button span {
-    display: block;
+    display: block !important;
 
-    width: 20px;
+    width: 22px !important;
+    height: 2px !important;
 
-    height: 2px;
+    margin: 0 !important;
+    padding: 0 !important;
 
-    margin: 4px auto;
+    background: #ffffff !important;
 
-    background: var(--navy);
+    border-radius: 2px !important;
 }
+
 
 .dashboard-header-actions {
     display: flex;
@@ -914,15 +936,65 @@
 
 @media (max-width: 900px) {
 
+    /* =====================================
+       HAMBURGER BUTTON
+    ===================================== */
+
     .dashboard-menu-button {
-        display: block;
+        display: flex !important;
+
+        width: 42px;
+        height: 42px;
 
         flex-shrink: 0;
+
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        gap: 4px;
+
+        padding: 0;
+        margin: 0;
+
+        border: 0;
+        border-radius: 8px;
+
+        background: var(--navy);
+
+        cursor: pointer;
+
+        position: relative;
+        z-index: 200;
     }
+
+    .dashboard-menu-button span {
+        display: block;
+
+        width: 22px;
+        height: 2px;
+
+        margin: 0;
+        padding: 0;
+
+        border-radius: 2px;
+
+        background: #ffffff;
+    }
+
+
+    /* =====================================
+       HEADER
+    ===================================== */
 
     .dashboard-header-left {
         gap: 14px;
     }
+
+
+    /* =====================================
+       SIDEBAR
+    ===================================== */
 
     .dashboard-sidebar {
         position: fixed;
@@ -931,7 +1003,9 @@
         left: 0;
         bottom: 0;
 
-        z-index: 90;
+        width: 235px;
+
+        z-index: 150;
 
         transform: translateX(-100%);
 
@@ -947,12 +1021,43 @@
         transform: translateX(0);
     }
 
+
+    /* =====================================
+       MAIN CONTENT
+    ===================================== */
+
     .dashboard-container {
         width: calc(100% - 40px);
     }
 
+
+    /* =====================================
+       OVERLAY
+    ===================================== */
+
+    .dashboard-sidebar-overlay {
+        position: fixed;
+
+        top: 72px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        z-index: 140;
+
+        border: 0;
+
+        background:
+            rgba(5, 27, 70, 0.18);
+
+        cursor: pointer;
+    }
 }
 
+
+/* =========================================
+   TABLET / MOBILE
+========================================= */
 
 @media (max-width: 650px) {
 
@@ -962,9 +1067,29 @@
         padding: 0 15px;
     }
 
+
     .dashboard-header-left {
         gap: 10px;
     }
+
+
+    /* =====================================
+       HAMBURGER
+    ===================================== */
+
+    .dashboard-menu-button {
+        width: 38px;
+        height: 38px;
+    }
+
+    .dashboard-menu-button span {
+        width: 20px;
+    }
+
+
+    /* =====================================
+       LOGO
+    ===================================== */
 
     .dashboard-logo-text {
         display: none;
@@ -976,6 +1101,11 @@
 
         font-size: 17px;
     }
+
+
+    /* =====================================
+       HEADER ACTIONS
+    ===================================== */
 
     .dashboard-header-actions {
         gap: 6px;
@@ -1002,14 +1132,38 @@
         height: 29px;
     }
 
+
+    /* =====================================
+       SIDEBAR
+    ===================================== */
+
+    .dashboard-sidebar {
+        top: 65px;
+    }
+
+    .dashboard-sidebar-overlay {
+        top: 65px;
+    }
+
+
+    /* =====================================
+       CONTENT
+    ===================================== */
+
     .dashboard-container {
         width: calc(100% - 30px);
 
         padding-top: 32px;
     }
 
+
+    /* =====================================
+       INTRO
+    ===================================== */
+
     .dashboard-intro {
         align-items: flex-start;
+
         flex-direction: column;
 
         gap: 16px;
@@ -1031,6 +1185,11 @@
         align-items: flex-start;
     }
 
+
+    /* =====================================
+       QUICK ACTIONS
+    ===================================== */
+
     .dashboard-actions {
         gap: 8px;
 
@@ -1046,6 +1205,11 @@
 
         font-size: 9px;
     }
+
+
+    /* =====================================
+       ACCOUNTS
+    ===================================== */
 
     .account-grid {
         grid-template-columns: 1fr;
@@ -1067,12 +1231,18 @@
         font-size: 29px;
     }
 
+
+    /* =====================================
+       SECTIONS
+    ===================================== */
+
     .dashboard-section {
         margin-bottom: 34px;
     }
 
     .dashboard-section-heading {
         align-items: flex-start;
+
         flex-direction: column;
 
         gap: 9px;
@@ -1081,6 +1251,11 @@
     .dashboard-section-heading h2 {
         font-size: 19px;
     }
+
+
+    /* =====================================
+       TRANSACTIONS
+    ===================================== */
 
     .transaction-row {
         min-height: 70px;
@@ -1106,6 +1281,11 @@
         font-size: 10px;
     }
 
+
+    /* =====================================
+       SECURITY
+    ===================================== */
+
     .dashboard-security {
         align-items: flex-start;
 
@@ -1117,9 +1297,12 @@
     .dashboard-security button {
         margin-left: 50px;
     }
-
 }
 
+
+/* =========================================
+   SMALL PHONES
+========================================= */
 
 @media (max-width: 420px) {
 
@@ -1131,14 +1314,27 @@
         gap: 7px;
     }
 
+
+    /* =====================================
+       HAMBURGER
+    ===================================== */
+
     .dashboard-menu-button {
-        width: 34px;
-        height: 34px;
+        width: 36px;
+        height: 36px;
+
+        border-radius: 7px;
     }
 
     .dashboard-menu-button span {
         width: 18px;
+        height: 2px;
     }
+
+
+    /* =====================================
+       LOGO
+    ===================================== */
 
     .dashboard-logo-mark {
         width: 32px;
@@ -1147,14 +1343,14 @@
         font-size: 16px;
     }
 
+
+    /* =====================================
+       HEADER ACTIONS
+    ===================================== */
+
     .dashboard-header-actions {
         gap: 4px;
     }
-
-    /*
-       Keep dashboard controls visible
-       on small phones.
-    */
 
     .dashboard-icon-button {
         display: grid;
@@ -1174,11 +1370,36 @@
         height: 28px;
     }
 
+
+    /* =====================================
+       SIDEBAR
+    ===================================== */
+
+    .dashboard-sidebar {
+        top: 65px;
+
+        width: min(235px, 82vw);
+    }
+
+    .dashboard-sidebar-overlay {
+        top: 65px;
+    }
+
+
+    /* =====================================
+       CONTENT
+    ===================================== */
+
     .dashboard-container {
         width: calc(100% - 24px);
 
         padding-top: 27px;
     }
+
+
+    /* =====================================
+       INTRO
+    ===================================== */
 
     .dashboard-eyebrow {
         font-size: 8px;
@@ -1200,6 +1421,11 @@
         font-size: 10px;
     }
 
+
+    /* =====================================
+       QUICK ACTIONS
+    ===================================== */
+
     .dashboard-actions {
         gap: 7px;
 
@@ -1219,6 +1445,11 @@
     .dashboard-actions span {
         font-size: 14px;
     }
+
+
+    /* =====================================
+       ACCOUNTS
+    ===================================== */
 
     .account-card {
         min-height: 190px;
@@ -1257,6 +1488,11 @@
         font-size: 8px;
     }
 
+
+    /* =====================================
+       SECTIONS
+    ===================================== */
+
     .dashboard-section {
         margin-bottom: 30px;
     }
@@ -1264,6 +1500,11 @@
     .dashboard-section-heading h2 {
         font-size: 18px;
     }
+
+
+    /* =====================================
+       TRANSACTIONS
+    ===================================== */
 
     .transaction-row {
         min-height: 66px;
@@ -1293,6 +1534,11 @@
         font-size: 9px;
     }
 
+
+    /* =====================================
+       SECURITY
+    ===================================== */
+
     .dashboard-security {
         padding: 16px;
     }
@@ -1317,18 +1563,4 @@
 
         font-size: 8px;
     }
-
-}
-
-.dashboard-sidebar-overlay {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 80;
-    display: block;
-    border: 0;
-    background: rgba(5, 27, 70, 0.18);
-    cursor: pointer;
 }
