@@ -210,7 +210,7 @@ function Register() {
         try {
 
             const response = await fetch(
-                "https://capital-bank-of-canada.onrender.com/api/auth/register",
+                "/api/auth/register",
                 {
                     method: "POST",
 
