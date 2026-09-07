@@ -79,13 +79,14 @@
     width: 42px;
     height: 42px;
     flex-shrink: 0;
+
     padding: 0;
     margin: 0;
 
     border: 1px solid #dfe4e9;
     border-radius: 7px;
 
-    background: var(--navy);
+    background: #171a1f;
     color: #ffffff;
 
     cursor: pointer;
@@ -103,8 +104,10 @@
 
 .dashboard-menu-button span {
     display: block !important;
+
     width: 21px;
     height: 2px;
+
     flex-shrink: 0;
 
     margin: 0;
@@ -120,7 +123,9 @@
         opacity 0.25s ease;
 }
 
-/* Open state — hamburger becomes X */
+/* =========================================
+   OPEN STATE — HAMBURGER BECOMES X
+========================================= */
 
 .dashboard-menu-button.active span:nth-child(1) {
     transform: translateY(6px) rotate(45deg);
@@ -133,7 +138,6 @@
 .dashboard-menu-button.active span:nth-child(3) {
     transform: translateY(-6px) rotate(-45deg);
 }
-
 
 /* =========================================
    HEADER ACTIONS
