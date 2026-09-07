@@ -428,7 +428,9 @@ function Dashboard() {
 
                    <button
     type="button"
-    className="dashboard-menu-button"
+    className={`dashboard-menu-button ${
+    sidebarOpen ? "active" : ""
+}`}
     onClick={() =>
         setSidebarOpen(!sidebarOpen)
     }
@@ -698,6 +700,14 @@ function Dashboard() {
 
 </aside>
 
+{sidebarOpen && (
+    <button
+        type="button"
+        className="dashboard-sidebar-overlay"
+        onClick={() => setSidebarOpen(false)}
+        aria-label="Close navigation"
+    />
+)}
 
 
                 {/* =========================================

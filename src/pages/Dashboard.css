@@ -930,71 +930,106 @@
     display: none;
 }
 
+
+    /* =========================================
+   DASHBOARD MOBILE MENU BUTTON
+========================================= */
+
+.dashboard-menu-button {
+    display: none;
+    position: relative;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    padding: 0;
+    border: 1px solid #dfe4e9;
+    border-radius: 7px;
+    background: #ffffff;
+    cursor: pointer;
+    z-index: 200;
+}
+
+/* Hamburger lines */
+.dashboard-menu-button span {
+    position: absolute;
+    left: 11px;
+    width: 22px;
+    height: 2px;
+    background: var(--navy);
+    border-radius: 2px;
+
+    transition:
+        transform 0.3s ease,
+        top 0.3s ease,
+        background 0.3s ease;
+}
+
+.dashboard-menu-button span:first-child {
+    top: 17px;
+}
+
+.dashboard-menu-button span:last-child {
+    top: 25px;
+}
+
+/* Open state */
+.dashboard-menu-button.active span:first-child {
+    top: 21px;
+    transform: rotate(45deg);
+    background: var(--white);
+}
+
+.dashboard-menu-button.active span:last-child {
+    top: 21px;
+    transform: rotate(-45deg);
+    background: var(--white);
+}
+
+
+/* =========================================
+   DASHBOARD MOBILE OVERLAY
+========================================= */
+
+.dashboard-sidebar-overlay {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 150;
+
+    background: rgba(5, 27, 70, 0.18);
+
+    border: 0;
+    padding: 0;
+
+    cursor: pointer;
+}
+
+
 /* =========================================
    MOBILE
 ========================================= */
 
 @media (max-width: 900px) {
 
-    /* =====================================
-       HAMBURGER BUTTON
-    ===================================== */
-
     .dashboard-menu-button {
-        display: flex !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
 
-        width: 42px;
-        height: 42px;
-
-        flex-shrink: 0;
-
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-
-        gap: 4px;
-
-        padding: 0;
-        margin: 0;
-
-        border: 0;
-        border-radius: 8px;
-
-        background: var(--navy);
-
-        cursor: pointer;
-
-        position: relative;
+    .dashboard-header {
+        position: sticky;
         z-index: 200;
     }
 
-    .dashboard-menu-button span {
-        display: block;
-
-        width: 22px;
-        height: 2px;
-
-        margin: 0;
-        padding: 0;
-
-        border-radius: 2px;
-
-        background: #ffffff;
-    }
-
-
-    /* =====================================
-       HEADER
-    ===================================== */
-
     .dashboard-header-left {
-        gap: 14px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
-
-
-    /* =====================================
-       SIDEBAR
-    ===================================== */
 
     .dashboard-sidebar {
         position: fixed;
@@ -1005,22 +1040,113 @@
 
         width: 235px;
 
-        z-index: 150;
+        z-index: 180;
 
         transform: translateX(-100%);
 
+        visibility: hidden;
+
         box-shadow:
             10px 0 30px
-            rgba(20, 30, 45, 0.08);
+            rgba(20, 30, 45, 0.15);
 
         transition:
-            transform 0.25s ease;
+            transform 0.25s ease,
+            visibility 0.25s ease;
     }
 
     .dashboard-sidebar.open {
         transform: translateX(0);
+        visibility: visible;
     }
 
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .dashboard-header {
+        height: 65px;
+        padding: 0 15px;
+    }
+
+    .dashboard-menu-button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dashboard-menu-button span {
+        left: 9px;
+        width: 22px;
+    }
+
+    .dashboard-menu-button span:first-child {
+        top: 15px;
+    }
+
+    .dashboard-menu-button span:last-child {
+        top: 23px;
+    }
+
+    .dashboard-menu-button.active span:first-child,
+    .dashboard-menu-button.active span:last-child {
+        top: 19px;
+    }
+
+    .dashboard-sidebar {
+        top: 65px;
+        width: min(280px, 82vw);
+    }
+
+    .dashboard-sidebar-overlay {
+        top: 65px;
+    }
+
+}
+
+
+/* =========================================
+   VERY SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+    .dashboard-header {
+        padding: 0 10px;
+    }
+
+    .dashboard-header-left {
+        gap: 7px;
+    }
+
+    .dashboard-menu-button {
+        width: 38px;
+        height: 38px;
+    }
+
+    .dashboard-menu-button span {
+        left: 8px;
+        width: 20px;
+    }
+
+    .dashboard-menu-button span:first-child {
+        top: 14px;
+    }
+
+    .dashboard-menu-button span:last-child {
+        top: 22px;
+    }
+
+    .dashboard-menu-button.active span:first-child,
+    .dashboard-menu-button.active span:last-child {
+        top: 18px;
+    }
+
+}
 
     /* =====================================
        MAIN CONTENT
@@ -1052,7 +1178,6 @@
 
         cursor: pointer;
     }
-}
 
 
 /* =========================================
@@ -1073,7 +1198,7 @@
     }
 
 
-    /* =====================================
+ /* =====================================
        HAMBURGER
     ===================================== */
 
