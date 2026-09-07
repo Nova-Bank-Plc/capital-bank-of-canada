@@ -426,20 +426,62 @@ function Dashboard() {
 
                 <div className="dashboard-header-left">
 
-                   <button
+                    <button
     type="button"
     className={`dashboard-menu-button ${
-    sidebarOpen ? "active" : ""
-}`}
-    onClick={() =>
-        setSidebarOpen(!sidebarOpen)
-    }
+        sidebarOpen ? "active" : ""
+    }`}
+    onClick={() => setSidebarOpen(!sidebarOpen)}
     aria-label="Toggle navigation"
     aria-expanded={sidebarOpen}
+    style={{
+        display: "flex",
+        width: "42px",
+        height: "42px",
+        padding: 0,
+        margin: 0,
+        flexShrink: 0,
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "column",
+        gap: "4px",
+        border: "1px solid #dfe4e9",
+        borderRadius: "7px",
+        background: "#051B46",
+        cursor: "pointer",
+        boxSizing: "border-box",
+    }}
 >
-    <span></span>
-    <span></span>
-    <span></span>
+    <span
+        style={{
+            display: "block",
+            width: "21px",
+            height: "2px",
+            background: "#ffffff",
+            borderRadius: "2px",
+            flexShrink: 0,
+        }}
+    />
+    <span
+        style={{
+            display: "block",
+            width: "21px",
+            height: "2px",
+            background: "#ffffff",
+            borderRadius: "2px",
+            flexShrink: 0,
+        }}
+    />
+    <span
+        style={{
+            display: "block",
+            width: "21px",
+            height: "2px",
+            background: "#ffffff",
+            borderRadius: "2px",
+            flexShrink: 0,
+        }}
+    />
 </button>
 
 
