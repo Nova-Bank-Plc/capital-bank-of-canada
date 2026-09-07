@@ -586,6 +586,21 @@ function Dashboard() {
                 Transfers
             </Link>
 
+            
+            {/* LOANS */}
+           <Link
+               to="/dashboard/loans"
+               onClick={() =>
+                 setSidebarOpen(false)
+              }
+>
+            <span className="nav-icon">
+               $
+            </span>
+
+             Loans
+           </Link>
+
 
             {/* PAYMENTS */}
             <a

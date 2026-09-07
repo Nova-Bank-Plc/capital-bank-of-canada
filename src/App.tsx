@@ -7,6 +7,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import AccountDetails from "./pages/AccountDetails";
 import Transfer from "./pages/Transfer";
+import Loans from "./pages/Loans";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
@@ -62,6 +63,15 @@ function App() {
                                 <Transfer />
                              </ProtectedRoute>
                      }
+/>
+
+                         <Route
+                          path="/dashboard/loans"
+                         element={
+                             <ProtectedRoute>
+                              <Loans />
+                            </ProtectedRoute>
+                    }
 />
 
                     <Route

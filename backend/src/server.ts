@@ -8,6 +8,7 @@ import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
 import transferRoutes from "./routes/transferRoutes.js";
+import loanRoutes from "./routes/loanRoutes.js";
 
 dotenv.config();
 
@@ -41,6 +42,11 @@ app.use("/api/accounts", accountRoutes);
 app.use(
     "/api/transfers",
     transferRoutes
+);
+
+app.use(
+    "/api/loans",
+    loanRoutes
 );
 
 app.get("/api/health", (_req, res) => {
