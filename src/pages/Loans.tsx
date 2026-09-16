@@ -19,40 +19,62 @@ const API_BASE_URL =
 
 
 interface ApiLoan {
+
     _id: string;
+
     userId: string;
+
     loanType: string;
-    loanNumber: string;
-    principalAmount: number;
-    outstandingBalance: number;
-    interestRate: number;
+
+    applicationNumber: string;
+
+    loanNumber?: string;
+
+    requestedAmount: number;
+
+    principalAmount?: number;
+
+    outstandingBalance?: number;
+
+    interestRate?: number;
+
     termMonths: number;
-    monthlyPayment: number;
+
+    monthlyPayment?: number;
+
     nextPaymentDate?: string;
+
+    purpose: string;
+
     status:
         | "pending"
         | "approved"
         | "active"
         | "rejected"
         | "paid";
+
     applicationDate: string;
+
     approvedDate?: string;
+
     createdAt: string;
+
     updatedAt: string;
+
 }
 
 
 interface LoansResponse {
-    success: boolean;
-    data: {
-        loans: ApiLoan[];
-    };
+
+    loans: ApiLoan[];
+
 }
 
 
 function formatCurrency(
     amount: number
 ) {
+
     return new Intl.NumberFormat(
         "en-CA",
         {
@@ -62,26 +84,33 @@ function formatCurrency(
             maximumFractionDigits: 2,
         }
     ).format(amount);
+
 }
 
 
 function formatDate(
     date?: string
 ) {
+
     if (!date) {
         return "—";
     }
 
+
     const parsedDate =
         new Date(date);
+
 
     if (
         Number.isNaN(
             parsedDate.getTime()
         )
     ) {
+
         return "—";
+
     }
+
 
     return new Intl.DateTimeFormat(
         "en-CA",
@@ -91,12 +120,14 @@ function formatDate(
             day: "numeric",
         }
     ).format(parsedDate);
+
 }
 
 
 function formatLoanType(
     loanType: string
 ) {
+
     return loanType
         .replace(/[-_]/g, " ")
         .replace(
@@ -104,12 +135,14 @@ function formatLoanType(
             (letter) =>
                 letter.toUpperCase()
         );
+
 }
 
 
 function formatStatus(
     status: ApiLoan["status"]
 ) {
+
     return status
         .replace(/[-_]/g, " ")
         .replace(
@@ -117,6 +150,7 @@ function formatStatus(
             (letter) =>
                 letter.toUpperCase()
         );
+
 }
 
 
@@ -124,11 +158,14 @@ function Loans() {
 
     const { token } = useAuth();
 
+
     const [loans, setLoans] =
         useState<ApiLoan[]>([]);
 
+
     const [loading, setLoading] =
         useState(true);
+
 
     const [error, setError] =
         useState("");
@@ -145,6 +182,7 @@ function Loans() {
             );
 
             return;
+
         }
 
 
@@ -154,6 +192,7 @@ function Loans() {
                 try {
 
                     setLoading(true);
+
                     setError("");
 
 
@@ -162,9 +201,11 @@ function Loans() {
                             `${API_BASE_URL}/api/loans`,
                             {
                                 method: "GET",
+
                                 headers: {
                                     Authorization:
                                         `Bearer ${token}`,
+
                                     "Content-Type":
                                         "application/json",
                                 },
@@ -182,6 +223,7 @@ function Loans() {
                             result.message ||
                             "Unable to load loans."
                         );
+
                     }
 
 
@@ -190,21 +232,21 @@ function Loans() {
 
 
                     if (
-                        !data.success ||
-                        !data.data ||
+                        !data ||
                         !Array.isArray(
-                            data.data.loans
+                            data.loans
                         )
                     ) {
 
                         throw new Error(
                             "Unable to load loans."
                         );
+
                     }
 
 
                     setLoans(
-                        data.data.loans
+                        data.loans
                     );
 
                 } catch (requestError) {
@@ -213,6 +255,7 @@ function Loans() {
                         "Loans loading error:",
                         requestError
                     );
+
 
                     setError(
                         requestError instanceof Error
@@ -303,7 +346,10 @@ function Loans() {
                         loan
                     ) =>
                         total +
-                        loan.outstandingBalance,
+                        (
+                            loan.outstandingBalance ??
+                            0
+                        ),
                     0
                 ),
             [activeLoans]
@@ -343,9 +389,11 @@ function Loans() {
                         ← Dashboard
                     </Link>
 
+
                     <h1>
                         Loans
                     </h1>
+
 
                     <p>
                         Manage your borrowing,
@@ -356,14 +404,12 @@ function Loans() {
                 </div>
 
 
-                <button
-                    type="button"
+                <Link
+                    to="/dashboard/loans/apply"
                     className="loans-apply-button"
-                    disabled
-                    title="Loan applications will be enabled in the next step."
                 >
                     Apply for a loan
-                </button>
+                </Link>
 
             </header>
 
@@ -400,9 +446,11 @@ function Loans() {
                         !
                     </div>
 
+
                     <h2>
                         Unable to load loans
                     </h2>
+
 
                     <p>
                         {error}
@@ -427,9 +475,11 @@ function Loans() {
                         $
                     </div>
 
+
                     <h2>
                         No loans yet
                     </h2>
+
 
                     <p>
                         You don't currently have
@@ -437,14 +487,13 @@ function Loans() {
                         applications.
                     </p>
 
-                    <button
-                        type="button"
+
+                    <Link
+                        to="/dashboard/loans/apply"
                         className="loans-apply-button"
-                        disabled
-                        title="Loan applications will be enabled in the next step."
                     >
-                        Apply for a loan
-                    </button>
+                         Apply for a loan
+                    </Link>
 
                 </div>
 
@@ -473,6 +522,7 @@ function Loans() {
                                 Outstanding balance
                             </span>
 
+
                             <strong>
                                 {formatCurrency(
                                     totalOutstanding
@@ -488,6 +538,7 @@ function Loans() {
                                 Active loans
                             </span>
 
+
                             <strong>
                                 {activeLoans.length}
                             </strong>
@@ -500,6 +551,7 @@ function Loans() {
                             <span>
                                 Applications
                             </span>
+
 
                             <strong>
                                 {pendingLoans.length}
@@ -525,6 +577,7 @@ function Loans() {
                                     <h2>
                                         Current loans
                                     </h2>
+
 
                                     <p>
                                         Your current
@@ -558,11 +611,14 @@ function Loans() {
                                                     )}
                                                 </span>
 
+
                                                 <h3>
-                                                    {loan.loanNumber}
+                                                    {loan.loanNumber ??
+                                                        loan.applicationNumber}
                                                 </h3>
 
                                             </div>
+
 
                                             <span
                                                 className={`loan-status loan-status-${loan.status}`}
@@ -578,52 +634,69 @@ function Loans() {
                                         <div className="loan-details">
 
                                             <div>
+
                                                 <span>
                                                     Outstanding
                                                 </span>
 
+
                                                 <strong>
                                                     {formatCurrency(
-                                                        loan.outstandingBalance
+                                                        loan.outstandingBalance ??
+                                                        0
                                                     )}
                                                 </strong>
+
                                             </div>
 
 
                                             <div>
+
                                                 <span>
                                                     Monthly payment
                                                 </span>
 
+
                                                 <strong>
                                                     {formatCurrency(
-                                                        loan.monthlyPayment
+                                                        loan.monthlyPayment ??
+                                                        0
                                                     )}
                                                 </strong>
+
                                             </div>
 
 
                                             <div>
+
                                                 <span>
                                                     Interest rate
                                                 </span>
 
+
                                                 <strong>
-                                                    {loan.interestRate}%
+                                                    {loan.interestRate !==
+                                                        undefined
+                                                        ? `${loan.interestRate}%`
+                                                        : "—"}
                                                 </strong>
+
                                             </div>
 
 
                                             <div>
+
                                                 <span>
                                                     Next payment
                                                 </span>
+
 
                                                 <strong>
                                                     {formatDate(
                                                         loan.nextPaymentDate
                                                     )}
                                                 </strong>
+
                                             </div>
 
                                         </div>
@@ -635,15 +708,19 @@ function Loans() {
                                                 Original amount
                                             </span>
 
+
                                             <strong>
                                                 {formatCurrency(
-                                                    loan.principalAmount
+                                                    loan.principalAmount ??
+                                                    0
                                                 )}
                                             </strong>
+
 
                                             <span>
                                                 Term
                                             </span>
+
 
                                             <strong>
                                                 {loan.termMonths} months
@@ -674,11 +751,14 @@ function Loans() {
                                                     )}
                                                 </span>
 
+
                                                 <h3>
-                                                    {loan.loanNumber}
+                                                    {loan.loanNumber ??
+                                                        loan.applicationNumber}
                                                 </h3>
 
                                             </div>
+
 
                                             <span
                                                 className={`loan-status loan-status-${loan.status}`}
@@ -694,52 +774,69 @@ function Loans() {
                                         <div className="loan-details">
 
                                             <div>
+
                                                 <span>
                                                     Approved amount
                                                 </span>
 
+
                                                 <strong>
                                                     {formatCurrency(
-                                                        loan.principalAmount
+                                                        loan.principalAmount ??
+                                                        0
                                                     )}
                                                 </strong>
+
                                             </div>
 
 
                                             <div>
+
                                                 <span>
                                                     Monthly payment
                                                 </span>
 
+
                                                 <strong>
                                                     {formatCurrency(
-                                                        loan.monthlyPayment
+                                                        loan.monthlyPayment ??
+                                                        0
                                                     )}
                                                 </strong>
+
                                             </div>
 
 
                                             <div>
+
                                                 <span>
                                                     Interest rate
                                                 </span>
 
+
                                                 <strong>
-                                                    {loan.interestRate}%
+                                                    {loan.interestRate !==
+                                                        undefined
+                                                        ? `${loan.interestRate}%`
+                                                        : "—"}
                                                 </strong>
+
                                             </div>
 
 
                                             <div>
+
                                                 <span>
                                                     Approved
                                                 </span>
+
 
                                                 <strong>
                                                     {formatDate(
                                                         loan.approvedDate
                                                     )}
                                                 </strong>
+
                                             </div>
 
                                         </div>
@@ -771,6 +868,7 @@ function Loans() {
                                         Loan applications
                                     </h2>
 
+
                                     <p>
                                         Applications
                                         currently being
@@ -793,52 +891,64 @@ function Loans() {
                                     >
 
                                         <div>
+
                                             <span>
                                                 Loan type
                                             </span>
+
 
                                             <strong>
                                                 {formatLoanType(
                                                     loan.loanType
                                                 )}
                                             </strong>
+
                                         </div>
 
 
                                         <div>
+
                                             <span>
                                                 Application
                                             </span>
 
+
                                             <strong>
-                                                {loan.loanNumber}
+                                                {loan.applicationNumber}
                                             </strong>
+
                                         </div>
 
 
                                         <div>
+
                                             <span>
                                                 Requested
                                             </span>
 
+
                                             <strong>
                                                 {formatCurrency(
-                                                    loan.principalAmount
+                                                    loan.requestedAmount
                                                 )}
                                             </strong>
+
                                         </div>
 
 
                                         <div>
+
                                             <span>
                                                 Applied
                                             </span>
+
 
                                             <strong>
                                                 {formatDate(
                                                     loan.applicationDate
                                                 )}
                                             </strong>
+
                                         </div>
 
 
@@ -873,6 +983,7 @@ function Loans() {
                                         Loan history
                                     </h2>
 
+
                                     <p>
                                         Previously completed
                                         or declined loan
@@ -902,8 +1013,10 @@ function Loans() {
                                                 )}
                                             </span>
 
+
                                             <strong>
-                                                {loan.loanNumber}
+                                                {loan.loanNumber ??
+                                                    loan.applicationNumber}
                                             </strong>
 
                                         </div>
@@ -915,9 +1028,11 @@ function Loans() {
                                                 Amount
                                             </span>
 
+
                                             <strong>
                                                 {formatCurrency(
-                                                    loan.principalAmount
+                                                    loan.principalAmount ??
+                                                    loan.requestedAmount
                                                 )}
                                             </strong>
 
@@ -929,6 +1044,7 @@ function Loans() {
                                             <span>
                                                 Status
                                             </span>
+
 
                                             <span className="loan-status loan-status-paid">
                                                 Paid
@@ -957,8 +1073,9 @@ function Loans() {
                                                 )}
                                             </span>
 
+
                                             <strong>
-                                                {loan.loanNumber}
+                                                {loan.applicationNumber}
                                             </strong>
 
                                         </div>
@@ -970,9 +1087,10 @@ function Loans() {
                                                 Requested
                                             </span>
 
+
                                             <strong>
                                                 {formatCurrency(
-                                                    loan.principalAmount
+                                                    loan.requestedAmount
                                                 )}
                                             </strong>
 
@@ -984,6 +1102,7 @@ function Loans() {
                                             <span>
                                                 Status
                                             </span>
+
 
                                             <span className="loan-status loan-status-rejected">
                                                 Rejected
@@ -1013,3 +1132,4 @@ function Loans() {
 
 
 export default Loans;
+

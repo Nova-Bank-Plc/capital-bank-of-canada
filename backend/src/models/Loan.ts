@@ -12,19 +12,25 @@ export interface ILoan
 
     loanType: string;
 
-    loanNumber: string;
+    applicationNumber: string;
 
-    principalAmount: number;
+    loanNumber?: string;
 
-    outstandingBalance: number;
+    requestedAmount: number;
 
-    interestRate: number;
+    principalAmount?: number;
+
+    outstandingBalance?: number;
+
+    interestRate?: number;
 
     termMonths: number;
 
-    monthlyPayment: number;
+    monthlyPayment?: number;
 
     nextPaymentDate?: Date;
+
+    purpose: string;
 
     status:
         | "pending"
@@ -47,110 +53,79 @@ export interface ILoan
 const loanSchema =
     new Schema<ILoan>(
         {
-
             userId: {
-
                 type: Schema.Types.ObjectId,
-
                 ref: "User",
-
                 required: true,
-
                 index: true,
-
             },
-
 
             loanType: {
-
                 type: String,
-
                 required: true,
-
                 trim: true,
-
             },
 
+            applicationNumber: {
+                type: String,
+                required: true,
+                unique: true,
+                trim: true,
+            },
 
             loanNumber: {
-
                 type: String,
-
-                required: true,
-
                 unique: true,
-
+                sparse: true,
                 trim: true,
-
             },
 
+            requestedAmount: {
+                type: Number,
+                required: true,
+                min: 1,
+            },
 
             principalAmount: {
-
                 type: Number,
-
-                required: true,
-
                 min: 0,
-
             },
-
 
             outstandingBalance: {
-
                 type: Number,
-
-                required: true,
-
                 min: 0,
-
             },
-
 
             interestRate: {
-
                 type: Number,
-
-                required: true,
-
                 min: 0,
-
             },
-
 
             termMonths: {
-
                 type: Number,
-
                 required: true,
-
                 min: 1,
-
             },
-
 
             monthlyPayment: {
-
                 type: Number,
-
-                required: true,
-
                 min: 0,
-
             },
-
 
             nextPaymentDate: {
-
                 type: Date,
-
             },
 
+            purpose: {
+                type: String,
+                required: true,
+                trim: true,
+                minlength: 5,
+                maxlength: 500,
+            },
 
             status: {
-
                 type: String,
-
                 enum: [
                     "pending",
                     "approved",
@@ -158,37 +133,24 @@ const loanSchema =
                     "rejected",
                     "paid",
                 ],
-
                 required: true,
-
                 default: "pending",
-
             },
-
 
             applicationDate: {
-
                 type: Date,
-
                 required: true,
-
                 default: Date.now,
-
             },
 
-
             approvedDate: {
-
                 type: Date,
-
             },
 
         },
 
         {
-
             timestamps: true,
-
         }
 
     );
