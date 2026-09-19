@@ -430,27 +430,30 @@ export const login = async (
         ================================= */
 
         const token =
-            jwt.sign(
+    jwt.sign(
 
-                {
-                    userId:
-                        user._id.toString(),
+        {
+            userId:
+                user._id.toString(),
 
-                    email:
-                        user.email,
+            email:
+                user.email,
 
-                    clientNumber:
-                        user.clientNumber,
-                },
+            clientNumber:
+                user.clientNumber,
 
-                process.env.JWT_SECRET ||
-                    "capital-bank-development-secret",
+            role:
+                user.role,
+        },
 
-                {
-                    expiresIn: "7d",
-                }
+        process.env.JWT_SECRET ||
+            "capital-bank-development-secret",
 
-            );
+        {
+            expiresIn: "7d",
+        }
+
+    );
 
 
         /* ================================
@@ -485,6 +488,10 @@ export const login = async (
 
                 phone:
                     user.phone,
+
+
+                role:
+                     user.role,
 
             },
 

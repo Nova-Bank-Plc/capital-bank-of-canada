@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
+
+/* =========================================
+   CAPITAL BANK — LIGHT THEME
+========================================= */
+
 :root {
 
     /* =========================================
@@ -19,6 +24,20 @@
     --grey: #6B6B6B;
     --light-grey: #E7E7E4;
     --border: #DDDDD9;
+
+
+    /* =========================================
+       THEME SURFACES
+    ========================================= */
+
+    --page-bg: #FFFFFF;
+    --surface: #FFFFFF;
+    --surface-secondary: #F6F6F4;
+
+    --text-primary: #111111;
+    --text-secondary: #6B6B6B;
+
+    --border-color: #DDDDD9;
 
 
     /* =========================================
@@ -57,3 +76,44 @@
     --shadow-soft:
         0 15px 40px rgba(17, 17, 17, 0.08);
 }
+
+
+/* =========================================
+   CAPITAL BANK — DARK THEME
+========================================= */
+
+html.dark {
+
+    --black: #F5F6F8;
+    --charcoal: #E2E5E9;
+
+    --white: #111315;
+    --off-white: #191C20;
+
+    --grey: #A7ADB5;
+    --light-grey: #2A2E34;
+    --border: #343940;
+
+
+    /* =========================================
+       DARK THEME SURFACES
+    ========================================= */
+
+    --page-bg: #111315;
+    --surface: #191C20;
+    --surface-secondary: #20242A;
+
+    --text-primary: #F5F6F8;
+    --text-secondary: #A7ADB5;
+
+    --border-color: #343940;
+
+
+    /* =========================================
+       DARK THEME SHADOW
+    ========================================= */
+
+    --shadow-soft:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+

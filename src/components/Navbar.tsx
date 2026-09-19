@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import LanguageSelector from "./LanguageSelector";
 import "./Navbar.css";
 
 function Navbar() {
@@ -69,6 +70,8 @@ function Navbar() {
                 {/* DESKTOP ACTIONS */}
 
                 <div className="navbar-actions">
+
+                    <LanguageSelector />
 
                     <Link
                         to="/login"
@@ -183,29 +186,33 @@ function Navbar() {
 
                     {/* MOBILE ACTIONS */}
 
-                    <div className="mobile-menu-actions">
+                     <div className="mobile-menu-actions">
 
-                        <Link
-                            to="/login"
-                            onClick={closeMenu}
-                            className="mobile-sign-in"
-                        >
-                            Sign in
-                        </Link>
+    <LanguageSelector
+        elementId="google_translate_element_mobile"
+    />
 
-                        <Link
-                            to="/register"
-                            onClick={closeMenu}
-                            className="mobile-open-account"
-                        >
-                            Open an account
+    <Link
+        to="/login"
+        onClick={closeMenu}
+        className="mobile-sign-in"
+    >
+        Sign in
+    </Link>
 
-                            <span>
-                                →
-                            </span>
-                        </Link>
+    <Link
+        to="/register"
+        onClick={closeMenu}
+        className="mobile-open-account"
+    >
+        Open an account
 
-                    </div>
+        <span>
+            →
+        </span>
+    </Link>
+
+</div>
 
 
                     {/* MOBILE FOOTER */}

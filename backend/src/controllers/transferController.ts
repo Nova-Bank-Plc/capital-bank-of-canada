@@ -5,6 +5,11 @@ import Account from "../models/Account.js";
 import Transaction from "../models/Transaction.js";
 
 import {
+    createTransferSentNotification,
+    createTransferReceivedNotification,
+} from "../services/notificationService.js";
+
+import {
     AuthenticatedRequest,
 } from "../middleware/authMiddleware.js";
 
@@ -16,6 +21,8 @@ export const createTransfer = async (
 
     const session =
         await mongoose.startSession();
+
+    let transactionStarted = false;
 
     try {
 
@@ -81,10 +88,17 @@ export const createTransfer = async (
         }
 
 
+        const normalizedRecipientAccountNumber =
+            String(recipientAccountNumber)
+                .trim()
+                .toUpperCase();
+
+
         session.startTransaction();
+        transactionStarted = true;
 
 
-        // Find the customer's source account
+        // Find customer's source account
 
         const sourceAccount =
             await Account.findOne({
@@ -97,31 +111,33 @@ export const createTransfer = async (
         if (!sourceAccount) {
 
             await session.abortTransaction();
+            transactionStarted = false;
 
             return res.status(404).json({
                 success: false,
                 message:
                     "Source account not found.",
             });
-
         }
 
 
         // Prevent transferring to the same account
 
         if (
-            sourceAccount.accountNumber ===
-            recipientAccountNumber
+            sourceAccount.accountNumber
+                .trim()
+                .toUpperCase() ===
+            normalizedRecipientAccountNumber
         ) {
 
             await session.abortTransaction();
+            transactionStarted = false;
 
             return res.status(400).json({
                 success: false,
                 message:
                     "You cannot transfer money to the same account.",
             });
-
         }
 
 
@@ -133,13 +149,13 @@ export const createTransfer = async (
         ) {
 
             await session.abortTransaction();
+            transactionStarted = false;
 
             return res.status(400).json({
                 success: false,
                 message:
                     "Insufficient funds.",
             });
-
         }
 
 
@@ -148,21 +164,38 @@ export const createTransfer = async (
         const recipientAccount =
             await Account.findOne({
                 accountNumber:
-                    recipientAccountNumber,
-                status: "active",
+                    normalizedRecipientAccountNumber,
             }).session(session);
 
 
         if (!recipientAccount) {
 
             await session.abortTransaction();
+            transactionStarted = false;
 
             return res.status(404).json({
                 success: false,
                 message:
                     "Recipient account not found.",
             });
+        }
 
+
+        // Make sure recipient account is active
+
+        if (
+            recipientAccount.status !==
+            "active"
+        ) {
+
+            await session.abortTransaction();
+            transactionStarted = false;
+
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Recipient account is not active.",
+            });
         }
 
 
@@ -189,73 +222,119 @@ export const createTransfer = async (
 
         // Create sender transaction
 
-        await Transaction.create(
-            [
+        const senderTransactionResult =
+            await Transaction.create(
+                [
+                    {
+                        userId:
+                            sourceAccount.userId,
+
+                        accountId:
+                            sourceAccount._id,
+
+                        name:
+                            description?.trim() ||
+                            "Transfer",
+
+                        transactionType:
+                            "transfer",
+
+                        amount:
+                            transferAmount,
+
+                        direction:
+                            "debit",
+
+                        status:
+                            "completed",
+
+                        source:
+                            "Direct Transfer",
+                    },
+                ],
                 {
-                    userId:
-                        sourceAccount.userId,
+                    session,
+                }
+            );
 
-                    accountId:
-                        sourceAccount._id,
 
-                    name:
-                        description?.trim() ||
-                        "Transfer",
-
-                    transactionType:
-                        "transfer",
-
-                    amount:
-                        transferAmount,
-
-                    direction:
-                        "debit",
-
-                    status:
-                        "completed",
-                },
-            ],
-            {
-                session,
-            }
-        );
+        const senderTransaction =
+            senderTransactionResult[0];
 
 
         // Create recipient transaction
 
-        await Transaction.create(
-            [
+        const recipientTransactionResult =
+            await Transaction.create(
+                [
+                    {
+                        userId:
+                            recipientAccount.userId,
+
+                        accountId:
+                            recipientAccount._id,
+
+                        name:
+                            description?.trim() ||
+                            "Transfer received",
+
+                        transactionType:
+                            "transfer",
+
+                        amount:
+                            transferAmount,
+
+                        direction:
+                            "credit",
+
+                        status:
+                            "completed",
+
+                        source:
+                            "Direct Transfer",
+                    },
+                ],
                 {
-                    userId:
-                        recipientAccount.userId,
+                    session,
+                }
+            );
 
-                    accountId:
-                        recipientAccount._id,
 
-                    name:
-                        description?.trim() ||
-                        "Transfer received",
+        const recipientTransaction =
+            recipientTransactionResult[0];
 
-                    transactionType:
-                        "transfer",
 
-                    amount:
-                        transferAmount,
+        // Commit financial transaction once
 
-                    direction:
-                        "credit",
+        await session.commitTransaction();
+        transactionStarted = false;
 
-                    status:
-                        "completed",
-                },
-            ],
-            {
-                session,
-            }
+
+        /*
+         * Create dashboard notifications AFTER
+         * the money movement has successfully committed.
+         *
+         * Notification failure will not undo the transfer.
+         */
+
+        await createTransferSentNotification(
+            sourceAccount.userId,
+            sourceAccount._id,
+            senderTransaction._id,
+            transferAmount,
+            sourceAccount.currency,
+            recipientAccount.accountNumber
         );
 
 
-        await session.commitTransaction();
+        await createTransferReceivedNotification(
+            recipientAccount.userId,
+            recipientAccount._id,
+            recipientTransaction._id,
+            transferAmount,
+            recipientAccount.currency,
+            sourceAccount.accountNumber
+        );
 
 
         return res.status(201).json({
@@ -281,12 +360,25 @@ export const createTransfer = async (
 
     } catch (error) {
 
-        await session.abortTransaction();
+        if (transactionStarted) {
+
+            try {
+                await session.abortTransaction();
+            } catch (abortError) {
+                console.error(
+                    "Transfer rollback error:",
+                    abortError
+                );
+            }
+
+        }
+
 
         console.error(
             "Transfer error:",
             error
         );
+
 
         return res.status(500).json({
             success: false,

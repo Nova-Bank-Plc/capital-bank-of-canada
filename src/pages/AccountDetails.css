@@ -1,8 +1,21 @@
+/* =========================================
+   CAPITAL BANK OF CANADA
+   ACCOUNT DETAILS
+========================================= */
+
 .account-details-page {
     min-height: 100vh;
     background: #f5f6f8;
-    color: var(--navy);
+    color: #172033;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
+
+
+/* =========================================
+   HEADER
+========================================= */
 
 .account-details-header {
     background: #ffffff;
@@ -12,14 +25,18 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .account-back-link {
     display: inline-block;
-    color: #64748b;
+    color: #475569;
     text-decoration: none;
     font-size: 14px;
     margin-bottom: 20px;
+    transition: color 0.2s ease;
 }
 
 .account-back-link:hover {
@@ -35,9 +52,10 @@
 .account-icon {
     width: 48px;
     height: 48px;
+    flex-shrink: 0;
     border-radius: 12px;
     background: var(--primary);
-    color: white;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,13 +66,15 @@
 .account-label {
     margin: 0 0 3px;
     font-size: 13px;
-    color: #64748b;
+    color: #475569;
 }
 
 .account-title h1 {
     margin: 0;
+    color: #172033;
     font-size: 26px;
     font-weight: 700;
+    line-height: 1.2;
 }
 
 .account-status {
@@ -67,11 +87,13 @@
     color: #15803d;
     font-size: 13px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .account-status span {
     width: 7px;
     height: 7px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: #22c55e;
 }
@@ -87,52 +109,75 @@
     background: #ef4444;
 }
 
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
 .account-details-container {
     width: min(1100px, 92%);
     margin: 35px auto 60px;
 }
 
+
+/* =========================================
+   BALANCE CARD
+========================================= */
+
 .account-balance-card {
-    background: var(--primary);
-    color: white;
+    background: var(--red);
+    color: #ffffff;
     border-radius: 20px;
     padding: 35px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
     margin-bottom: 25px;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.08);
 }
 
-.balance-label {
+.account-details-page .balance-label {
     margin: 0 0 8px;
-    opacity: 0.8;
+    color: #ffffff !important;
+    opacity: 0.9;
     font-size: 14px;
 }
 
-.account-balance-card h2 {
+.account-details-page .account-balance-card h2 {
     margin: 0;
+    color: #ffffff !important;
     font-size: 38px;
+    line-height: 1.15;
     letter-spacing: -1px;
 }
 
-.balance-currency {
+.account-details-page .balance-currency {
     margin: 7px 0 0;
-    opacity: 0.75;
+    color: #ffffff !important;
+    opacity: 0.85;
     font-size: 13px;
 }
 
 .balance-symbol {
     width: 65px;
     height: 65px;
+    flex-shrink: 0;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #ffffff;
     font-size: 30px;
     font-weight: 600;
 }
+
+
+/* =========================================
+   INFORMATION CARD
+========================================= */
 
 .account-information-card {
     background: #ffffff;
@@ -140,6 +185,10 @@
     border-radius: 18px;
     padding: 28px;
     margin-bottom: 25px;
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .section-heading {
@@ -148,7 +197,7 @@
 
 .section-eyebrow {
     margin: 0 0 5px;
-    color: #64748b;
+    color: #475569;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -157,8 +206,15 @@
 
 .section-heading h2 {
     margin: 0;
+    color: #172033;
     font-size: 21px;
+    line-height: 1.3;
 }
+
+
+/* =========================================
+   INFORMATION GRID
+========================================= */
 
 .account-information-grid {
     display: grid;
@@ -176,16 +232,19 @@
     display: flex;
     flex-direction: column;
     gap: 7px;
+    transition:
+        background-color 0.25s ease;
 }
 
 .information-item span {
     font-size: 12px;
-    color: #64748b;
+    color: #475569;
 }
 
 .information-item strong {
     font-size: 15px;
     color: #172033;
+    line-height: 1.4;
 }
 
 .account-number {
@@ -193,6 +252,11 @@
     font-family: monospace;
     letter-spacing: 0.4px;
 }
+
+
+/* =========================================
+   TRANSACTIONS
+========================================= */
 
 .account-transactions {
     border-top: 1px solid #e5e7eb;
@@ -212,6 +276,7 @@
 }
 
 .transaction-left {
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 13px;
@@ -220,6 +285,7 @@
 .transaction-icon {
     width: 42px;
     height: 42px;
+    flex-shrink: 0;
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -227,6 +293,7 @@
     font-size: 20px;
     font-weight: 700;
     background: #f1f5f9;
+    color: #475569;
 }
 
 .transaction-icon.credit {
@@ -241,25 +308,31 @@
 
 .transaction-left strong {
     display: block;
+    color: #172033;
     font-size: 14px;
     margin-bottom: 4px;
+    line-height: 1.4;
 }
 
 .transaction-left span,
 .transaction-right span {
     display: block;
     font-size: 12px;
-    color: #64748b;
+    color: #475569;
+    line-height: 1.4;
 }
 
 .transaction-right {
+    flex-shrink: 0;
     text-align: right;
 }
 
 .transaction-right strong {
     display: block;
+    color: #172033;
     font-size: 14px;
     margin-bottom: 4px;
+    line-height: 1.4;
 }
 
 .transaction-right strong.credit {
@@ -269,6 +342,11 @@
 .transaction-right strong.debit {
     color: #dc2626;
 }
+
+
+/* =========================================
+   NO TRANSACTIONS
+========================================= */
 
 .no-transactions {
     text-align: center;
@@ -282,6 +360,7 @@
     margin: 0 auto 15px;
     border-radius: 50%;
     background: #f1f5f9;
+    color: #475569;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -290,14 +369,21 @@
 
 .no-transactions h3 {
     margin: 0 0 7px;
+    color: #172033;
     font-size: 17px;
 }
 
 .no-transactions p {
     margin: 0;
-    color: #64748b;
+    color: #475569;
     font-size: 14px;
+    line-height: 1.5;
 }
+
+
+/* =========================================
+   LOADING / ERROR
+========================================= */
 
 .account-details-loading,
 .account-details-error {
@@ -308,6 +394,10 @@
     flex-direction: column;
     text-align: center;
     padding: 30px;
+}
+
+.account-details-loading {
+    color: #172033;
 }
 
 .account-loader {
@@ -342,22 +432,359 @@
 
 .account-details-error h2 {
     margin: 0 0 8px;
+    color: #172033;
 }
 
 .account-details-error p {
     margin: 0 0 20px;
-    color: #64748b;
+    color: #475569;
+    line-height: 1.5;
 }
 
 .account-back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--primary);
-    color: white;
+    color: #ffffff;
     padding: 11px 18px;
+    border: 1px solid var(--primary);
     border-radius: 9px;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
 }
+
+.account-back-button:hover {
+    filter: brightness(0.92);
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+.dark .account-details-page,
+[data-theme="dark"] .account-details-page,
+.dark-mode .account-details-page {
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+
+/* =========================================
+   DARK MODE - HEADER
+========================================= */
+
+.dark .account-details-header,
+[data-theme="dark"] .account-details-header,
+.dark-mode .account-details-header {
+    background: #111827;
+    border-bottom-color: #273244;
+}
+
+.dark .account-back-link,
+[data-theme="dark"] .account-back-link,
+.dark-mode .account-back-link {
+    color: #aeb8c7;
+}
+
+.dark .account-back-link:hover,
+[data-theme="dark"] .account-back-link:hover,
+.dark-mode .account-back-link:hover {
+    color: #ff4b63;
+}
+
+.dark .account-label,
+[data-theme="dark"] .account-label,
+.dark-mode .account-label {
+    color: #aeb8c7;
+}
+
+.dark .account-title h1,
+[data-theme="dark"] .account-title h1,
+.dark-mode .account-title h1 {
+    color: #f8fafc;
+}
+
+
+/* =========================================
+   DARK MODE - STATUS
+========================================= */
+
+.dark .account-status,
+[data-theme="dark"] .account-status,
+.dark-mode .account-status {
+    background: #143522;
+    color: #86efac;
+}
+
+.dark .account-status span,
+[data-theme="dark"] .account-status span,
+.dark-mode .account-status span {
+    background: #4ade80;
+}
+
+.dark .account-status.inactive,
+.dark .account-status.closed,
+[data-theme="dark"] .account-status.inactive,
+[data-theme="dark"] .account-status.closed,
+.dark-mode .account-status.inactive,
+.dark-mode .account-status.closed {
+    background: #35171e;
+    color: #ff9aaa;
+}
+
+.dark .account-status.inactive span,
+.dark .account-status.closed span,
+[data-theme="dark"] .account-status.inactive span,
+[data-theme="dark"] .account-status.closed span,
+.dark-mode .account-status.inactive span,
+.dark-mode .account-status.closed span {
+    background: #f87171;
+}
+
+
+/* =========================================
+   DARK MODE - BALANCE CARD
+========================================= */
+
+.dark .account-balance-card,
+[data-theme="dark"] .account-balance-card,
+.dark-mode .account-balance-card {
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.dark .balance-label,
+[data-theme="dark"] .balance-label,
+.dark-mode .balance-label {
+    color: #ffffff;
+}
+
+.dark .account-balance-card h2,
+[data-theme="dark"] .account-balance-card h2,
+.dark-mode .account-balance-card h2 {
+    color: #ffffff;
+}
+
+.dark .balance-currency,
+[data-theme="dark"] .balance-currency,
+.dark-mode .balance-currency {
+    color: #ffffff;
+}
+
+.dark .balance-symbol,
+[data-theme="dark"] .balance-symbol,
+.dark-mode .balance-symbol {
+    color: #ffffff;
+}
+
+
+/* =========================================
+   DARK MODE - INFORMATION CARD
+========================================= */
+
+.dark .account-information-card,
+[data-theme="dark"] .account-information-card,
+.dark-mode .account-information-card {
+    background: #111827;
+    border-color: #273244;
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.dark .section-eyebrow,
+[data-theme="dark"] .section-eyebrow,
+.dark-mode .section-eyebrow {
+    color: #aeb8c7;
+}
+
+.dark .section-heading h2,
+[data-theme="dark"] .section-heading h2,
+.dark-mode .section-heading h2 {
+    color: #f8fafc;
+}
+
+
+/* =========================================
+   DARK MODE - INFORMATION GRID
+========================================= */
+
+.dark .account-information-grid,
+[data-theme="dark"] .account-information-grid,
+.dark-mode .account-information-grid {
+    background: #273244;
+    border-color: #273244;
+}
+
+.dark .information-item,
+[data-theme="dark"] .information-item,
+.dark-mode .information-item {
+    background: #151f2e;
+}
+
+.dark .information-item span,
+[data-theme="dark"] .information-item span,
+.dark-mode .information-item span {
+    color: #9ca8b8;
+}
+
+.dark .information-item strong,
+[data-theme="dark"] .information-item strong,
+.dark-mode .information-item strong {
+    color: #f8fafc;
+}
+
+
+/* =========================================
+   DARK MODE - TRANSACTIONS
+========================================= */
+
+.dark .account-transactions,
+[data-theme="dark"] .account-transactions,
+.dark-mode .account-transactions {
+    border-top-color: #273244;
+}
+
+.dark .account-transaction,
+[data-theme="dark"] .account-transaction,
+.dark-mode .account-transaction {
+    border-bottom-color: #273244;
+}
+
+.dark .transaction-icon,
+[data-theme="dark"] .transaction-icon,
+.dark-mode .transaction-icon {
+    background: #1e293b;
+    color: #aeb8c7;
+}
+
+.dark .transaction-icon.credit,
+[data-theme="dark"] .transaction-icon.credit,
+.dark-mode .transaction-icon.credit {
+    background: #143522;
+    color: #86efac;
+}
+
+.dark .transaction-icon.debit,
+[data-theme="dark"] .transaction-icon.debit,
+.dark-mode .transaction-icon.debit {
+    background: #35171e;
+    color: #ff9aaa;
+}
+
+.dark .transaction-left strong,
+.dark .transaction-right strong,
+[data-theme="dark"] .transaction-left strong,
+[data-theme="dark"] .transaction-right strong,
+.dark-mode .transaction-left strong,
+.dark-mode .transaction-right strong {
+    color: #f8fafc;
+}
+
+.dark .transaction-left span,
+.dark .transaction-right span,
+[data-theme="dark"] .transaction-left span,
+[data-theme="dark"] .transaction-right span,
+.dark-mode .transaction-left span,
+.dark-mode .transaction-right span {
+    color: #9ca8b8;
+}
+
+.dark .transaction-right strong.credit,
+[data-theme="dark"] .transaction-right strong.credit,
+.dark-mode .transaction-right strong.credit {
+    color: #86efac;
+}
+
+.dark .transaction-right strong.debit,
+[data-theme="dark"] .transaction-right strong.debit,
+.dark-mode .transaction-right strong.debit {
+    color: #ff9aaa;
+}
+
+
+/* =========================================
+   DARK MODE - NO TRANSACTIONS
+========================================= */
+
+.dark .no-transactions,
+[data-theme="dark"] .no-transactions,
+.dark-mode .no-transactions {
+    border-top-color: #273244;
+}
+
+.dark .no-transactions-icon,
+[data-theme="dark"] .no-transactions-icon,
+.dark-mode .no-transactions-icon {
+    background: #1e293b;
+    color: #aeb8c7;
+}
+
+.dark .no-transactions h3,
+[data-theme="dark"] .no-transactions h3,
+.dark-mode .no-transactions h3 {
+    color: #f8fafc;
+}
+
+.dark .no-transactions p,
+[data-theme="dark"] .no-transactions p,
+.dark-mode .no-transactions p {
+    color: #9ca8b8;
+}
+
+
+/* =========================================
+   DARK MODE - LOADING
+========================================= */
+
+.dark .account-details-loading,
+[data-theme="dark"] .account-details-loading,
+.dark-mode .account-details-loading {
+    color: #f8fafc;
+}
+
+.dark .account-loader,
+[data-theme="dark"] .account-loader,
+.dark-mode .account-loader {
+    border-color: #334155;
+    border-top-color: var(--primary);
+}
+
+
+/* =========================================
+   DARK MODE - ERROR
+========================================= */
+
+.dark .error-icon,
+[data-theme="dark"] .error-icon,
+.dark-mode .error-icon {
+    background: #35171e;
+    color: #ff9aaa;
+}
+
+.dark .account-details-error h2,
+[data-theme="dark"] .account-details-error h2,
+.dark-mode .account-details-error h2 {
+    color: #f8fafc;
+}
+
+.dark .account-details-error p,
+[data-theme="dark"] .account-details-error p,
+.dark-mode .account-details-error p {
+    color: #9ca8b8;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-width: 650px) {
 
@@ -405,10 +832,26 @@
     }
 }
 
+
 @media (max-width: 420px) {
+
+    .account-title {
+        gap: 11px;
+    }
+
+    .account-icon {
+        width: 43px;
+        height: 43px;
+        border-radius: 10px;
+        font-size: 18px;
+    }
 
     .account-title h1 {
         font-size: 22px;
+    }
+
+    .account-label {
+        font-size: 12px;
     }
 
     .account-balance-card {
@@ -419,7 +862,15 @@
         font-size: 25px;
     }
 
+    .balance-label {
+        font-size: 13px;
+    }
+
     .account-information-card {
+        padding: 16px;
+    }
+
+    .information-item {
         padding: 16px;
     }
 
@@ -430,5 +881,18 @@
     .transaction-icon {
         width: 36px;
         height: 36px;
+        border-radius: 10px;
+        font-size: 17px;
+    }
+
+    .transaction-left strong,
+    .transaction-right strong {
+        font-size: 13px;
+    }
+
+    .transaction-left span,
+    .transaction-right span {
+        font-size: 11px;
     }
 }
+

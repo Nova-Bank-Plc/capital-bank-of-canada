@@ -6,9 +6,14 @@ import path from "path";
 import { connectDatabase } from "./config/database.js";
 import authRoutes from "./routes/authRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import cardRoutes from "./routes/cardRoutes.js";
 import accountRoutes from "./routes/accountRoutes.js";
 import transferRoutes from "./routes/transferRoutes.js";
 import loanRoutes from "./routes/loanRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+import notificationRoutes from "./routes/notificationRoutes.js";
+import billPaymentRoutes from "./routes/billPaymentRoutes.js";
+import supportRoutes from "./routes/supportRoutes.js";
 
 dotenv.config();
 
@@ -37,7 +42,16 @@ app.use("/api/auth", authRoutes);
 
 app.use("/api/dashboard", dashboardRoutes);
 
+app.use("/api/support", supportRoutes);
+
+app.use(
+    "/api/cards",
+    cardRoutes
+);
+
 app.use("/api/accounts", accountRoutes);
+
+app.use("/api/admin", adminRoutes);
 
 app.use(
     "/api/transfers",
@@ -49,12 +63,23 @@ app.use(
     loanRoutes
 );
 
+app.use(
+    "/api/payments",
+    billPaymentRoutes
+);
+
 app.get("/api/health", (_req, res) => {
     res.json({
         success: true,
         message: "Capital Bank of Canada API is running.",
     });
 });
+
+
+app.use(
+    "/api/notifications",
+    notificationRoutes
+);
 
 // ================================
 // FRONTEND

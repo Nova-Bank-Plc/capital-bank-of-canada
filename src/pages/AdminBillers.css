@@ -1,0 +1,1557 @@
+/* =========================================
+   CAPITAL BANK
+   ADMINISTRATOR — BILLER MANAGEMENT
+========================================= */
+
+.admin-billers-page {
+    min-height: 100vh;
+    background: #f4f6f8;
+    color: #162131;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-billers-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #e3e7eb;
+}
+
+.admin-billers-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.admin-billers-logo-link {
+    display: flex;
+    text-decoration: none;
+}
+
+.admin-billers-logo {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: #c8102e;
+    color: #ffffff;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.admin-billers-brand strong {
+    display: block;
+    color: #162131;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.admin-billers-brand span {
+    display: block;
+    margin-top: 3px;
+    color: #7a8490;
+    font-size: 11px;
+}
+
+.admin-billers-header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.admin-billers-admin-name {
+    color: #4e5966;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.admin-billers-logout {
+    padding: 9px 16px;
+    border: 1px solid #d8dde3;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #263342;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.admin-billers-logout:hover {
+    border-color: #c8102e;
+    background: #c8102e;
+    color: #ffffff;
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
+
+.admin-billers-layout {
+    display: flex;
+    min-height: calc(100vh - 72px);
+}
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.admin-billers-sidebar {
+    width: 235px;
+    flex-shrink: 0;
+    padding: 28px 16px;
+    background: #162131;
+}
+
+.admin-billers-sidebar-label {
+    margin: 0 12px 12px;
+    color: #8f9aaa;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.admin-billers-sidebar-link {
+    width: 100%;
+    display: block;
+    margin-bottom: 4px;
+    padding: 11px 12px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: #c7ced7;
+    text-align: left;
+    text-decoration: none;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 550;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.admin-billers-sidebar-link:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.07);
+    color: #ffffff;
+}
+
+.admin-billers-sidebar-link.active {
+    background: #c8102e;
+    color: #ffffff;
+}
+
+.admin-billers-sidebar-link:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.admin-billers-sidebar-divider {
+    height: 1px;
+    margin: 24px 12px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.admin-billers-content {
+    flex: 1;
+    min-width: 0;
+    padding: 38px 42px 60px;
+}
+
+/* =========================================
+   PAGE HEADING
+========================================= */
+
+.admin-billers-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.admin-billers-heading > div > span {
+    display: block;
+    margin-bottom: 8px;
+    color: #c8102e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.admin-billers-heading h1 {
+    margin: 0;
+    color: #162131;
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 750;
+}
+
+.admin-billers-heading p {
+    margin: 9px 0 0;
+    color: #707b88;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   ADD BILLER BUTTON
+========================================= */
+
+.admin-billers-add-button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+    padding: 0 18px;
+    border: 1px solid #c8102e;
+    border-radius: 7px;
+    background: #c8102e;
+    color: #ffffff;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(200, 16, 46, 0.16);
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-billers-add-button:hover {
+    border-color: #a90d26;
+    background: #a90d26;
+    box-shadow: 0 5px 14px rgba(200, 16, 46, 0.22);
+    transform: translateY(-1px);
+}
+
+.admin-billers-add-button:active {
+    box-shadow: 0 2px 6px rgba(200, 16, 46, 0.16);
+    transform: translateY(0);
+}
+
+.admin-billers-add-button:focus-visible {
+    outline: 3px solid rgba(200, 16, 46, 0.18);
+    outline-offset: 2px;
+}
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+.admin-billers-error,
+.admin-billers-success {
+    margin-bottom: 20px;
+    padding: 14px 17px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.admin-billers-error {
+    border: 1px solid #efb7c0;
+    background: #fff3f5;
+    color: #a30d27;
+}
+
+.admin-billers-success {
+    border: 1px solid #b8dcc8;
+    background: #f1faf4;
+    color: #22633b;
+}
+
+/* =========================================
+   BILLER FORM SECTION
+========================================= */
+
+.admin-biller-form-section {
+    margin-bottom: 28px;
+    border: 1px solid #e0e5e9;
+    border-radius: 10px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.admin-biller-form-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 22px 24px;
+    border-bottom: 1px solid #e8ebee;
+}
+
+.admin-biller-form-heading span {
+    display: block;
+    margin-bottom: 7px;
+    color: #c8102e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.admin-biller-form-heading h2 {
+    margin: 0;
+    color: #162131;
+    font-size: 19px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.admin-biller-close-button {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid #dfe4e8;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #5d6874;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.admin-biller-close-button:hover {
+    border-color: #c8102e;
+    background: #fff3f5;
+    color: #c8102e;
+}
+
+/* =========================================
+   BILLER FORM
+========================================= */
+
+.admin-biller-form {
+    padding: 24px;
+}
+
+.admin-biller-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.admin-biller-form label {
+    display: block;
+    min-width: 0;
+}
+
+.admin-biller-form label > span {
+    display: block;
+    margin-bottom: 8px;
+    color: #374352;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-biller-form input,
+.admin-biller-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d8dee4;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #162131;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-biller-form input {
+    height: 44px;
+    padding: 0 13px;
+}
+
+.admin-biller-form textarea {
+    min-height: 105px;
+    padding: 12px 13px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.admin-biller-form input::placeholder,
+.admin-biller-form textarea::placeholder {
+    color: #9aa3ad;
+}
+
+.admin-biller-form input:focus,
+.admin-biller-form textarea:focus {
+    border-color: #c8102e;
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08);
+}
+
+.admin-biller-description-field {
+    grid-column: 1 / -1;
+}
+
+/* =========================================
+   BILLER FORM ACTIONS
+========================================= */
+
+.admin-biller-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid #edf0f2;
+}
+
+.admin-biller-cancel-button,
+.admin-biller-save-button {
+    min-height: 40px;
+    padding: 0 17px;
+    border-radius: 7px;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.admin-biller-cancel-button {
+    border: 1px solid #d8dde3;
+    background: #ffffff;
+    color: #465260;
+}
+
+.admin-biller-cancel-button:hover:not(:disabled) {
+    border-color: #bfc6ce;
+    background: #f7f8f9;
+}
+
+.admin-biller-save-button {
+    border: 1px solid #c8102e;
+    background: #c8102e;
+    color: #ffffff;
+}
+
+.admin-biller-save-button:hover:not(:disabled) {
+    border-color: #a90d26;
+    background: #a90d26;
+}
+
+.admin-biller-cancel-button:disabled,
+.admin-biller-save-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================================
+   BILLER LIST
+========================================= */
+
+.admin-biller-list-section {
+    border: 1px solid #e0e5e9;
+    border-radius: 10px;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.admin-biller-list-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 22px 24px;
+    border-bottom: 1px solid #e8ebee;
+}
+
+.admin-biller-list-heading span {
+    display: block;
+    margin-bottom: 7px;
+    color: #c8102e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.admin-biller-list-heading h2 {
+    margin: 0;
+    color: #162131;
+    font-size: 19px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.admin-biller-list-heading > strong {
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 9px;
+    border-radius: 16px;
+    background: #f0f2f4;
+    color: #4f5a66;
+    font-size: 12px;
+    font-weight: 750;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.admin-biller-table-wrapper {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+
+.admin-biller-table-wrapper table {
+    width: 100%;
+    min-width: 1040px;
+    border-collapse: collapse;
+}
+
+.admin-biller-table-wrapper th {
+    padding: 13px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e4e8ec;
+    color: #687482;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.admin-biller-table-wrapper td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #edf0f2;
+    color: #3f4b58;
+    font-size: 13px;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.admin-biller-table-wrapper tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-biller-table-wrapper tbody tr:hover {
+    background: #fafbfc;
+}
+
+.admin-biller-table-wrapper td:first-child {
+    min-width: 170px;
+}
+
+.admin-biller-table-wrapper td:first-child strong {
+    color: #162131;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* Keep important table columns readable */
+.admin-biller-table-wrapper th:nth-child(1),
+.admin-biller-table-wrapper td:nth-child(1) {
+    min-width: 170px;
+}
+
+.admin-biller-table-wrapper th:nth-child(2),
+.admin-biller-table-wrapper td:nth-child(2) {
+    min-width: 125px;
+}
+
+.admin-biller-table-wrapper th:nth-child(3),
+.admin-biller-table-wrapper td:nth-child(3) {
+    min-width: 240px;
+}
+
+.admin-biller-table-wrapper th:nth-child(4),
+.admin-biller-table-wrapper td:nth-child(4) {
+    min-width: 100px;
+}
+
+.admin-biller-table-wrapper th:nth-child(5),
+.admin-biller-table-wrapper td:nth-child(5) {
+    min-width: 125px;
+}
+
+.admin-biller-table-wrapper th:nth-child(6),
+.admin-biller-table-wrapper td:nth-child(6) {
+    min-width: 155px;
+}
+
+.admin-biller-table-wrapper th:nth-child(7),
+.admin-biller-table-wrapper td:nth-child(7) {
+    min-width: 210px;
+}
+
+/* =========================================
+   BILLER ROW EXPANDED
+========================================= */
+
+.admin-biller-table-wrapper
+tbody
+tr.admin-biller-row-expanded {
+    background: #fcfdfe;
+}
+
+.admin-biller-table-wrapper
+tbody
+tr.admin-biller-row-expanded
+td {
+    border-bottom-color: #e1e6eb;
+}
+
+/* =========================================
+   PAYMENT OPTIONS TOGGLE
+========================================= */
+
+.admin-biller-options-toggle {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 0 11px;
+    border: 1px solid #d8dde3;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #43505d;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.admin-biller-options-toggle:hover {
+    border-color: #c8102e;
+    background: #fff3f5;
+    color: #c8102e;
+}
+
+.admin-biller-options-toggle svg {
+    transition: transform 0.2s ease;
+}
+
+.admin-biller-options-toggle svg.rotated {
+    transform: rotate(180deg);
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.admin-biller-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.admin-biller-status.active {
+    background: #edf8f1;
+    color: #277243;
+}
+
+.admin-biller-status.inactive {
+    background: #f1f3f5;
+    color: #687482;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.admin-biller-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.admin-biller-edit-button,
+.admin-biller-status-button {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 11px;
+    border-radius: 6px;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.admin-biller-edit-button {
+    border: 1px solid #d8dde3;
+    background: #ffffff;
+    color: #43505d;
+}
+
+.admin-biller-edit-button:hover {
+    border-color: #c8102e;
+    background: #fff3f5;
+    color: #c8102e;
+}
+
+.admin-biller-status-button.active {
+    border: 1px solid #efb7c0;
+    background: #fff3f5;
+    color: #a30d27;
+}
+
+.admin-biller-status-button.active:hover {
+    border-color: #c8102e;
+    background: #c8102e;
+    color: #ffffff;
+}
+
+.admin-biller-status-button.inactive {
+    border: 1px solid #b8dcc8;
+    background: #f1faf4;
+    color: #277243;
+}
+
+.admin-biller-status-button.inactive:hover {
+    border-color: #277243;
+    background: #277243;
+    color: #ffffff;
+}
+
+/* =========================================
+   PAYMENT OPTIONS PANEL
+========================================= */
+
+.admin-payment-options-panel {
+    margin: 0;
+    padding: 26px 28px 28px;
+    border-top: 1px solid #dfe5e9;
+    background: #f8fafb;
+}
+
+/* =========================================
+   PAYMENT OPTIONS HEADER
+========================================= */
+
+.admin-payment-options-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+
+.admin-payment-options-header > div {
+    min-width: 0;
+}
+
+.admin-payment-options-header > div > span {
+    display: block;
+    margin-bottom: 6px;
+    color: #c8102e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.admin-payment-options-header h3 {
+    margin: 0;
+    color: #162131;
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 750;
+}
+
+.admin-payment-options-header p {
+    max-width: 650px;
+    margin: 7px 0 0;
+    color: #707b88;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+/* =========================================
+   ADD PAYMENT OPTION BUTTON
+========================================= */
+
+.admin-payment-option-add-button {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    flex-shrink: 0;
+    padding: 0 15px;
+    border: 1px solid #c8102e;
+    border-radius: 7px;
+    background: #c8102e;
+    color: #ffffff;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow: 0 3px 9px rgba(200, 16, 46, 0.13);
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-payment-option-add-button:hover {
+    border-color: #a90d26;
+    background: #a90d26;
+    box-shadow: 0 4px 12px rgba(200, 16, 46, 0.2);
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   PAYMENT OPTION FORM
+========================================= */
+
+.admin-payment-option-form {
+    margin-bottom: 22px;
+    padding: 20px;
+    border: 1px solid #e0e5e9;
+    border-radius: 9px;
+    background: #ffffff;
+}
+
+.admin-payment-option-form-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.admin-payment-option-form-heading > div {
+    min-width: 0;
+}
+
+.admin-payment-option-form-heading span {
+    display: block;
+    margin-bottom: 6px;
+    color: #c8102e;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.admin-payment-option-form-heading h4 {
+    margin: 0;
+    color: #162131;
+    font-size: 16px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.admin-payment-option-form-fields {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: 18px;
+}
+
+.admin-payment-option-form-fields label {
+    display: block;
+    min-width: 0;
+}
+
+.admin-payment-option-form-fields label > span {
+    display: block;
+    margin-bottom: 8px;
+    color: #374352;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-payment-option-form-fields input,
+.admin-payment-option-form-fields textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #d8dee4;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #162131;
+    font: inherit;
+    font-size: 13px;
+    outline: none;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-payment-option-form-fields input {
+    height: 44px;
+    padding: 0 13px;
+}
+
+.admin-payment-option-form-fields textarea {
+    min-height: 88px;
+    padding: 11px 13px;
+    resize: vertical;
+    line-height: 1.5;
+}
+
+.admin-payment-option-form-fields input::placeholder,
+.admin-payment-option-form-fields textarea::placeholder {
+    color: #9aa3ad;
+}
+
+.admin-payment-option-form-fields input:focus,
+.admin-payment-option-form-fields textarea:focus {
+    border-color: #c8102e;
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.08);
+}
+
+.admin-payment-option-form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 2px;
+    padding-top: 17px;
+    border-top: 1px solid #edf0f2;
+}
+
+/* =========================================
+   PAYMENT OPTIONS EMPTY STATE
+========================================= */
+
+.admin-payment-options-empty {
+    padding: 24px;
+    border: 1px dashed #d6dde3;
+    border-radius: 8px;
+    background: #ffffff;
+    text-align: center;
+}
+
+.admin-payment-options-empty strong {
+    display: block;
+    color: #364250;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.admin-payment-options-empty p {
+    margin: 6px 0 0;
+    color: #7b8692;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* =========================================
+   PAYMENT OPTIONS LIST
+========================================= */
+
+.admin-payment-options-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.admin-payment-option-card {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    min-width: 0;
+    padding: 17px;
+    border: 1px solid #e0e5e9;
+    border-radius: 8px;
+    background: #ffffff;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-payment-option-card:hover {
+    border-color: #d2d9df;
+    box-shadow: 0 4px 14px rgba(22, 33, 49, 0.05);
+}
+
+.admin-payment-option-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.admin-payment-option-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.admin-payment-option-title-row strong {
+    color: #162131;
+    font-size: 13px;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+}
+
+.admin-payment-option-info p {
+    margin: 7px 0 0;
+    color: #707b88;
+    font-size: 11px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+.admin-payment-option-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+.admin-payment-option-status.active {
+    background: #edf8f1;
+    color: #277243;
+}
+
+.admin-payment-option-status.inactive {
+    background: #f1f3f5;
+    color: #687482;
+}
+
+.admin-payment-option-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+/* =========================================
+   STATES
+========================================= */
+
+.admin-biller-state {
+    padding: 30px 24px;
+    color: #697481;
+    font-size: 13px;
+}
+
+.admin-biller-empty {
+    padding: 30px 24px;
+    color: #7a8591;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+    .admin-billers-content {
+        padding: 34px 28px 55px;
+    }
+
+    .admin-billers-sidebar {
+        width: 215px;
+    }
+
+    .admin-payment-options-list {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-biller-table-wrapper table {
+        min-width: 980px;
+    }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+    .admin-billers-header {
+        padding: 0 18px;
+    }
+
+    .admin-billers-admin-name {
+        display: none;
+    }
+
+    .admin-billers-layout {
+        display: block;
+        min-height: auto;
+    }
+
+    .admin-billers-sidebar {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px;
+        overflow-x: hidden;
+    }
+
+    .admin-billers-sidebar nav {
+        display: flex;
+        gap: 5px;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding-bottom: 2px;
+    }
+
+    .admin-billers-sidebar-label,
+    .admin-billers-sidebar-divider {
+        display: none;
+    }
+
+    .admin-billers-sidebar-link {
+        width: auto;
+        flex-shrink: 0;
+        margin-bottom: 0;
+        white-space: nowrap;
+    }
+
+    .admin-billers-content {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 28px 18px 45px;
+    }
+
+    .admin-billers-heading {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 18px;
+        margin-bottom: 24px;
+    }
+
+    .admin-billers-add-button {
+        align-self: flex-start;
+    }
+
+    /* Main biller form */
+    .admin-biller-form {
+        padding: 20px;
+    }
+
+    .admin-biller-form-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .admin-biller-description-field {
+        grid-column: auto;
+    }
+
+    /* Biller list heading */
+    .admin-biller-list-heading {
+        align-items: flex-start;
+    }
+
+    /* IMPORTANT:
+       Keep every table field available.
+       The table scrolls horizontally instead
+       of hiding columns. */
+    .admin-biller-table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        overscroll-behavior-x: contain;
+    }
+
+    .admin-biller-table-wrapper table {
+        width: max-content;
+        min-width: 1040px;
+    }
+
+    .admin-biller-table-wrapper th,
+    .admin-biller-table-wrapper td {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Payment options */
+    .admin-payment-options-panel {
+        padding: 22px 20px 24px;
+    }
+
+    .admin-payment-options-header {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .admin-payment-options-header p {
+        max-width: none;
+    }
+
+    .admin-payment-option-add-button {
+        align-self: flex-start;
+    }
+
+    .admin-payment-option-form {
+        padding: 18px;
+    }
+
+    .admin-payment-option-form-fields {
+        grid-template-columns: 1fr;
+        gap: 17px;
+    }
+
+    .admin-payment-option-form-actions {
+        grid-column: auto;
+    }
+
+    .admin-payment-options-list {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-payment-option-card {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .admin-payment-option-actions {
+        width: 100%;
+    }
+
+    .admin-payment-option-actions .admin-biller-edit-button,
+    .admin-payment-option-actions .admin-biller-status-button {
+        flex: 1;
+    }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 520px) {
+    .admin-billers-header {
+        height: 64px;
+        padding: 0 12px;
+    }
+
+    .admin-billers-logo {
+        width: 38px;
+        height: 38px;
+        font-size: 20px;
+    }
+
+    .admin-billers-brand {
+        gap: 9px;
+        min-width: 0;
+    }
+
+    .admin-billers-brand strong {
+        font-size: 14px;
+    }
+
+    .admin-billers-brand span {
+        font-size: 10px;
+    }
+
+    .admin-billers-header-right {
+        gap: 8px;
+    }
+
+    .admin-billers-logout {
+        padding: 8px 12px;
+    }
+
+    .admin-billers-sidebar {
+        padding: 10px;
+    }
+
+    .admin-billers-sidebar-link {
+        padding: 10px 11px;
+        font-size: 12px;
+    }
+
+    .admin-billers-content {
+        padding: 24px 12px 40px;
+    }
+
+    .admin-billers-heading {
+        gap: 16px;
+    }
+
+    .admin-billers-heading h1 {
+        font-size: 24px;
+    }
+
+    .admin-billers-heading p {
+        font-size: 13px;
+    }
+
+    .admin-billers-add-button {
+        width: 100%;
+    }
+
+    .admin-biller-form-heading,
+    .admin-biller-list-heading {
+        padding: 18px 16px;
+    }
+
+    .admin-biller-form-heading h2,
+    .admin-biller-list-heading h2 {
+        font-size: 17px;
+    }
+
+    .admin-biller-form {
+        padding: 16px;
+    }
+
+    .admin-biller-form-grid {
+        gap: 16px;
+    }
+
+    .admin-biller-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .admin-biller-cancel-button,
+    .admin-biller-save-button {
+        width: 100%;
+    }
+
+    /*
+       Keep the complete biller table.
+       User can swipe left/right to reach:
+       Biller Name → Category → Description →
+       Status → Created → Payment Options → Actions
+    */
+    .admin-biller-table-wrapper {
+        margin: 0;
+        border-top: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .admin-biller-table-wrapper table {
+        min-width: 1040px;
+    }
+
+    .admin-biller-table-wrapper th {
+        padding: 12px 14px;
+        font-size: 9px;
+    }
+
+    .admin-biller-table-wrapper td {
+        padding: 14px;
+        font-size: 12px;
+    }
+
+    /* Make action controls remain completely visible */
+    .admin-biller-actions {
+        gap: 7px;
+        flex-wrap: nowrap;
+    }
+
+    .admin-biller-edit-button,
+    .admin-biller-status-button {
+        min-height: 34px;
+        padding: 0 10px;
+        font-size: 10px;
+    }
+
+    /* Payment options */
+    .admin-payment-options-panel {
+        padding: 18px 14px 20px;
+    }
+
+    .admin-payment-options-header h3 {
+        font-size: 16px;
+    }
+
+    .admin-payment-options-header p {
+        font-size: 11px;
+    }
+
+    .admin-payment-option-add-button {
+        width: 100%;
+    }
+
+    .admin-payment-option-form {
+        padding: 15px;
+    }
+
+    .admin-payment-option-form-heading {
+        gap: 12px;
+        margin-bottom: 17px;
+    }
+
+    .admin-payment-option-form-heading h4 {
+        font-size: 15px;
+    }
+
+    .admin-payment-option-form-fields {
+        gap: 15px;
+    }
+
+    .admin-payment-option-form-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .admin-payment-option-form-actions
+        .admin-biller-cancel-button,
+    .admin-payment-option-form-actions
+        .admin-biller-save-button {
+        width: 100%;
+    }
+
+    .admin-payment-option-card {
+        padding: 14px;
+    }
+
+    .admin-payment-option-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-payment-option-actions
+        .admin-biller-edit-button,
+    .admin-payment-option-actions
+        .admin-biller-status-button {
+        width: 100%;
+    }
+
+    .admin-payment-options-empty {
+        padding: 20px 15px;
+    }
+
+    .admin-biller-state,
+    .admin-biller-empty {
+        padding: 24px 16px;
+    }
+}
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+    .admin-billers-header {
+        padding: 0 10px;
+    }
+
+    .admin-billers-brand span {
+        display: none;
+    }
+
+    .admin-billers-brand strong {
+        font-size: 13px;
+    }
+
+    .admin-billers-logout {
+        padding: 7px 10px;
+        font-size: 11px;
+    }
+
+    .admin-billers-content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .admin-biller-form-heading,
+    .admin-biller-list-heading {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .admin-biller-form {
+        padding: 14px;
+    }
+
+    .admin-payment-options-panel {
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+}
+
+/* =========================================
+   BACK TO DASHBOARD
+========================================= */
+
+.admin-billers-back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 22px;
+    color: var(--red);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-billers-back-link:hover {
+    color: var(--red-dark);
+    transform: translateX(-3px);
+}
+
+html.dark .admin-billers-back-link {
+    color: var(--red-light);
+}
+
+html.dark .admin-billers-back-link:hover {
+    color: #ffffff;
+}

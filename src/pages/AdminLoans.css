@@ -1,0 +1,2018 @@
+/* =========================================
+   CAPITAL BANK
+   ADMIN LOANS
+========================================= */
+
+.admin-loans-page {
+    min-height: 100vh;
+    background: var(--page-bg);
+    color: var(--text-primary);
+}
+
+
+.admin-loans-content {
+    width: min(
+        1500px,
+        calc(100% - 48px)
+    );
+
+    margin: 0 auto;
+
+    padding:
+        34px
+        0
+        60px;
+}
+
+
+/* =========================================
+   BACK LINK
+========================================= */
+
+.admin-loans-back-link {
+    display: inline-flex;
+
+    align-items: center;
+
+    margin-bottom: 24px;
+
+    color: var(--red);
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.admin-loans-back-link:hover {
+    color: var(--red-dark);
+
+    transform:
+        translateX(-3px);
+}
+
+
+html.dark
+.admin-loans-back-link {
+    color: var(--red-light);
+}
+
+
+html.dark
+.admin-loans-back-link:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-loans-header {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 30px;
+}
+
+
+.admin-loans-eyebrow {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--red);
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.12em;
+
+    text-transform:
+        uppercase;
+}
+
+
+html.dark
+.admin-loans-eyebrow {
+    color: var(--red-light);
+}
+
+
+.admin-loans-header h1 {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            40px
+        );
+
+    line-height: 1.15;
+
+    font-weight: 700;
+}
+
+
+.admin-loans-header p {
+    max-width: 680px;
+
+    margin:
+        10px
+        0
+        0;
+
+    color: var(--text-secondary);
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+
+.admin-loans-refresh {
+    flex-shrink: 0;
+
+    min-height: 44px;
+
+    padding:
+        0
+        20px;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 8px;
+
+    background:
+        var(--surface);
+
+    color:
+        var(--text-primary);
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.admin-loans-refresh:hover:not(:disabled) {
+    border-color:
+        var(--red);
+
+    color:
+        var(--red);
+}
+
+
+html.dark
+.admin-loans-refresh:hover:not(:disabled) {
+    border-color:
+        var(--red-light);
+
+    color:
+        var(--red-light);
+}
+
+
+.admin-loans-refresh:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   ALERTS
+========================================= */
+
+.admin-loans-alert {
+    margin-bottom: 22px;
+
+    padding:
+        13px
+        16px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.admin-loans-alert.success {
+    border:
+        1px solid
+        rgba(22, 163, 74, 0.25);
+
+    background:
+        rgba(22, 163, 74, 0.08);
+
+    color:
+        #15803d;
+}
+
+
+.admin-loans-alert.error {
+    border:
+        1px solid
+        rgba(185, 28, 28, 0.25);
+
+    background:
+        rgba(185, 28, 28, 0.08);
+
+    color:
+        #b91c1c;
+}
+
+
+html.dark
+.admin-loans-alert.success {
+    color:
+        #4ade80;
+}
+
+
+html.dark
+.admin-loans-alert.error {
+    color:
+        #f87171;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.admin-loans-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            6,
+            minmax(0, 1fr)
+        );
+
+    gap: 14px;
+
+    margin-bottom: 26px;
+}
+
+
+.admin-loans-summary-card {
+    min-height: 108px;
+
+    padding:
+        18px;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 10px;
+
+    background:
+        var(--surface);
+
+    color:
+        var(--text-primary);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.admin-loans-summary-card:hover {
+    border-color:
+        var(--red);
+
+    transform:
+        translateY(-2px);
+}
+
+
+.admin-loans-summary-card.active {
+    border-color:
+        var(--red);
+
+    box-shadow:
+        0
+        0
+        0
+        1px
+        var(--red);
+}
+
+
+.admin-loans-summary-card span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.admin-loans-summary-card strong {
+    display: block;
+
+    color:
+        var(--text-primary);
+
+    font-size: 28px;
+
+    line-height: 1;
+}
+
+
+.admin-loans-summary-card.pending strong {
+    color:
+        #b45309;
+}
+
+
+.admin-loans-summary-card.approved strong {
+    color:
+        #2563eb;
+}
+
+
+.admin-loans-summary-card.active-loan strong {
+    color:
+        #15803d;
+}
+
+
+.admin-loans-summary-card.rejected strong {
+    color:
+        #b91c1c;
+}
+
+
+.admin-loans-summary-card.paid strong {
+    color:
+        #6d28d9;
+}
+
+
+html.dark
+.admin-loans-summary-card.pending strong {
+    color:
+        #fbbf24;
+}
+
+
+html.dark
+.admin-loans-summary-card.approved strong {
+    color:
+        #60a5fa;
+}
+
+
+html.dark
+.admin-loans-summary-card.active-loan strong {
+    color:
+        #4ade80;
+}
+
+
+html.dark
+.admin-loans-summary-card.rejected strong {
+    color:
+        #f87171;
+}
+
+
+html.dark
+.admin-loans-summary-card.paid strong {
+    color:
+        #c084fc;
+}
+
+
+/* =========================================
+   TABLE SECTION
+========================================= */
+
+.admin-loans-table-section {
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 12px;
+
+    background:
+        var(--surface);
+}
+
+
+.admin-loans-table-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        22px
+        24px;
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+
+.admin-loans-table-header h2 {
+    margin: 0;
+
+    color:
+        var(--text-primary);
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+
+.admin-loans-table-header span {
+    display: block;
+
+    margin-top: 5px;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.admin-loans-table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+.admin-loans-table {
+    width: 100%;
+
+    min-width: 1100px;
+
+    border-collapse:
+        collapse;
+}
+
+
+.admin-loans-table th {
+    padding:
+        14px
+        18px;
+
+    background:
+        rgba(
+            127,
+            127,
+            127,
+            0.04
+        );
+
+    color:
+        var(--text-secondary);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.06em;
+
+    text-align: left;
+
+    text-transform:
+        uppercase;
+
+    white-space:
+        nowrap;
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+
+.admin-loans-table td {
+    padding:
+        17px
+        18px;
+
+    color:
+        var(--text-primary);
+
+    font-size: 13px;
+
+    vertical-align: middle;
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+
+.admin-loans-table tbody tr {
+    transition:
+        background 0.2s ease;
+}
+
+
+.admin-loans-table tbody tr:hover {
+    background:
+        rgba(
+            177,
+            18,
+            38,
+            0.025
+        );
+}
+
+
+.admin-loans-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================
+   APPLICATION
+========================================= */
+
+.admin-loans-application {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.admin-loans-application strong {
+    color:
+        var(--text-primary);
+
+    font-size: 13px;
+}
+
+
+.admin-loans-application span {
+    color:
+        var(--text-secondary);
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   CUSTOMER
+========================================= */
+
+.admin-loans-customer {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    min-width: 180px;
+}
+
+
+.admin-loans-customer strong {
+    color:
+        var(--text-primary);
+
+    font-size: 13px;
+}
+
+
+.admin-loans-customer span {
+    color:
+        var(--text-secondary);
+
+    font-size: 11px;
+}
+
+
+.admin-loans-customer small {
+    color:
+        var(--red);
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+html.dark
+.admin-loans-customer small {
+    color:
+        var(--red-light);
+}
+
+
+/* =========================================
+   LOAN TYPE
+========================================= */
+
+.admin-loans-type {
+    color:
+        var(--text-primary);
+
+    font-size: 13px;
+
+    font-weight: 500;
+}
+
+
+/* =========================================
+   MONEY
+========================================= */
+
+.admin-loans-money {
+    color:
+        var(--text-primary);
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================
+   DATE
+========================================= */
+
+.admin-loans-date {
+    color:
+        var(--text-secondary);
+
+    white-space:
+        nowrap;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.admin-loan-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 76px;
+
+    padding:
+        5px
+        9px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.04em;
+
+    text-transform:
+        capitalize;
+}
+
+
+.admin-loan-status.pending {
+    background:
+        rgba(
+            245,
+            158,
+            11,
+            0.12
+        );
+
+    color:
+        #b45309;
+}
+
+
+.admin-loan-status.approved {
+    background:
+        rgba(
+            37,
+            99,
+            235,
+            0.12
+        );
+
+    color:
+        #2563eb;
+}
+
+
+.admin-loan-status.active {
+    background:
+        rgba(
+            22,
+            163,
+            74,
+            0.12
+        );
+
+    color:
+        #15803d;
+}
+
+
+.admin-loan-status.rejected {
+    background:
+        rgba(
+            220,
+            38,
+            38,
+            0.12
+        );
+
+    color:
+        #b91c1c;
+}
+
+
+.admin-loan-status.paid {
+    background:
+        rgba(
+            124,
+            58,
+            237,
+            0.12
+        );
+
+    color:
+        #6d28d9;
+}
+
+
+html.dark
+.admin-loan-status.pending {
+    color:
+        #fbbf24;
+}
+
+
+html.dark
+.admin-loan-status.approved {
+    color:
+        #60a5fa;
+}
+
+
+html.dark
+.admin-loan-status.active {
+    color:
+        #4ade80;
+}
+
+
+html.dark
+.admin-loan-status.rejected {
+    color:
+        #f87171;
+}
+
+
+html.dark
+.admin-loan-status.paid {
+    color:
+        #c084fc;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.admin-loans-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    white-space:
+        nowrap;
+}
+
+
+.admin-loan-action {
+    min-height: 32px;
+
+    padding:
+        0
+        10px;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.admin-loan-action.primary {
+    background:
+        var(--red);
+
+    color:
+        #ffffff;
+}
+
+
+.admin-loan-action.primary:hover:not(:disabled) {
+    background:
+        var(--red-dark);
+}
+
+
+.admin-loan-action.danger {
+    border-color:
+        rgba(
+            185,
+            28,
+            28,
+            0.25
+        );
+
+    background:
+        transparent;
+
+    color:
+        #b91c1c;
+}
+
+
+.admin-loan-action.danger:hover:not(:disabled) {
+    background:
+        rgba(
+            185,
+            28,
+            28,
+            0.08
+        );
+}
+
+
+.admin-loan-action.success {
+    background:
+        #15803d;
+
+    color:
+        #ffffff;
+}
+
+
+.admin-loan-action.success:hover:not(:disabled) {
+    background:
+        #166534;
+}
+
+
+.admin-loan-action.view {
+    border-color:
+        var(--border-color);
+
+    background:
+        transparent;
+
+    color:
+        var(--text-primary);
+}
+
+
+.admin-loan-action.view:hover:not(:disabled) {
+    border-color:
+        var(--red);
+
+    color:
+        var(--red);
+}
+
+
+.admin-loan-action:disabled {
+    opacity: 0.55;
+
+    cursor:
+        not-allowed;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.admin-loans-empty {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    min-height: 300px;
+
+    padding: 40px;
+
+    text-align: center;
+}
+
+
+.admin-loans-empty-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 48px;
+
+    height: 48px;
+
+    margin-bottom: 14px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            177,
+            18,
+            38,
+            0.08
+        );
+
+    color:
+        var(--red);
+
+    font-size: 22px;
+
+    font-weight: 700;
+}
+
+
+.admin-loans-empty h3 {
+    margin:
+        0
+        0
+        7px;
+
+    color:
+        var(--text-primary);
+
+    font-size: 16px;
+}
+
+
+.admin-loans-empty p {
+    margin: 0;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 13px;
+}
+
+
+.admin-loans-spinner {
+    width: 34px;
+
+    height: 34px;
+
+    margin-bottom: 14px;
+
+    border:
+        3px solid
+        var(--border-color);
+
+    border-top-color:
+        var(--red);
+
+    border-radius: 50%;
+
+    animation:
+        adminLoansSpin
+        0.8s linear infinite;
+}
+
+
+@keyframes adminLoansSpin {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+
+}
+
+
+/* =========================================
+   MODAL OVERLAY
+========================================= */
+
+.admin-loans-modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 24px;
+
+    background:
+        rgba(
+            0,
+            0,
+            0,
+            0.58
+        );
+
+    backdrop-filter:
+        blur(4px);
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+.admin-loans-modal {
+    width: min(
+        620px,
+        100%
+    );
+
+    max-height:
+        calc(
+            100vh - 48px
+        );
+
+    overflow-y: auto;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 14px;
+
+    background:
+        var(--surface);
+
+    box-shadow:
+        0
+        24px
+        70px
+        rgba(
+            0,
+            0,
+            0,
+            0.25
+        );
+}
+
+
+.admin-loans-modal-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding:
+        22px
+        24px;
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+
+.admin-loans-modal-header span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+        var(--red);
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing:
+        0.08em;
+
+    text-transform:
+        uppercase;
+}
+
+
+html.dark
+.admin-loans-modal-header span {
+    color:
+        var(--red-light);
+}
+
+
+.admin-loans-modal-header h2 {
+    margin: 0;
+
+    color:
+        var(--text-primary);
+
+    font-size: 21px;
+}
+
+
+.admin-loans-modal-close {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 34px;
+
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background:
+        rgba(
+            127,
+            127,
+            127,
+            0.08
+        );
+
+    color:
+        var(--text-secondary);
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+.admin-loans-modal-close:hover:not(:disabled) {
+    background:
+        rgba(
+            177,
+            18,
+            38,
+            0.1
+        );
+
+    color:
+        var(--red);
+}
+
+
+.admin-loans-modal-close:disabled {
+    opacity: 0.5;
+
+    cursor:
+        not-allowed;
+}
+
+
+/* =========================================
+   MODAL BODY
+========================================= */
+
+.admin-loans-modal-body {
+    padding: 24px;
+}
+
+
+/* =========================================
+   CUSTOMER CARD
+========================================= */
+
+.admin-loans-customer-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 22px;
+
+    padding: 15px;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 10px;
+
+    background:
+        rgba(
+            127,
+            127,
+            127,
+            0.035
+        );
+}
+
+
+.admin-loans-customer-avatar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 44px;
+
+    height: 44px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        var(--red);
+
+    color:
+        #ffffff;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+
+.admin-loans-customer-card > div:last-child {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.admin-loans-customer-card strong {
+    color:
+        var(--text-primary);
+
+    font-size: 14px;
+}
+
+
+.admin-loans-customer-card span {
+    color:
+        var(--text-secondary);
+
+    font-size: 12px;
+}
+
+
+.admin-loans-customer-card small {
+    color:
+        var(--red);
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   DETAIL GRID
+========================================= */
+
+.admin-loans-detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 1px;
+
+    margin-bottom: 20px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 9px;
+}
+
+
+.admin-loans-detail-grid > div {
+    min-height: 72px;
+
+    padding: 14px;
+
+    background:
+        var(--surface);
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+
+.admin-loans-detail-grid > div:nth-last-child(-n + 2) {
+    border-bottom: none;
+}
+
+
+.admin-loans-detail-grid span,
+.admin-loans-purpose > span,
+.admin-loans-existing-details span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.admin-loans-detail-grid strong {
+    color:
+        var(--text-primary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   PURPOSE
+========================================= */
+
+.admin-loans-purpose {
+    margin-bottom: 22px;
+
+    padding: 15px;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 9px;
+}
+
+
+.admin-loans-purpose p {
+    margin: 0;
+
+    color:
+        var(--text-primary);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.admin-loans-form {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+
+.admin-loans-form-field {
+    min-width: 0;
+}
+
+
+.admin-loans-form-field label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--text-primary);
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.admin-loans-input-wrap {
+    display: flex;
+
+    align-items: center;
+
+    min-height: 44px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 7px;
+
+    background:
+        var(--page-bg);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.admin-loans-input-wrap:focus-within {
+    border-color:
+        var(--red);
+
+    box-shadow:
+        0
+        0
+        0
+        2px
+        rgba(
+            177,
+            18,
+            38,
+            0.1
+        );
+}
+
+
+.admin-loans-input-wrap span {
+    padding:
+        0
+        10px;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+.admin-loans-input-wrap input {
+    width: 100%;
+
+    min-width: 0;
+
+    height: 42px;
+
+    padding:
+        0
+        10px;
+
+    border: none;
+
+    outline: none;
+
+    background:
+        transparent;
+
+    color:
+        var(--text-primary);
+
+    font-family:
+        inherit;
+
+    font-size: 13px;
+}
+
+
+.admin-loans-input-wrap input::placeholder {
+    color:
+        var(--text-secondary);
+
+    opacity: 0.65;
+}
+
+
+.admin-loans-form-field small {
+    display: block;
+
+    margin-top: 5px;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================
+   MODAL ERROR
+========================================= */
+
+.admin-loans-modal-error {
+    margin-bottom: 16px;
+
+    padding:
+        11px
+        13px;
+
+    border:
+        1px solid
+        rgba(
+            185,
+            28,
+            28,
+            0.25
+        );
+
+    border-radius: 7px;
+
+    background:
+        rgba(
+            185,
+            28,
+            28,
+            0.08
+        );
+
+    color:
+        #b91c1c;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+html.dark
+.admin-loans-modal-error {
+    color:
+        #f87171;
+}
+
+
+/* =========================================
+   MODAL ACTIONS
+========================================= */
+
+.admin-loans-modal-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding-top: 4px;
+}
+
+
+.admin-loan-modal-reject,
+.admin-loan-modal-approve {
+    min-height: 44px;
+
+    padding:
+        0
+        18px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.admin-loan-modal-reject {
+    border:
+        1px solid
+        rgba(
+            185,
+            28,
+            28,
+            0.3
+        );
+
+    background:
+        transparent;
+
+    color:
+        #b91c1c;
+}
+
+
+.admin-loan-modal-reject:hover:not(:disabled) {
+    background:
+        rgba(
+            185,
+            28,
+            28,
+            0.08
+        );
+}
+
+
+.admin-loan-modal-approve {
+    border:
+        1px solid
+        var(--red);
+
+    background:
+        var(--red);
+
+    color:
+        #ffffff;
+}
+
+
+.admin-loan-modal-approve:hover:not(:disabled) {
+    background:
+        var(--red-dark);
+
+    border-color:
+        var(--red-dark);
+}
+
+
+.admin-loan-modal-reject:disabled,
+.admin-loan-modal-approve:disabled {
+    opacity: 0.55;
+
+    cursor:
+        not-allowed;
+}
+
+
+/* =========================================
+   EXISTING LOAN DETAILS
+========================================= */
+
+.admin-loans-existing-details {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 1px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border-color);
+
+    border-radius: 9px;
+}
+
+
+.admin-loans-existing-details > div {
+    min-height: 78px;
+
+    padding: 14px;
+
+    background:
+        var(--surface);
+
+    border-bottom:
+        1px solid
+        var(--border-color);
+}
+
+
+.admin-loans-existing-details > div:nth-last-child(-n + 2) {
+    border-bottom: none;
+}
+
+
+.admin-loans-existing-details strong {
+    color:
+        var(--text-primary);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+
+    .admin-loans-summary {
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 760px) {
+
+    .admin-loans-content {
+        width:
+            calc(
+                100% - 28px
+            );
+
+        padding:
+            24px
+            0
+            40px;
+    }
+
+
+    .admin-loans-header {
+        align-items: stretch;
+
+        flex-direction: column;
+
+        gap: 18px;
+    }
+
+
+    .admin-loans-header h1 {
+        font-size: 29px;
+    }
+
+
+    .admin-loans-header p {
+        font-size: 14px;
+    }
+
+
+    .admin-loans-refresh {
+        width: 100%;
+    }
+
+
+    .admin-loans-summary {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 10px;
+    }
+
+
+    .admin-loans-summary-card {
+        min-height: 92px;
+
+        padding: 14px;
+    }
+
+
+    .admin-loans-summary-card strong {
+        font-size: 23px;
+    }
+
+
+    .admin-loans-table-header {
+        padding:
+            18px;
+    }
+
+
+    .admin-loans-table-header h2 {
+        font-size: 16px;
+    }
+
+
+    .admin-loans-modal-overlay {
+        align-items: flex-start;
+
+        padding:
+            12px;
+    }
+
+
+    .admin-loans-modal {
+        max-height:
+            calc(
+                100vh - 24px
+            );
+
+        border-radius: 11px;
+    }
+
+
+    .admin-loans-modal-header {
+        padding:
+            18px;
+    }
+
+
+    .admin-loans-modal-body {
+        padding:
+            18px;
+    }
+
+
+    .admin-loans-form {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .admin-loans-detail-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .admin-loans-detail-grid > div:nth-last-child(-n + 2) {
+        border-bottom:
+            1px solid
+            var(--border-color);
+    }
+
+
+    .admin-loans-detail-grid > div:last-child {
+        border-bottom: none;
+    }
+
+
+    .admin-loans-existing-details {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .admin-loans-existing-details > div:nth-last-child(-n + 2) {
+        border-bottom:
+            1px solid
+            var(--border-color);
+    }
+
+
+    .admin-loans-existing-details > div:last-child {
+        border-bottom: none;
+    }
+
+
+    .admin-loans-modal-actions {
+        flex-direction: column-reverse;
+    }
+
+
+    .admin-loan-modal-reject,
+    .admin-loan-modal-approve {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 430px) {
+
+    .admin-loans-content {
+        width:
+            calc(
+                100% - 20px
+            );
+
+        padding-top:
+            18px;
+    }
+
+
+    .admin-loans-summary {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+
+    .admin-loans-summary-card span {
+        font-size: 10px;
+    }
+
+
+    .admin-loans-summary-card strong {
+        font-size: 21px;
+    }
+
+
+    .admin-loans-modal-header h2 {
+        font-size: 18px;
+    }
+
+}

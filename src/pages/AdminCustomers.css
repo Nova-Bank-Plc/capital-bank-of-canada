@@ -1,0 +1,1384 @@
+/* =========================================
+   CAPITAL BANK
+   ADMIN CUSTOMERS
+========================================= */
+
+.admin-customers-page {
+    min-height: 100vh;
+    background: #f5f6f8;
+    color: var(--navy);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-customers-header {
+    min-height: 72px;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.admin-customers-header-left {
+    display: flex;
+    align-items: center;
+}
+
+.admin-customers-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--navy);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-customers-back:hover {
+    color: #c8102e;
+    transform: translateX(-2px);
+}
+
+.admin-customers-header-title {
+    text-align: right;
+}
+
+.admin-customers-header-title span {
+    display: block;
+    margin-bottom: 2px;
+    color: #c8102e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.admin-customers-header-title h1 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.admin-customers-content {
+    width: min(
+        1180px,
+        calc(100% - 48px)
+    );
+    margin: 0 auto;
+    padding: 48px 0 72px;
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.admin-customers-intro {
+    margin-bottom: 28px;
+}
+
+.admin-section-label {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #c8102e;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+}
+
+.admin-customers-intro h2 {
+    margin: 0 0 8px;
+    color: var(--navy);
+    font-size: 30px;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+}
+
+.admin-customers-intro p {
+    max-width: 650px;
+    margin: 0;
+    color: #687385;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.admin-customer-search {
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 8px 8px 20px;
+    background: #ffffff;
+    border: 1px solid #dfe3e8;
+    border-radius: 12px;
+    box-shadow:
+        0 4px 18px rgba(16, 24, 40, 0.05);
+    margin-bottom: 28px;
+}
+
+.admin-customer-search > svg {
+    flex: 0 0 auto;
+    color: #7b8492;
+}
+
+.admin-customer-search input {
+    min-width: 0;
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--navy);
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.admin-customer-search input::placeholder {
+    color: #9aa2ad;
+}
+
+.admin-customer-search button {
+    flex: 0 0 auto;
+    min-width: 110px;
+    min-height: 46px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 8px;
+    background: #c8102e;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-customer-search button:hover:not(:disabled) {
+    background: #a80d26;
+    transform: translateY(-1px);
+    box-shadow:
+        0 6px 14px rgba(200, 16, 46, 0.2);
+}
+
+.admin-customer-search button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.admin-customers-error {
+    padding: 14px 16px;
+    margin-bottom: 24px;
+    border: 1px solid #f1b8c2;
+    border-radius: 8px;
+    background: #fff3f5;
+    color: #a80d26;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.admin-customers-empty {
+    padding: 56px 24px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px solid #e2e6eb;
+    border-radius: 14px;
+}
+
+.admin-customers-empty svg {
+    margin-bottom: 12px;
+    color: #a3aab5;
+}
+
+.admin-customers-empty h3 {
+    margin: 0 0 6px;
+    color: var(--navy);
+    font-size: 18px;
+}
+
+.admin-customers-empty p {
+    margin: 0;
+    color: #7a8491;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   RESULTS
+========================================= */
+
+.admin-customer-results {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.admin-results-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2px;
+}
+
+.admin-results-heading h2 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.admin-results-heading span {
+    color: #788290;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   CUSTOMER CARD
+========================================= */
+
+.admin-customer-card {
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e1e5ea;
+    border-radius: 14px;
+    box-shadow:
+        0 5px 20px rgba(16, 24, 40, 0.045);
+}
+
+
+/* =========================================
+   CUSTOMER MAIN
+========================================= */
+
+.admin-customer-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.admin-customer-avatar {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fbecef;
+    color: #c8102e;
+}
+
+.admin-customer-identity h3 {
+    margin: 0 0 4px;
+    color: var(--navy);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.admin-customer-identity span {
+    color: #697483;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   CUSTOMER DETAILS
+========================================= */
+
+.admin-customer-details {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    padding: 22px 24px;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.admin-customer-details div {
+    min-width: 0;
+}
+
+.admin-customer-details span {
+    display: block;
+    margin-bottom: 5px;
+    color: #89919d;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.admin-customer-details strong {
+    display: block;
+    overflow: hidden;
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   ACCOUNTS
+========================================= */
+
+.admin-customer-accounts {
+    padding: 22px 24px 24px;
+}
+
+.admin-accounts-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.admin-accounts-heading > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-accounts-heading svg {
+    color: #c8102e;
+}
+
+.admin-accounts-heading h4 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.admin-accounts-heading > span {
+    min-width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f1f3f5;
+    color: #596474;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-no-accounts {
+    margin: 0;
+    padding: 16px;
+    border-radius: 8px;
+    background: #f7f8fa;
+    color: #7a8491;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   ACCOUNT ROW
+========================================= */
+
+.admin-account-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.admin-account-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px;
+    border: 1px solid #e5e8ec;
+    border-radius: 10px;
+    background: #fafbfc;
+}
+
+.admin-account-row > div:first-child {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.admin-account-row strong {
+    color: var(--navy);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.admin-account-row span {
+    color: #7d8794;
+    font-size: 12px;
+}
+
+
+/* =========================================
+   ACCOUNT BALANCE
+========================================= */
+
+.admin-account-balance {
+    flex: 0 0 auto;
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.admin-account-balance strong {
+    color: var(--navy);
+    font-size: 15px;
+}
+
+.admin-account-balance span {
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #f0f1f3;
+    color: #68717e;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.admin-account-balance span.active {
+    background: #eaf7ef;
+    color: #237a45;
+}
+
+
+/* =========================================
+   ACCOUNT ACTIONS
+========================================= */
+
+.admin-account-actions {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* =========================================
+   CREDIT ACCOUNT BUTTON
+========================================= */
+
+.admin-credit-button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid #c8102e;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #c8102e;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-credit-button:hover:not(:disabled) {
+    background: #c8102e;
+    border-color: #c8102e;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow:
+        0 5px 12px rgba(200, 16, 46, 0.18);
+}
+
+.admin-credit-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   DEBIT ACCOUNT BUTTON
+========================================= */
+
+.admin-debit-button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 0 14px;
+    border: 1px solid #1f2937;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #1f2937;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-debit-button:hover:not(:disabled) {
+    background: #1f2937;
+    border-color: #1f2937;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow:
+        0 5px 12px rgba(15, 23, 42, 0.16);
+}
+
+.admin-debit-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   CREDIT MODAL OVERLAY
+========================================= */
+
+.admin-credit-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(3px);
+}
+
+
+/* =========================================
+   CREDIT MODAL
+========================================= */
+
+.admin-credit-modal {
+    width: min(
+        100%,
+        500px
+    );
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e1e5ea;
+    border-radius: 16px;
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.2);
+}
+
+
+/* =========================================
+   CREDIT MODAL HEADER
+========================================= */
+
+.admin-credit-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.admin-credit-modal-header span {
+    display: block;
+    margin-bottom: 6px;
+    color: #c8102e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.admin-credit-modal-header h2 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.admin-credit-close {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #596474;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.admin-credit-close:hover {
+    background: #fbecef;
+    color: #c8102e;
+}
+
+
+/* =========================================
+   CREDIT ACCOUNT SUMMARY
+========================================= */
+
+.admin-credit-account-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 22px;
+    border: 1px solid #e7eaee;
+    border-radius: 10px;
+    background: #f8f9fb;
+}
+
+.admin-credit-account-summary div {
+    min-width: 0;
+}
+
+.admin-credit-account-summary span {
+    display: block;
+    margin-bottom: 5px;
+    color: #89919d;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.admin-credit-account-summary strong {
+    display: block;
+    overflow: hidden;
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-credit-account-summary .admin-credit-current-balance {
+    grid-column: 1 / -1;
+    padding-top: 12px;
+    border-top: 1px solid #e3e6ea;
+}
+
+.admin-credit-current-balance strong {
+    color: #237a45;
+    font-size: 18px;
+}
+
+
+/* =========================================
+   CREDIT FORM
+========================================= */
+
+.admin-credit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.admin-credit-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.admin-credit-form label > span {
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-credit-form input,
+.admin-credit-form select {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid #d8dde3;
+    border-radius: 8px;
+    outline: 0;
+    background: #ffffff;
+    color: var(--navy);
+    font-family: inherit;
+    font-size: 14px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-credit-form input:focus,
+.admin-credit-form select:focus {
+    border-color: #c8102e;
+    box-shadow:
+        0 0 0 3px rgba(200, 16, 46, 0.08);
+}
+
+.admin-credit-form input::placeholder {
+    color: #a0a7b1;
+}
+
+.admin-credit-amount input {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   CREDIT ERROR / SUCCESS
+========================================= */
+
+.admin-credit-error {
+    padding: 12px 14px;
+    border: 1px solid #f1b8c2;
+    border-radius: 8px;
+    background: #fff3f5;
+    color: #a80d26;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.admin-credit-success {
+    padding: 12px 14px;
+    border: 1px solid #b8dfc7;
+    border-radius: 8px;
+    background: #eefaf2;
+    color: #237a45;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   CREDIT ACTIONS
+========================================= */
+
+.admin-credit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.admin-credit-cancel,
+.admin-credit-submit {
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-credit-cancel {
+    border: 1px solid #d8dde3;
+    background: #ffffff;
+    color: #596474;
+}
+
+.admin-credit-cancel:hover:not(:disabled) {
+    background: #f5f6f8;
+    border-color: #c7ccd3;
+}
+
+.admin-credit-submit {
+    border: 1px solid #c8102e;
+    background: #c8102e;
+    color: #ffffff;
+}
+
+.admin-credit-submit:hover:not(:disabled) {
+    background: #a80d26;
+    border-color: #a80d26;
+    transform: translateY(-1px);
+    box-shadow:
+        0 6px 14px rgba(200, 16, 46, 0.2);
+}
+
+.admin-credit-submit:disabled,
+.admin-credit-cancel:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   DEBIT MODAL OVERLAY
+========================================= */
+
+.admin-debit-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(3px);
+}
+
+
+/* =========================================
+   DEBIT MODAL
+========================================= */
+
+.admin-debit-modal {
+    width: min(
+        100%,
+        500px
+    );
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e1e5ea;
+    border-radius: 16px;
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.2);
+}
+
+
+/* =========================================
+   DEBIT MODAL HEADER
+========================================= */
+
+.admin-debit-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 22px;
+}
+
+.admin-debit-modal-header span {
+    display: block;
+    margin-bottom: 6px;
+    color: #596474;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.admin-debit-modal-header h2 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.admin-debit-close {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #596474;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.admin-debit-close:hover {
+    background: #eef0f3;
+    color: var(--navy);
+}
+
+
+/* =========================================
+   DEBIT ACCOUNT SUMMARY
+========================================= */
+
+.admin-debit-account-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px;
+    margin-bottom: 22px;
+    border: 1px solid #e7eaee;
+    border-radius: 10px;
+    background: #f8f9fb;
+}
+
+.admin-debit-account-summary div {
+    min-width: 0;
+}
+
+.admin-debit-account-summary span {
+    display: block;
+    margin-bottom: 5px;
+    color: #89919d;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.admin-debit-account-summary strong {
+    display: block;
+    overflow: hidden;
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-debit-account-summary div:last-child {
+    grid-column: 1 / -1;
+    padding-top: 12px;
+    border-top: 1px solid #e3e6ea;
+}
+
+.admin-debit-account-summary div:last-child strong {
+    color: var(--navy);
+    font-size: 18px;
+}
+
+
+/* =========================================
+   DEBIT FORM
+========================================= */
+
+.admin-debit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.admin-debit-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    color: var(--navy);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-debit-form input,
+.admin-debit-form select {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 13px;
+    border: 1px solid #d8dde3;
+    border-radius: 8px;
+    outline: 0;
+    background: #ffffff;
+    color: var(--navy);
+    font-family: inherit;
+    font-size: 14px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-debit-form input:focus,
+.admin-debit-form select:focus {
+    border-color: #596474;
+    box-shadow:
+        0 0 0 3px rgba(15, 23, 42, 0.08);
+}
+
+.admin-debit-form input::placeholder {
+    color: #a0a7b1;
+}
+
+.admin-debit-amount {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    overflow: hidden;
+    border: 1px solid #d8dde3;
+    border-radius: 8px;
+    background: #ffffff;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-debit-amount:focus-within {
+    border-color: #596474;
+    box-shadow:
+        0 0 0 3px rgba(15, 23, 42, 0.08);
+}
+
+.admin-debit-amount > span {
+    padding: 0 13px;
+    color: #68717e;
+    font-size: 12px;
+    font-weight: 800;
+    border-right: 1px solid #e1e5ea;
+}
+
+.admin-debit-amount input {
+    min-height: 44px;
+    border: 0;
+    box-shadow: none;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.admin-debit-amount input:focus {
+    border: 0;
+    box-shadow: none;
+}
+
+
+/* =========================================
+   DEBIT ERROR / SUCCESS
+========================================= */
+
+.admin-debit-error {
+    padding: 12px 14px;
+    border: 1px solid #f1b8c2;
+    border-radius: 8px;
+    background: #fff3f5;
+    color: #a80d26;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.admin-debit-success {
+    padding: 12px 14px;
+    border: 1px solid #b8dfc7;
+    border-radius: 8px;
+    background: #eefaf2;
+    color: #237a45;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   DEBIT ACTIONS
+========================================= */
+
+.admin-debit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.admin-debit-cancel,
+.admin-debit-submit {
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-debit-cancel {
+    border: 1px solid #d8dde3;
+    background: #ffffff;
+    color: #596474;
+}
+
+.admin-debit-cancel:hover:not(:disabled) {
+    background: #f5f6f8;
+    border-color: #c7ccd3;
+}
+
+.admin-debit-submit {
+    border: 1px solid #1f2937;
+    background: #1f2937;
+    color: #ffffff;
+}
+
+.admin-debit-submit:hover:not(:disabled) {
+    background: #111827;
+    border-color: #111827;
+    transform: translateY(-1px);
+    box-shadow:
+        0 6px 14px rgba(15, 23, 42, 0.2);
+}
+
+.admin-debit-submit:disabled,
+.admin-debit-cancel:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 800px) {
+
+    .admin-customers-header {
+        padding: 0 20px;
+    }
+
+    .admin-customers-content {
+        width: min(
+            100% - 32px,
+            1180px
+        );
+
+        padding-top: 36px;
+    }
+
+    .admin-customer-details {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .admin-account-row {
+        flex-wrap: wrap;
+    }
+
+    .admin-account-actions {
+        margin-left: auto;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .admin-customers-header {
+        min-height: 64px;
+    }
+
+    .admin-customers-header-title h1 {
+        font-size: 18px;
+    }
+
+    .admin-customers-header-title span {
+        font-size: 8px;
+    }
+
+    .admin-customers-back span {
+        display: none;
+    }
+
+    .admin-customers-content {
+        width: calc(100% - 24px);
+        padding:
+            28px 0
+            48px;
+    }
+
+    .admin-customers-intro h2 {
+        font-size: 25px;
+    }
+
+    .admin-customers-intro p {
+        font-size: 14px;
+    }
+
+    .admin-customer-search {
+        min-height: 58px;
+        padding:
+            7px 7px 7px 14px;
+        gap: 9px;
+    }
+
+    .admin-customer-search input {
+        font-size: 13px;
+    }
+
+    .admin-customer-search button {
+        min-width: 82px;
+        min-height: 42px;
+        padding: 0 13px;
+        font-size: 13px;
+    }
+
+    .admin-customer-main {
+        padding: 20px;
+    }
+
+    .admin-customer-details {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    .admin-customer-accounts {
+        padding: 20px;
+    }
+
+    .admin-account-row {
+        align-items: flex-start;
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .admin-account-balance {
+        align-items: flex-end;
+    }
+
+    .admin-account-balance strong {
+        font-size: 14px;
+    }
+
+    .admin-account-actions {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .admin-credit-button,
+    .admin-debit-button {
+        flex: 1;
+    }
+
+    .admin-credit-modal,
+    .admin-debit-modal {
+        padding: 22px;
+    }
+
+    .admin-credit-modal-header h2,
+    .admin-debit-modal-header h2 {
+        font-size: 20px;
+    }
+
+    .admin-credit-overlay,
+    .admin-debit-overlay {
+        padding: 12px;
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    .admin-customer-search {
+        align-items: stretch;
+        flex-wrap: wrap;
+        padding: 10px 10px 10px 14px;
+    }
+
+    .admin-customer-search > svg {
+        margin-top: 11px;
+    }
+
+    .admin-customer-search input {
+        width: calc(100% - 40px);
+        flex: 1 1 calc(100% - 40px);
+    }
+
+    .admin-customer-search button {
+        width: 100%;
+        flex: 1 0 100%;
+    }
+
+    .admin-account-row {
+        flex-direction: column;
+    }
+
+    .admin-account-balance {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .admin-account-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .admin-credit-button,
+    .admin-debit-button {
+        width: 100%;
+    }
+
+    .admin-credit-account-summary,
+    .admin-debit-account-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-credit-account-summary .admin-credit-current-balance {
+        grid-column: auto;
+    }
+
+    .admin-debit-account-summary div:last-child {
+        grid-column: auto;
+    }
+
+    .admin-credit-actions,
+    .admin-debit-actions {
+        flex-direction: column-reverse;
+    }
+
+    .admin-credit-cancel,
+    .admin-credit-submit,
+    .admin-debit-cancel,
+    .admin-debit-submit {
+        width: 100%;
+    }
+
+}
+
+
+

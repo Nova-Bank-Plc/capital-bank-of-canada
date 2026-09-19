@@ -1,0 +1,239 @@
+/* =========================================
+   CAPITAL BANK
+   ADMINISTRATOR LOGIN
+========================================= */
+
+.admin-login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    background:
+        linear-gradient(
+            135deg,
+            #101923 0%,
+            #162131 50%,
+            #0d141d 100%
+        );
+    color: #162131;
+}
+
+
+/* =========================================
+   LOGIN CARD
+========================================= */
+
+.admin-login-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 42px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow:
+        0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+
+.admin-login-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 42px;
+}
+
+.admin-login-logo {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #c8102e;
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.admin-login-brand h1 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 750;
+}
+
+.admin-login-brand p {
+    margin: 4px 0 0;
+    color: #687383;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   HEADING
+========================================= */
+
+.admin-login-heading {
+    margin-bottom: 26px;
+}
+
+.admin-login-heading span {
+    display: block;
+    margin-bottom: 9px;
+    color: #c8102e;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+}
+
+.admin-login-heading h2 {
+    margin: 0;
+    color: #162131;
+    font-size: 28px;
+    line-height: 1.2;
+    font-weight: 750;
+}
+
+.admin-login-heading p {
+    margin: 10px 0 0;
+    color: #687383;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.admin-login-error {
+    margin-bottom: 20px;
+    padding: 12px 14px;
+    border: 1px solid #f0b7c0;
+    border-radius: 8px;
+    background: #fff3f5;
+    color: #a30d27;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.admin-login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-login-form label {
+    margin-bottom: 8px;
+    color: #273444;
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.admin-login-form input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    padding: 13px 14px;
+    border: 1px solid #d6dbe1;
+    border-radius: 8px;
+    outline: none;
+    background: #ffffff;
+    color: #162131;
+    font: inherit;
+    font-size: 14px;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-login-form input::placeholder {
+    color: #9aa3ae;
+}
+
+.admin-login-form input:focus {
+    border-color: #c8102e;
+    box-shadow:
+        0 0 0 3px rgba(200, 16, 46, 0.1);
+}
+
+
+/* =========================================
+   SUBMIT BUTTON
+========================================= */
+
+.admin-login-form button {
+    width: 100%;
+    margin-top: 4px;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 8px;
+    background: #162131;
+    color: #ffffff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-login-form button:hover:not(:disabled) {
+    background: #c8102e;
+    transform: translateY(-1px);
+}
+
+.admin-login-form button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   SECURITY NOTICE
+========================================= */
+
+.admin-login-security {
+    margin: 26px 0 0;
+    padding-top: 20px;
+    border-top: 1px solid #e8ebef;
+    color: #89929e;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 520px) {
+
+    .admin-login-page {
+        padding: 20px 14px;
+    }
+
+    .admin-login-card {
+        padding: 30px 22px;
+        border-radius: 12px;
+    }
+
+    .admin-login-brand {
+        margin-bottom: 34px;
+    }
+
+    .admin-login-heading h2 {
+        font-size: 24px;
+    }
+}

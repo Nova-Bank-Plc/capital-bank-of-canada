@@ -1,7 +1,6 @@
 import {
     createContext,
     useContext,
-    useEffect,
     useState,
     type ReactNode,
 } from "react";
@@ -14,7 +13,9 @@ interface User {
     lastName: string;
     email: string;
     phone?: string;
+    role: "customer" | "admin";
 }
+
 
 interface AuthContextType {
     user: User | null;
@@ -24,61 +25,73 @@ interface AuthContextType {
     logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(
-    undefined
-);
+
+const AuthContext =
+    createContext<AuthContextType | undefined>(
+        undefined
+    );
+
 
 interface AuthProviderProps {
     children: ReactNode;
 }
 
+
+function getStoredUser(): User | null {
+    const storedUser =
+        localStorage.getItem(
+            "capital-bank-user"
+        );
+
+    if (!storedUser) {
+        return null;
+    }
+
+    try {
+        return JSON.parse(storedUser) as User;
+    } catch (error) {
+        console.error(
+            "Unable to restore stored user:",
+            error
+        );
+
+        localStorage.removeItem(
+            "capital-bank-user"
+        );
+
+        return null;
+    }
+}
+
+
+function getStoredToken(): string | null {
+    return localStorage.getItem(
+        "capital-bank-token"
+    );
+}
+
+
 export function AuthProvider({
     children,
 }: AuthProviderProps) {
 
-    const [user, setUser] = useState<User | null>(null);
+    /*
+     * Restore authentication BEFORE the first render.
+     *
+     * This prevents protected routes from seeing
+     * token === null for one render after refresh.
+     */
 
-    const [token, setToken] = useState<string | null>(
-        null
-    );
+    const [token, setToken] =
+        useState<string | null>(
+            getStoredToken
+        );
 
 
-    useEffect(() => {
-
-        const storedToken =
-            localStorage.getItem("capital-bank-token");
-
-        const storedUser =
-            localStorage.getItem("capital-bank-user");
-
-        if (storedToken && storedUser) {
-
-            try {
-
-                const parsedUser: User =
-                    JSON.parse(storedUser);
-
-                setToken(storedToken);
-                setUser(parsedUser);
-
-            } catch (error) {
-
-                console.error(
-                    "Unable to restore login session:",
-                    error
-                );
-
-                localStorage.removeItem(
-                    "capital-bank-token"
-                );
-
-                localStorage.removeItem(
-                    "capital-bank-user"
-                );
-            }
-        }
-
-    }, []);
+    const [user, setUser] =
+        useState<User | null>(
+            getStoredUser
+        );
 
 
     const login = (
@@ -125,7 +138,8 @@ export function AuthProvider({
             value={{
                 user,
                 token,
-                isAuthenticated: Boolean(token),
+                isAuthenticated:
+                    Boolean(token),
                 login,
                 logout,
             }}
@@ -138,12 +152,13 @@ export function AuthProvider({
 
 export function useAuth() {
 
-    const context = useContext(AuthContext);
+    const context =
+        useContext(AuthContext);
 
     if (!context) {
 
         throw new Error(
-            "useAuth must be used inside an AuthProvider"
+            "useAuth must be used inside AuthProvider"
         );
     }
 

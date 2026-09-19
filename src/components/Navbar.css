@@ -1,5 +1,6 @@
 /* =========================================
-   CAPITAL BANK — NAVBAR
+   CAPITAL BANK OF CANADA
+   NAVBAR
 ========================================= */
 
 .navbar {
@@ -7,67 +8,65 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 9999;
+    background: transparent;
 }
 
 .navbar-container {
-    position: relative;
-    z-index: 1002;
-
-    width: min(
-        var(--container),
-        calc(100% - 64px)
-    );
-
-    min-height: 88px;
+    width: min(var(--container), calc(100% - 80px));
+    height: 88px;
     margin: 0 auto;
 
     display: flex;
     align-items: center;
-    gap: 40px;
+    justify-content: space-between;
 }
-
 
 /* =========================================
    LOGO
 ========================================= */
 
 .bank-logo {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
 
     color: var(--black);
-    flex-shrink: 0;
-
     text-decoration: none;
+
+    flex-shrink: 0;
 }
 
 .logo-mark {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
 
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background: var(--red);
     color: var(--white);
 
-    font-family: var(--font-heading);
-    font-size: 21px;
+    font-family: var(--font-display);
+    font-size: 22px;
     font-weight: 800;
+    line-height: 1;
+
+    border-radius: 50%;
 }
 
 .logo-text {
     display: flex;
     flex-direction: column;
 
-    font-family: var(--font-heading);
-    font-size: 14px;
+    font-family: var(--font-display);
+    font-size: 16px;
     font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: 0.08em;
 
-    letter-spacing: 2px;
-    line-height: 1;
+    color: var(--black);
 }
 
 .logo-text small {
@@ -75,12 +74,11 @@
 
     font-family: var(--font-body);
     font-size: 7px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.2em;
 
-    letter-spacing: 1.8px;
-    color: var(--grey);
+    color: var(--text-secondary);
 }
-
 
 /* =========================================
    DESKTOP NAVIGATION
@@ -89,21 +87,25 @@
 .main-navigation {
     display: flex;
     align-items: center;
-    gap: 34px;
+    gap: 36px;
+
     margin-left: auto;
+    margin-right: 44px;
 }
 
 .main-navigation a {
     position: relative;
 
-    color: var(--charcoal);
-
-    font-size: 13px;
-    font-weight: 500;
-
+    color: var(--black);
     text-decoration: none;
 
-    transition: color var(--transition);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+
+    transition:
+        color 0.25s ease,
+        opacity 0.25s ease;
 }
 
 .main-navigation a::after {
@@ -114,11 +116,11 @@
     bottom: -7px;
 
     width: 0;
-    height: 2px;
+    height: 1px;
 
     background: var(--red);
 
-    transition: width var(--transition);
+    transition: width 0.25s ease;
 }
 
 .main-navigation a:hover {
@@ -129,7 +131,6 @@
     width: 100%;
 }
 
-
 /* =========================================
    DESKTOP ACTIONS
 ========================================= */
@@ -137,17 +138,22 @@
 .navbar-actions {
     display: flex;
     align-items: center;
-    gap: 22px;
+    gap: 18px;
+
+    flex-shrink: 0;
 }
 
 .sign-in {
-    font-size: 13px;
-    font-weight: 600;
-
     color: var(--black);
     text-decoration: none;
 
-    transition: color var(--transition);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+
+    transition:
+        color 0.25s ease,
+        opacity 0.25s ease;
 }
 
 .sign-in:hover {
@@ -155,37 +161,48 @@
 }
 
 .open-account {
+    min-height: 44px;
+    padding: 0 18px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     gap: 12px;
-
-    padding: 12px 18px;
 
     background: var(--red);
     color: var(--white);
 
-    font-size: 12px;
-    font-weight: 600;
-
     text-decoration: none;
 
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+
+    border: 1px solid var(--red);
+
     transition:
-        background var(--transition),
-        transform var(--transition);
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
 }
 
 .open-account span {
-    font-size: 17px;
-    line-height: 0;
+    font-size: 16px;
+    line-height: 1;
+
+    transition: transform 0.25s ease;
 }
 
 .open-account:hover {
     background: var(--red-dark);
-    transform: translateY(-2px);
+    border-color: var(--red-dark);
+
+    transform: translateY(-1px);
 }
 
+.open-account:hover span {
+    transform: translateX(4px);
+}
 
 /* =========================================
    MOBILE MENU BUTTON
@@ -197,90 +214,42 @@
     width: 44px;
     height: 44px;
 
-    margin-left: auto;
     padding: 0;
 
-    border: 0;
-    background: transparent;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+
+    background: var(--red);
+    border: 1px solid var(--red);
 
     cursor: pointer;
 
     position: relative;
+    z-index: 1200;
 }
 
 .mobile-menu-button span {
-    position: absolute;
-    left: 11px;
+    display: block;
 
-    width: 22px;
-    height: 2px;
+    width: 20px;
+    height: 1.5px;
 
-    background: var(--black);
+    background: var(--white);
 
     transition:
-        transform 0.3s ease,
-        top 0.3s ease,
-        background 0.3s ease;
-}
-
-.mobile-menu-button span:first-child {
-    top: 17px;
-}
-
-.mobile-menu-button span:last-child {
-    top: 25px;
+        transform 0.25s ease,
+        opacity 0.25s ease;
 }
 
 .mobile-menu-button.active span:first-child {
-    top: 21px;
-
-    transform: rotate(45deg);
-
-    background: var(--white);
+    transform: translateY(3.75px) rotate(45deg);
 }
 
 .mobile-menu-button.active span:last-child {
-    top: 21px;
-
-    transform: rotate(-45deg);
-
-    background: var(--white);
+    transform: translateY(-3.75px) rotate(-45deg);
 }
-
-
-/* =========================================
-   MOBILE OVERLAY
-========================================= */
-
-.mobile-overlay {
-    position: fixed;
-    inset: 0;
-
-    z-index: 1000;
-
-    width: 100%;
-    height: 100%;
-
-    border: 0;
-    padding: 0;
-
-    background: rgba(0, 0, 0, 0.45);
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-
-    transition:
-        opacity 0.35s ease,
-        visibility 0.35s ease;
-}
-
-.mobile-overlay.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
 
 /* =========================================
    MOBILE MENU
@@ -292,29 +261,21 @@
     top: 0;
     right: 0;
 
-    z-index: 1001;
-
-    width: min(440px, 88vw);
+    width: min(420px, 88%);
     height: 100vh;
 
     background: var(--charcoal);
-    color: var(--white);
 
     transform: translateX(100%);
 
-    visibility: hidden;
+    transition: transform 0.4s ease;
 
-    transition:
-        transform 0.45s
-        cubic-bezier(
-            0.22,
-            1,
-            0.36,
-            1
-        ),
-        visibility 0.45s ease;
+    z-index: 1100;
 
     overflow-y: auto;
+    overflow-x: hidden;
+
+    visibility: hidden;
 }
 
 .mobile-menu.active {
@@ -322,23 +283,17 @@
     visibility: visible;
 }
 
-
-/* =========================================
-   MOBILE MENU INNER
-========================================= */
-
 .mobile-menu-inner {
     min-height: 100%;
 
     display: flex;
     flex-direction: column;
 
-    padding: 28px 28px 25px;
+    padding: 110px 34px 30px;
 }
 
-
 /* =========================================
-   MOBILE MENU HEADER
+   MOBILE MENU HEADING
 ========================================= */
 
 .mobile-menu-heading {
@@ -346,42 +301,48 @@
     align-items: center;
     justify-content: space-between;
 
-    padding-bottom: 28px;
+    padding-bottom: 22px;
 
-    border-bottom: 1px solid
-        rgba(255, 255, 255, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .mobile-menu-heading span {
-    color: var(--red-light);
+    color: var(--white);
 
-    font-size: 9px;
+    font-family: var(--font-body);
+    font-size: 10px;
     font-weight: 700;
 
-    letter-spacing: 2px;
+    letter-spacing: 0.2em;
 }
 
 .mobile-menu-heading button {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
 
-    display: grid;
-    place-items: center;
+    padding: 0;
 
-    border: 1px solid
-        rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
     color: var(--white);
 
-    font-size: 25px;
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 300;
+
     line-height: 1;
 
     cursor: pointer;
 
     transition:
-        background var(--transition),
-        border-color var(--transition);
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
 
 .mobile-menu-heading button:hover {
@@ -389,73 +350,66 @@
     border-color: var(--red);
 }
 
-
 /* =========================================
-   MOBILE LINKS
+   MOBILE NAVIGATION
 ========================================= */
 
 .mobile-navigation {
     display: flex;
     flex-direction: column;
 
-    padding: 25px 0;
+    margin-top: 18px;
 }
 
 .mobile-navigation a {
-    display: grid;
+    min-height: 70px;
 
-    grid-template-columns:
-        35px
-        1fr
-        auto;
-
+    display: flex;
     align-items: center;
 
-    gap: 12px;
-
-    padding: 17px 0;
-
-    border-bottom: 1px solid
-        rgba(255, 255, 255, 0.09);
-
     color: var(--white);
-
-    font-family: var(--font-heading);
-    font-size: 28px;
-    font-weight: 700;
-
-    letter-spacing: -1px;
-
     text-decoration: none;
 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    font-family: var(--font-body);
+    font-size: 19px;
+    font-weight: 500;
+
     transition:
-        color var(--transition),
-        padding-left var(--transition);
+        color 0.25s ease,
+        padding-left 0.25s ease;
+}
+
+.mobile-navigation a span {
+    width: 42px;
+
+    color: rgba(255, 255, 255, 0.4);
+
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.mobile-navigation a b {
+    margin-left: auto;
+
+    color: var(--red-light);
+
+    font-size: 18px;
+    font-weight: 400;
+
+    transition: transform 0.25s ease;
 }
 
 .mobile-navigation a:hover {
     color: var(--red-light);
-    padding-left: 7px;
+    padding-left: 6px;
 }
 
-.mobile-navigation a span {
-    color: #777;
-
-    font-family: var(--font-body);
-    font-size: 8px;
-    font-weight: 700;
-
-    letter-spacing: 1px;
+.mobile-navigation a:hover b {
+    transform: translateX(5px);
 }
-
-.mobile-navigation a b {
-    color: var(--red-light);
-
-    font-family: var(--font-body);
-    font-size: 20px;
-    font-weight: 400;
-}
-
 
 /* =========================================
    MOBILE ACTIONS
@@ -467,109 +421,270 @@
 
     gap: 12px;
 
-    margin-top: auto;
-    padding-top: 25px;
+    margin-top: 28px;
 }
 
-.mobile-sign-in,
-.mobile-open-account {
-    min-height: 52px;
+.mobile-sign-in {
+    min-height: 50px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 11px;
+    color: var(--white);
+    text-decoration: none;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    font-family: var(--font-body);
+    font-size: 12px;
     font-weight: 700;
 
-    text-decoration: none;
-}
-
-.mobile-sign-in {
-    border: 1px solid
-        rgba(255, 255, 255, 0.2);
-
-    color: var(--white);
-
     transition:
-        background var(--transition),
-        border-color var(--transition);
+        background 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .mobile-sign-in:hover {
-    border-color: var(--white);
-
-    background:
-        rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .mobile-open-account {
-    gap: 15px;
+    min-height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 
     background: var(--red);
     color: var(--white);
 
+    text-decoration: none;
+
+    border: 1px solid var(--red);
+
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+
     transition:
-        background var(--transition);
+        background 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.mobile-open-account span {
+    font-size: 16px;
+
+    transition: transform 0.25s ease;
 }
 
 .mobile-open-account:hover {
     background: var(--red-dark);
+    border-color: var(--red-dark);
 }
 
-.mobile-open-account span {
-    font-size: 17px;
+.mobile-open-account:hover span {
+    transform: translateX(4px);
 }
-
 
 /* =========================================
    MOBILE FOOTER
 ========================================= */
 
 .mobile-menu-footer {
+    margin-top: auto;
+    padding-top: 30px;
+
     display: flex;
+    align-items: center;
     justify-content: space-between;
 
-    gap: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 
-    margin-top: 30px;
-    padding-top: 20px;
+    color: rgba(255, 255, 255, 0.45);
 
-    border-top: 1px solid
-        rgba(255, 255, 255, 0.09);
-
-    color: #666;
-
-    font-size: 7px;
+    font-family: var(--font-body);
+    font-size: 8px;
     font-weight: 700;
 
-    letter-spacing: 1.5px;
+    letter-spacing: 0.14em;
 }
 
-.mobile-menu-footer span:last-child {
-    color: var(--red-light);
+/* =========================================
+   MOBILE OVERLAY
+========================================= */
+
+.mobile-overlay {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    padding: 0;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    border: 0;
+
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    z-index: 1050;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+.mobile-overlay.active {
+    display: block;
+
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =========================================
+   LANGUAGE SELECTOR
+========================================= */
+
+.language-selector {
+    position: relative;
+    z-index: 1200;
+
+    display: flex !important;
+    align-items: center;
+    gap: 7px;
+
+    width: 145px !important;
+    min-width: 145px !important;
+
+    height: 38px !important;
+    min-height: 38px !important;
+
+    padding: 0 10px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border-color);
+
+    background: var(--white);
+    color: var(--black);
+
+    flex-shrink: 0;
+}
+
+.language-icon {
+    display: inline-flex !important;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 14px;
+    min-width: 14px;
+
+    color: var(--red);
+
+    font-size: 12px;
+    line-height: 1;
+
+    flex-shrink: 0;
 }
 
 
 /* =========================================
-   TABLET
+   CUSTOM LANGUAGE SELECT
 ========================================= */
 
-@media (max-width: 900px) {
+.custom-language-select {
+    display: block !important;
 
-    .navbar-container {
-        width: calc(100% - 40px);
-        min-height: 80px;
-    }
+    width: 105px !important;
+    min-width: 105px !important;
 
-    .main-navigation,
-    .navbar-actions {
-        display: none;
-    }
+    height: 30px !important;
 
-    .mobile-menu-button {
-        display: block;
-    }
+    margin: 0;
+    padding: 0 6px;
+
+    box-sizing: border-box;
+
+    border: 0;
+    outline: none;
+
+    background: var(--white);
+    color: var(--black);
+
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    appearance: auto;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================
+   GOOGLE TRANSLATE ENGINE
+========================================= */
+
+.google-translate-engine {
+    position: absolute !important;
+
+    left: -9999px !important;
+    top: -9999px !important;
+
+    width: 1px !important;
+    height: 1px !important;
+
+    overflow: hidden !important;
+
+    opacity: 0 !important;
+
+    pointer-events: none !important;
+}
+
+
+/* =========================================
+   GOOGLE TRANSLATE BANNER
+========================================= */
+
+.goog-te-banner-frame.skiptranslate {
+    display: none !important;
+}
+
+body {
+    top: 0 !important;
+}
+
+.goog-te-gadget-icon {
+    display: none !important;
+}
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+html.dark .language-selector {
+    background: var(--surface);
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+html.dark .custom-language-select {
+    background: var(--surface);
+    color: var(--text-primary);
 }
 
 
@@ -577,41 +692,72 @@
    MOBILE
 ========================================= */
 
+@media (max-width: 760px) {
+
+    .navbar-container {
+        width: calc(100% - 40px);
+        height: 76px;
+    }
+
+    .main-navigation {
+        display: none;
+    }
+
+    .navbar-actions {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        display: flex;
+    }
+
+    .mobile-menu {
+        width: min(420px, 88%);
+    }
+
+    .mobile-overlay {
+        display: block;
+    }
+
+}
+
+
+/* =========================================
+   TABLET / SMALLER PHONES
+========================================= */
+
 @media (max-width: 600px) {
 
     .navbar-container {
         width: calc(100% - 32px);
-        min-height: 72px;
+        height: 72px;
     }
 
     .logo-mark {
-        width: 34px;
-        height: 34px;
+        width: 38px;
+        height: 38px;
 
-        font-size: 19px;
+        font-size: 20px;
     }
 
     .logo-text {
-        font-size: 12px;
-        letter-spacing: 1.7px;
+        font-size: 14px;
     }
 
     .logo-text small {
         font-size: 6px;
-        letter-spacing: 1.4px;
-    }
-
-    .mobile-menu {
-        width: 100%;
     }
 
     .mobile-menu-inner {
-        padding: 24px 20px 22px;
+        padding: 96px 26px 26px;
     }
 
     .mobile-navigation a {
-        font-size: 25px;
+        min-height: 64px;
+
+        font-size: 17px;
     }
+
 }
 
 
@@ -625,21 +771,74 @@
         width: calc(100% - 24px);
     }
 
+    .bank-logo {
+        gap: 9px;
+    }
+
     .logo-mark {
-        width: 32px;
-        height: 32px;
+        width: 35px;
+        height: 35px;
+
+        font-size: 18px;
     }
 
     .logo-text {
-        font-size: 11px;
+        font-size: 12px;
     }
 
-    .mobile-navigation a {
-        font-size: 23px;
+    .logo-text small {
+        margin-top: 4px;
+
+        font-size: 5px;
+        letter-spacing: 0.16em;
     }
 
     .mobile-menu-inner {
-        padding-left: 18px;
-        padding-right: 18px;
+        padding: 90px 20px 22px;
     }
+
+    .mobile-navigation a {
+        min-height: 60px;
+
+        font-size: 16px;
+    }
+
+}
+
+.mobile-menu-actions .language-selector {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    height: 52px !important;
+    min-height: 52px !important;
+
+    justify-content: center;
+
+    margin-bottom: 4px;
+
+    padding: 0 14px;
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--white);
+}
+
+.mobile-menu-actions .language-icon {
+    color: var(--red-light);
+}
+
+.mobile-menu-actions .custom-language-select {
+    width: 120px !important;
+    min-width: 120px !important;
+
+    background: transparent;
+    color: var(--white);
+
+    font-size: 12px;
+}
+
+.mobile-menu-actions .custom-language-select option {
+    background: var(--charcoal);
+    color: var(--white);
 }

@@ -18,14 +18,17 @@ export interface ITransaction
 
     amount: number;
 
-    direction: "credit" | "debit";
+    direction:
+        | "credit"
+        | "debit";
 
     status: string;
+
+    source: string;
 
     createdAt: Date;
 
     updatedAt: Date;
-
 }
 
 
@@ -34,90 +37,69 @@ const transactionSchema =
         {
 
             userId: {
-
-                type: Schema.Types.ObjectId,
-
+                type:
+                    Schema.Types.ObjectId,
                 ref: "User",
-
                 required: true,
-
                 index: true,
-
             },
 
 
             accountId: {
-
-                type: Schema.Types.ObjectId,
-
+                type:
+                    Schema.Types.ObjectId,
                 ref: "Account",
-
                 required: true,
-
             },
 
 
             name: {
-
                 type: String,
-
                 required: true,
-
                 trim: true,
-
             },
 
 
             transactionType: {
-
                 type: String,
-
                 required: true,
-
                 trim: true,
-
             },
 
 
             amount: {
-
                 type: Number,
-
                 required: true,
-
             },
 
 
             direction: {
-
                 type: String,
-
                 enum: [
                     "credit",
                     "debit",
                 ],
-
                 required: true,
-
             },
 
 
             status: {
-
                 type: String,
-
                 default: "completed",
+            },
 
+
+            source: {
+                type: String,
+                required: true,
+                trim: true,
             },
 
         },
 
         {
-
             timestamps: true,
-
         }
-
     );
 
 

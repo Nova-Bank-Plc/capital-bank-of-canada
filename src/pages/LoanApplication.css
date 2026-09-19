@@ -1,553 +1,655 @@
 /* =========================================
-   CAPITAL BANK OF CANADA
-   LOAN APPLICATION
+CAPITAL BANK OF CANADA
+LOAN APPLICATION
 ========================================= */
 
 .loan-application-page {
-    min-height: 100vh;
-    background: #f5f6f8;
-    color: var(--navy);
+min-height: 100vh;
+background: #f5f6f8;
+color: var(--navy);
+transition:
+background-color 0.25s ease,
+color 0.25s ease;
 }
 
-
 /* =========================================
-   HEADER
+HEADER
 ========================================= */
 
 .loan-application-header {
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-    padding: 32px 6%;
+background: #ffffff;
+border-bottom: 1px solid #e5e7eb;
+padding: 32px 6%;
+transition:
+background-color 0.25s ease,
+border-color 0.25s ease;
 }
-
 
 .loan-application-header > div {
-    max-width: 900px;
-    margin: 28px auto 0;
+max-width: 900px;
+margin: 28px auto 0;
 }
-
 
 .loan-application-back {
-    display: inline-flex;
-    align-items: center;
-    color: var(--navy);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition:
-        color 0.2s ease;
+display: inline-flex;
+align-items: center;
+gap: 6px;
+color: var(--navy);
+text-decoration: none;
+font-size: 14px;
+font-weight: 600;
+transition:
+color 0.2s ease,
+opacity 0.2s ease;
 }
-
 
 .loan-application-back:hover {
-    color: #c8102e;
+color: #c8102e;
 }
-
 
 .loan-application-header h1 {
-    margin: 0 0 8px;
-    font-size: 34px;
-    line-height: 1.2;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+margin: 0 0 8px;
+color: var(--navy);
+font-size: 34px;
+line-height: 1.2;
+font-weight: 700;
+letter-spacing: -0.5px;
 }
-
 
 .loan-application-header p {
-    margin: 0;
-    color: #667085;
-    font-size: 15px;
-    line-height: 1.6;
+margin: 0;
+color: #667085;
+font-size: 15px;
+line-height: 1.6;
 }
 
-
 /* =========================================
-   MAIN CONTENT
+MAIN CONTENT
 ========================================= */
 
 .loan-application-content {
-    width: min(
-        1100px,
-        calc(100% - 40px)
-    );
-
-    margin: 0 auto;
-
-    padding: 40px 0 70px;
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 1fr)
-        320px;
-
-    gap: 28px;
-
-    align-items: start;
+width: min(1100px, calc(100% - 40px));
+margin: 0 auto;
+padding: 40px 0 70px;
+display: grid;
+grid-template-columns:
+minmax(0, 1fr)
+320px;
+gap: 28px;
+align-items: start;
 }
 
-
 /* =========================================
-   FORM CARD
+FORM CARD
 ========================================= */
 
 .loan-application-card {
-    background: #ffffff;
-
-    border: 1px solid #e5e7eb;
-
-    border-radius: 14px;
-
-    padding: 32px;
-
-    box-shadow:
-        0 8px 30px
-        rgba(15, 23, 42, 0.05);
+background: #ffffff;
+border: 1px solid #e5e7eb;
+border-radius: 14px;
+padding: 32px;
+box-shadow:
+0 8px 30px rgba(15, 23, 42, 0.05);
+transition:
+background-color 0.25s ease,
+border-color 0.25s ease,
+box-shadow 0.25s ease;
 }
-
 
 .loan-application-card form {
-    width: 100%;
+width: 100%;
 }
 
-
 /* =========================================
-   FORM GROUP
+FORM GROUP
 ========================================= */
 
 .loan-form-group {
-    position: relative;
-
-    margin-bottom: 24px;
+position: relative;
+margin-bottom: 24px;
 }
-
 
 .loan-form-group label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    color: var(--navy);
-
-    font-size: 14px;
-
-    font-weight: 600;
+display: block;
+margin-bottom: 8px;
+color: var(--navy);
+font-size: 14px;
+font-weight: 600;
+line-height: 1.4;
 }
-
 
 .loan-form-group input,
 .loan-form-group select,
 .loan-form-group textarea {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    border: 1px solid #d0d5dd;
-
-    border-radius: 8px;
-
-    background: #ffffff;
-
-    color: var(--navy);
-
-    font-family: inherit;
-
-    font-size: 15px;
-
-    outline: none;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+width: 100%;
+box-sizing: border-box;
+border: 1px solid #d0d5dd;
+border-radius: 8px;
+background: #ffffff;
+color: var(--navy);
+font-family: inherit;
+font-size: 15px;
+outline: none;
+transition:
+border-color 0.2s ease,
+box-shadow 0.2s ease,
+background-color 0.2s ease,
+color 0.2s ease;
 }
-
 
 .loan-form-group input,
 .loan-form-group select {
-    min-height: 48px;
-
-    padding:
-        0 14px;
+min-height: 48px;
+padding: 0 14px;
 }
-
 
 .loan-form-group textarea {
-    min-height: 130px;
-
-    padding: 13px 14px;
-
-    resize: vertical;
-
-    line-height: 1.5;
+min-height: 130px;
+padding: 13px 14px;
+resize: vertical;
+line-height: 1.5;
 }
-
 
 .loan-form-group input::placeholder,
 .loan-form-group textarea::placeholder {
-    color: #98a2b3;
+color: #98a2b3;
+opacity: 1;
 }
-
 
 .loan-form-group input:focus,
 .loan-form-group select:focus,
 .loan-form-group textarea:focus {
-    border-color: #c8102e;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(200, 16, 46, 0.10);
+border-color: #c8102e;
+box-shadow:
+0 0 0 3px rgba(200, 16, 46, 0.10);
 }
-
 
 .loan-form-group input:disabled,
 .loan-form-group select:disabled,
 .loan-form-group textarea:disabled {
-    background: #f8f9fa;
-
-    cursor: not-allowed;
-
-    opacity: 0.75;
+background: #f8f9fa;
+color: #667085;
+cursor: not-allowed;
+opacity: 0.75;
 }
 
+/* =========================================
+SELECT
+========================================= */
+
+.loan-form-group select {
+cursor: pointer;
+}
+
+.loan-form-group select option {
+background: #ffffff;
+color: #172033;
+}
 
 /* =========================================
-   AMOUNT INPUT
+AMOUNT INPUT
 ========================================= */
 
 .loan-input-prefix {
-    position: relative;
+position: relative;
 }
-
 
 .loan-input-prefix > span {
-    position: absolute;
-
-    left: 14px;
-
-    top: 50%;
-
-    transform:
-        translateY(-50%);
-
-    color: #667085;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    pointer-events: none;
+position: absolute;
+left: 14px;
+top: 50%;
+transform: translateY(-50%);
+color: #667085;
+font-size: 15px;
+font-weight: 600;
+pointer-events: none;
+z-index: 1;
 }
-
 
 .loan-input-prefix input {
-    padding-left: 30px;
+padding-left: 30px;
 }
 
-
-/* Remove number input arrows */
+/* =========================================
+REMOVE NUMBER INPUT ARROWS
+========================================= */
 
 .loan-form-group input[type="number"]::-webkit-inner-spin-button,
 .loan-form-group input[type="number"]::-webkit-outer-spin-button {
-    margin: 0;
-
-    -webkit-appearance: none;
+margin: 0;
+-webkit-appearance: none;
+appearance: none;
 }
-
 
 .loan-form-group input[type="number"] {
-    appearance: textfield;
-
-    -moz-appearance: textfield;
+appearance: textfield;
+-moz-appearance: textfield;
 }
 
-
 /* =========================================
-   CHARACTER COUNT
+CHARACTER COUNT
 ========================================= */
 
 .loan-character-count {
-    display: block;
-
-    margin-top: 6px;
-
-    text-align: right;
-
-    color: #98a2b3;
-
-    font-size: 12px;
+display: block;
+margin-top: 6px;
+text-align: right;
+color: #98a2b3;
+font-size: 12px;
+line-height: 1.4;
 }
 
-
 /* =========================================
-   FORM MESSAGES
+FORM MESSAGES
 ========================================= */
 
 .loan-form-message {
-    margin-bottom: 20px;
-
-    padding: 13px 15px;
-
-    border-radius: 8px;
-
-    font-size: 14px;
-
-    line-height: 1.5;
+margin-bottom: 20px;
+padding: 13px 15px;
+border-radius: 8px;
+font-size: 14px;
+line-height: 1.5;
 }
-
 
 .loan-form-error {
-    border: 1px solid #f1b8c1;
-
-    background: #fff1f3;
-
-    color: #a50e26;
+border: 1px solid #f1b8c1;
+background: #fff1f3;
+color: #a50e26;
 }
-
 
 .loan-form-success {
-    border: 1px solid #b7dec5;
-
-    background: #effaf3;
-
-    color: #18703c;
+border: 1px solid #b7dec5;
+background: #effaf3;
+color: #18703c;
 }
 
-
 /* =========================================
-   ACTIONS
+ACTIONS
 ========================================= */
 
 .loan-application-actions {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: flex-end;
-
-    gap: 12px;
-
-    margin-top: 30px;
+display: flex;
+align-items: center;
+justify-content: flex-end;
+gap: 12px;
+margin-top: 30px;
 }
-
 
 .loan-cancel-button,
 .loan-submit-button {
-    min-height: 46px;
-
-    padding:
-        0 20px;
-
-    border-radius: 8px;
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease,
-        transform 0.2s ease;
+min-height: 46px;
+padding: 0 20px;
+border-radius: 8px;
+font-family: inherit;
+font-size: 14px;
+font-weight: 600;
+text-decoration: none;
+cursor: pointer;
+transition:
+background-color 0.2s ease,
+border-color 0.2s ease,
+color 0.2s ease,
+transform 0.2s ease,
+box-shadow 0.2s ease;
 }
-
 
 .loan-cancel-button {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border: 1px solid #d0d5dd;
-
-    background: #ffffff;
-
-    color: #344054;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: 1px solid #d0d5dd;
+background: #ffffff;
+color: #344054;
 }
-
 
 .loan-cancel-button:hover {
-    background: #f8f9fa;
-
-    border-color: #b8bec8;
+background: #f8f9fa;
+border-color: #b8bec8;
+color: #172033;
 }
-
 
 .loan-submit-button {
-    border: 1px solid #c8102e;
-
-    background: #c8102e;
-
-    color: #ffffff;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: 1px solid #c8102e;
+background: #c8102e;
+color: #ffffff;
+box-shadow:
+0 4px 10px rgba(200, 16, 46, 0.15);
 }
-
 
 .loan-submit-button:hover:not(:disabled) {
-    background: #a90d27;
-
-    border-color: #a90d27;
-
-    transform:
-        translateY(-1px);
+background: #a90d27;
+border-color: #a90d27;
+color: #ffffff;
+transform: translateY(-1px);
+box-shadow:
+0 6px 14px rgba(200, 16, 46, 0.20);
 }
 
+.loan-submit-button:active:not(:disabled) {
+transform: translateY(0);
+}
 
 .loan-submit-button:disabled {
-    opacity: 0.65;
-
-    cursor: not-allowed;
+opacity: 0.65;
+cursor: not-allowed;
+transform: none;
+box-shadow: none;
 }
 
-
 /* =========================================
-   INFORMATION PANEL
+INFORMATION PANEL
 ========================================= */
 
 .loan-application-information {
-    background: #ffffff;
-
-    border:
-        1px solid #e5e7eb;
-
-    border-radius: 14px;
-
-    padding: 26px;
-
-    box-shadow:
-        0 8px 30px
-        rgba(15, 23, 42, 0.04);
+background: #ffffff;
+border: 1px solid #e5e7eb;
+border-radius: 14px;
+padding: 26px;
+box-shadow:
+0 8px 30px rgba(15, 23, 42, 0.04);
+transition:
+background-color 0.25s ease,
+border-color 0.25s ease,
+box-shadow 0.25s ease;
 }
-
 
 .loan-application-information h2 {
-    margin: 0 0 12px;
-
-    color: var(--navy);
-
-    font-size: 19px;
-
-    font-weight: 700;
+margin: 0 0 12px;
+color: var(--navy);
+font-size: 19px;
+font-weight: 700;
+line-height: 1.35;
 }
-
 
 .loan-application-information p {
-    margin: 0 0 18px;
-
-    color: #667085;
-
-    font-size: 14px;
-
-    line-height: 1.65;
+margin: 0 0 18px;
+color: #667085;
+font-size: 14px;
+line-height: 1.65;
 }
-
 
 .loan-application-information ul {
-    margin: 0;
-
-    padding-left: 20px;
-
-    color: #667085;
-
-    font-size: 14px;
-
-    line-height: 1.7;
+margin: 0;
+padding-left: 20px;
+color: #667085;
+font-size: 14px;
+line-height: 1.7;
 }
-
 
 .loan-application-information li {
-    margin-bottom: 10px;
+margin-bottom: 10px;
 }
-
 
 .loan-application-information li:last-child {
-    margin-bottom: 0;
+margin-bottom: 0;
 }
 
+/* =========================================
+DARK MODE
+Supports common theme selectors
+========================================= */
+
+.dark .loan-application-page,
+[data-theme="dark"] .loan-application-page,
+.dark-mode .loan-application-page {
+background: #0f172a;
+color: #f8fafc;
+}
+
+.dark .loan-application-header,
+[data-theme="dark"] .loan-application-header,
+.dark-mode .loan-application-header {
+background: #111827;
+border-bottom-color: #273244;
+}
+
+.dark .loan-application-back,
+[data-theme="dark"] .loan-application-back,
+.dark-mode .loan-application-back {
+color: #f8fafc;
+}
+
+.dark .loan-application-back:hover,
+[data-theme="dark"] .loan-application-back:hover,
+.dark-mode .loan-application-back:hover {
+color: #ff4b63;
+}
+
+.dark .loan-application-header h1,
+[data-theme="dark"] .loan-application-header h1,
+.dark-mode .loan-application-header h1 {
+color: #f8fafc;
+}
+
+.dark .loan-application-header p,
+[data-theme="dark"] .loan-application-header p,
+.dark-mode .loan-application-header p {
+color: #aeb8c7;
+}
+
+.dark .loan-application-card,
+[data-theme="dark"] .loan-application-card,
+.dark-mode .loan-application-card {
+background: #111827;
+border-color: #273244;
+box-shadow:
+0 8px 30px rgba(0, 0, 0, 0.20);
+}
+
+.dark .loan-form-group label,
+[data-theme="dark"] .loan-form-group label,
+.dark-mode .loan-form-group label {
+color: #f8fafc;
+}
+
+.dark .loan-form-group input,
+.dark .loan-form-group select,
+.dark .loan-form-group textarea,
+[data-theme="dark"] .loan-form-group input,
+[data-theme="dark"] .loan-form-group select,
+[data-theme="dark"] .loan-form-group textarea,
+.dark-mode .loan-form-group input,
+.dark-mode .loan-form-group select,
+.dark-mode .loan-form-group textarea {
+background: #0f172a;
+border-color: #3a4659;
+color: #f8fafc;
+}
+
+.dark .loan-form-group input::placeholder,
+.dark .loan-form-group textarea::placeholder,
+[data-theme="dark"] .loan-form-group input::placeholder,
+[data-theme="dark"] .loan-form-group textarea::placeholder,
+.dark-mode .loan-form-group input::placeholder,
+.dark-mode .loan-form-group textarea::placeholder {
+color: #7f8ba0;
+}
+
+.dark .loan-form-group select option,
+[data-theme="dark"] .loan-form-group select option,
+.dark-mode .loan-form-group select option {
+background: #0f172a;
+color: #f8fafc;
+}
+
+.dark .loan-form-group input:disabled,
+.dark .loan-form-group select:disabled,
+.dark .loan-form-group textarea:disabled,
+[data-theme="dark"] .loan-form-group input:disabled,
+[data-theme="dark"] .loan-form-group select:disabled,
+[data-theme="dark"] .loan-form-group textarea:disabled,
+.dark-mode .loan-form-group input:disabled,
+.dark-mode .loan-form-group select:disabled,
+.dark-mode .loan-form-group textarea:disabled {
+background: #1a2433;
+color: #7f8ba0;
+}
+
+.dark .loan-input-prefix > span,
+[data-theme="dark"] .loan-input-prefix > span,
+.dark-mode .loan-input-prefix > span {
+color: #aeb8c7;
+}
+
+.dark .loan-character-count,
+[data-theme="dark"] .loan-character-count,
+.dark-mode .loan-character-count {
+color: #7f8ba0;
+}
+
+.dark .loan-cancel-button,
+[data-theme="dark"] .loan-cancel-button,
+.dark-mode .loan-cancel-button {
+background: #1a2433;
+border-color: #3a4659;
+color: #f8fafc;
+}
+
+.dark .loan-cancel-button:hover,
+[data-theme="dark"] .loan-cancel-button:hover,
+.dark-mode .loan-cancel-button:hover {
+background: #243044;
+border-color: #536177;
+color: #ffffff;
+}
+
+.dark .loan-application-information,
+[data-theme="dark"] .loan-application-information,
+.dark-mode .loan-application-information {
+background: #111827;
+border-color: #273244;
+box-shadow:
+0 8px 30px rgba(0, 0, 0, 0.18);
+}
+
+.dark .loan-application-information h2,
+[data-theme="dark"] .loan-application-information h2,
+.dark-mode .loan-application-information h2 {
+color: #f8fafc;
+}
+
+.dark .loan-application-information p,
+.dark .loan-application-information ul,
+.dark .loan-application-information li,
+[data-theme="dark"] .loan-application-information p,
+[data-theme="dark"] .loan-application-information ul,
+[data-theme="dark"] .loan-application-information li,
+.dark-mode .loan-application-information p,
+.dark-mode .loan-application-information ul,
+.dark-mode .loan-application-information li {
+color: #aeb8c7;
+}
 
 /* =========================================
-   MOBILE
+DARK MODE - MESSAGES
+========================================= */
+
+.dark .loan-form-error,
+[data-theme="dark"] .loan-form-error,
+.dark-mode .loan-form-error {
+border-color: #6e2937;
+background: #32151d;
+color: #ff9aaa;
+}
+
+.dark .loan-form-success,
+[data-theme="dark"] .loan-form-success,
+.dark-mode .loan-form-success {
+border-color: #28583b;
+background: #14281d;
+color: #8ee0ac;
+}
+
+/* =========================================
+MOBILE
 ========================================= */
 
 @media (max-width: 850px) {
-
-    .loan-application-content {
-        grid-template-columns: 1fr;
-
-        width:
-            min(
-                680px,
-                calc(100% - 32px)
-            );
-
-        padding-top: 28px;
-    }
-
+.loan-application-content {
+grid-template-columns: 1fr;
+width: min(
+680px,
+calc(100% - 32px)
+);
+padding-top: 28px;
 }
-
+}
 
 @media (max-width: 600px) {
-
-    .loan-application-header {
-        padding:
-            24px 20px;
-    }
+.loan-application-header {
+padding: 24px 20px;
+}
 
 
-    .loan-application-header > div {
-        margin-top: 24px;
-    }
+.loan-application-header > div {
+    margin-top: 24px;
+}
 
+.loan-application-header h1 {
+    font-size: 28px;
+}
 
-    .loan-application-header h1 {
-        font-size: 28px;
-    }
+.loan-application-header p {
+    font-size: 14px;
+}
 
+.loan-application-content {
+    width: calc(100% - 24px);
+    padding: 22px 0 50px;
+    gap: 18px;
+}
 
-    .loan-application-content {
-        width:
-            calc(100% - 24px);
+.loan-application-card {
+    padding: 22px 18px;
+    border-radius: 12px;
+}
 
-        padding:
-            22px 0 50px;
+.loan-application-information {
+    padding: 22px 18px;
+    border-radius: 12px;
+}
 
-        gap: 18px;
-    }
+.loan-application-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+}
 
+.loan-cancel-button,
+.loan-submit-button {
+    width: 100%;
+    box-sizing: border-box;
+}
 
-    .loan-application-card {
-        padding: 22px 18px;
-
-        border-radius: 12px;
-    }
-
-
-    .loan-application-information {
-        padding: 22px 18px;
-
-        border-radius: 12px;
-    }
-
-
-    .loan-application-actions {
-        flex-direction: column-reverse;
-
-        align-items: stretch;
-    }
-
-
-    .loan-cancel-button,
-    .loan-submit-button {
-        width: 100%;
-
-        box-sizing: border-box;
-    }
 
 }
+
+@media (max-width: 400px) {
+.loan-application-header {
+padding-left: 16px;
+padding-right: 16px;
+}
+
+
+.loan-application-header h1 {
+    font-size: 25px;
+}
+
+.loan-application-content {
+    width: calc(100% - 20px);
+}
+
+.loan-application-card {
+    padding: 20px 15px;
+}
+
+.loan-application-information {
+    padding: 20px 15px;
+}
+
+
+}
+
 

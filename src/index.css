@@ -1,5 +1,9 @@
 @import "./styles/variables.css";
 
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -10,13 +14,13 @@ html {
 
 body {
     margin: 0;
-
-    background: var(--white);
-    color: var(--black);
-
+    background: var(--page-bg);
+    color: var(--text-primary);
     font-family: var(--font-body);
-
     -webkit-font-smoothing: antialiased;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 button,
@@ -44,21 +48,114 @@ img {
     min-height: 100vh;
 }
 
+/* =========================================
+   DARK MODE
+========================================= */
+
+html.dark {
+    color-scheme: dark;
+}
+
+html.dark body {
+    background: var(--page-bg);
+    color: var(--text-primary);
+}
 
 /* =========================================
-   CAPITAL BANK — SCROLL REVEAL
+   GLOBAL FORM ELEMENTS
+========================================= */
+
+input,
+textarea,
+select {
+    background: var(--surface);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-secondary);
+    opacity: 1;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    color: var(--text-primary);
+}
+
+/* =========================================
+   SELECT OPTIONS
+========================================= */
+
+option {
+    background: var(--surface);
+    color: var(--text-primary);
+}
+
+/* =========================================
+   DARK MODE FORM ELEMENTS
+========================================= */
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+    background: var(--surface);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+html.dark option {
+    background: var(--surface);
+    color: var(--text-primary);
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+html.dark {
+    scrollbar-color: #454b53 #111315;
+}
+
+html.dark ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+    background: #111315;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+    background: #454b53;
+    border-radius: 10px;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+    background: #5a626d;
+}
+
+/* =========================================
+   SCROLL REVEAL
 ========================================= */
 
 .scroll-reveal {
     opacity: 0;
-
-    transform:
-        translateY(35px);
-
+    transform: translateY(35px);
     transition:
         opacity 0.8s ease,
         transform 0.8s ease;
-
     will-change:
         opacity,
         transform;
@@ -66,24 +163,28 @@ img {
 
 .scroll-reveal.is-visible {
     opacity: 1;
-
-    transform:
-        translateY(0);
+    transform: translateY(0);
 }
-
 
 /* =========================================
    REDUCED MOTION
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
-
     .scroll-reveal {
         opacity: 1;
-
         transform: none;
-
         transition: none;
     }
 
+    body {
+        transition: none;
+    }
+
+    input,
+    textarea,
+    select {
+        transition: none;
+    }
 }
+

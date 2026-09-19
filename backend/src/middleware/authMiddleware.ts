@@ -1,10 +1,18 @@
-import { Request, Response, NextFunction } from "express";
+import {
+    Request,
+    Response,
+    NextFunction,
+} from "express";
+
 import jwt from "jsonwebtoken";
 
 
-export interface AuthenticatedRequest extends Request {
+export interface AuthenticatedRequest
+    extends Request {
 
     userId?: string;
+
+    userRole?: "customer" | "admin";
 
 }
 
@@ -27,8 +35,12 @@ export const requireAuth = (
         ) {
 
             return res.status(401).json({
+
                 success: false,
-                message: "Authentication required.",
+
+                message:
+                    "Authentication required.",
+
             });
 
         }
@@ -38,18 +50,44 @@ export const requireAuth = (
             authorization.split(" ")[1];
 
 
+        if (!token) {
+
+            return res.status(401).json({
+
+                success: false,
+
+                message:
+                    "Authentication required.",
+
+            });
+
+        }
+
+
         const decoded = jwt.verify(
+
             token,
+
             process.env.JWT_SECRET ||
                 "capital-bank-development-secret"
+
         ) as {
+
             userId: string;
+
             email: string;
+
+            role?: "customer" | "admin";
+
         };
 
 
         req.userId =
             decoded.userId;
+
+
+        req.userRole =
+            decoded.role || "customer";
 
 
         next();
@@ -64,8 +102,12 @@ export const requireAuth = (
 
 
         return res.status(401).json({
+
             success: false,
-            message: "Invalid or expired session.",
+
+            message:
+                "Invalid or expired session.",
+
         });
 
     }

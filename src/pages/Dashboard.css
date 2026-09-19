@@ -5,10 +5,12 @@
 
 .dashboard-page {
     min-height: 100vh;
-    background: #f5f6f8;
-    color: var(--navy);
+    background: var(--page-bg);
+    color: var(--text-primary);
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
-
 
 /* =========================================
    HEADER
@@ -23,8 +25,11 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 28px;
-    border-bottom: 1px solid #e2e6eb;
-    background: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--surface);
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .dashboard-header-left {
@@ -37,7 +42,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--navy);
+    color: var(--text-primary);
     text-decoration: none;
 }
 
@@ -48,7 +53,7 @@
     place-items: center;
     border-radius: 50%;
     background: var(--red);
-    color: var(--white);
+    color: #ffffff;
     font-size: 18px;
     font-weight: 750;
 }
@@ -64,11 +69,10 @@
 
 .dashboard-logo-text small {
     margin-top: 4px;
-    color: #8a929d;
+    color: var(--text-secondary);
     font-size: 6px;
     letter-spacing: 0.13em;
 }
-
 
 /* =========================================
    DASHBOARD HAMBURGER MENU
@@ -79,45 +83,32 @@
     width: 42px;
     height: 42px;
     flex-shrink: 0;
-
     padding: 0;
     margin: 0;
-
-    border: 1px solid #dfe4e9;
+    border: 1px solid var(--border-color);
     border-radius: 7px;
-
     background: #171a1f;
     color: #ffffff;
-
     cursor: pointer;
-
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 4px;
-
     position: relative;
     z-index: 300;
-
     box-sizing: border-box;
 }
 
 .dashboard-menu-button span {
     display: block !important;
-
     width: 21px;
     height: 2px;
-
     flex-shrink: 0;
-
     margin: 0;
     padding: 0;
-
     background: #ffffff !important;
     border-radius: 2px;
-
     opacity: 1;
-
     transition:
         transform 0.25s ease,
         opacity 0.25s ease;
@@ -155,12 +146,25 @@
     height: 38px;
     display: grid;
     place-items: center;
-    border: 1px solid #e1e5ea;
+    border: 1px solid var(--border-color);
     border-radius: 50%;
-    background: #fff;
-    color: var(--navy);
+    background: var(--surface);
+    color: var(--text-primary);
     cursor: pointer;
     font-size: 18px;
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.dashboard-icon-button:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+.dashboard-icon-button.theme-toggle {
+    font-size: 17px;
 }
 
 .notification span {
@@ -179,11 +183,15 @@
     gap: 9px;
     margin-left: 8px;
     padding: 4px 5px 4px 4px;
-    border: 1px solid #e1e5ea;
+    border: 1px solid var(--border-color);
     border-radius: 24px;
-    background: #fff;
-    color: var(--navy);
+    background: var(--surface);
+    color: var(--text-primary);
     cursor: pointer;
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
 
 .profile-avatar {
@@ -192,8 +200,8 @@
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: #e9eef6;
-    color: var(--navy);
+    background: var(--surface-secondary);
+    color: var(--text-primary);
     font-size: 9px;
     font-weight: 800;
 }
@@ -205,10 +213,470 @@
 
 .profile-arrow {
     padding-right: 5px;
-    color: #7f8792;
+    color: var(--text-secondary);
     font-size: 12px;
 }
 
+/* =========================================
+   DASHBOARD SEARCH
+========================================= */
+
+.dashboard-search-button.search-active {
+    border-color: var(--red);
+    background: var(--surface-secondary);
+    color: var(--red);
+}
+
+.dashboard-search-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 155px;
+    z-index: 550;
+    width: 390px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.16);
+}
+
+.dashboard-search-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px 18px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.dashboard-search-header > div > span {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+    font-size: 7px;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+}
+
+.dashboard-search-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.dashboard-search-close {
+    width: 28px;
+    height: 28px;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    padding: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 17px;
+    line-height: 1;
+}
+
+.dashboard-search-close:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+/* =========================================
+   SEARCH INPUT
+========================================= */
+
+.dashboard-search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 16px;
+    padding: 0 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+    background: var(--surface-secondary);
+}
+
+.dashboard-search-input-wrapper > span {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.dashboard-search-input-wrapper input {
+    width: 100%;
+    min-width: 0;
+    height: 42px;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.dashboard-search-input-wrapper input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.75;
+}
+
+.dashboard-search-input-wrapper:focus-within {
+    border-color: var(--red);
+}
+
+/* =========================================
+   SEARCH RESULTS
+========================================= */
+
+.dashboard-search-results {
+    max-height: 360px;
+    overflow-y: auto;
+    padding-bottom: 7px;
+}
+
+.dashboard-search-result {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 12px 16px;
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition:
+        background-color 0.2s ease;
+}
+
+.dashboard-search-result:hover {
+    background: var(--surface-secondary);
+}
+
+.dashboard-search-result:last-child {
+    border-bottom: 0;
+}
+
+.dashboard-search-result-icon {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 50%;
+    background: #f7eaea;
+    color: var(--red);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+html.dark .dashboard-search-result-icon {
+    background: #352126;
+}
+
+.dashboard-search-result-content {
+    min-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.dashboard-search-result-content strong {
+    color: var(--text-primary);
+    font-size: 10px;
+    font-weight: 750;
+}
+
+.dashboard-search-result-content span {
+    color: var(--text-secondary);
+    font-size: 8px;
+    line-height: 1.4;
+}
+
+.dashboard-search-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 130px;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.dashboard-search-empty strong {
+    color: var(--text-primary);
+    font-size: 11px;
+}
+
+.dashboard-search-empty span {
+    max-width: 260px;
+    color: var(--text-secondary);
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+.dashboard-notification-wrapper {
+    position: relative;
+}
+
+.dashboard-icon-button.notification {
+    position: relative;
+}
+
+.dashboard-icon-button.notification-active {
+    border-color: var(--red);
+    color: var(--red);
+    background: var(--surface-secondary);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    min-width: 17px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid var(--surface);
+    border-radius: 20px;
+    background: var(--red);
+    color: #ffffff;
+    font-size: 7px;
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* =========================================
+   NOTIFICATION PANEL
+========================================= */
+
+.dashboard-notification-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 360px;
+    max-width: calc(100vw - 30px);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.16);
+    z-index: 500;
+}
+
+/* =========================================
+   NOTIFICATION PANEL HEADER
+========================================= */
+
+.notification-panel-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 18px 18px 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.notification-panel-header > div > span {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-secondary);
+    font-size: 7px;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+}
+
+.notification-panel-header h3 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 750;
+}
+
+.notification-mark-all {
+    flex-shrink: 0;
+    padding: 3px 0;
+    border: 0;
+    background: transparent;
+    color: var(--red);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.notification-mark-all:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   NOTIFICATION LIST
+========================================= */
+
+.notification-panel-list {
+    max-height: 390px;
+    overflow-y: auto;
+}
+
+.notification-panel-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.notification-panel-list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: var(--border);
+}
+
+/* =========================================
+   NOTIFICATION ITEM
+========================================= */
+
+.dashboard-notification-item {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 14px 17px;
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--surface);
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition:
+        background-color 0.2s ease;
+}
+
+.dashboard-notification-item:last-child {
+    border-bottom: 0;
+}
+
+.dashboard-notification-item:hover {
+    background: var(--surface-secondary);
+}
+
+.dashboard-notification-item.unread {
+    background: var(--surface-secondary);
+}
+
+.dashboard-notification-item.unread:hover {
+    background: var(--surface-secondary);
+}
+
+.dashboard-notification-item.read {
+    opacity: 0.78;
+}
+
+/* =========================================
+   NOTIFICATION ICON
+========================================= */
+
+.notification-item-icon {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 50%;
+    background: #f7eaea;
+    color: var(--red);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+html.dark .notification-item-icon {
+    background: #352126;
+}
+
+/* =========================================
+   NOTIFICATION CONTENT
+========================================= */
+
+.notification-item-content {
+    min-width: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.notification-item-content strong {
+    overflow: hidden;
+    color: var(--text-primary);
+    font-size: 10px;
+    font-weight: 750;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.notification-item-content > span {
+    color: var(--text-secondary);
+    font-size: 9px;
+    line-height: 1.45;
+}
+
+.notification-item-content small {
+    color: var(--text-secondary);
+    font-size: 7px;
+}
+
+/* =========================================
+   UNREAD INDICATOR
+========================================= */
+
+.notification-unread-dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: var(--red);
+}
+
+/* =========================================
+   EMPTY NOTIFICATIONS
+========================================= */
+
+.notification-empty {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.notification-empty strong {
+    color: var(--text-primary);
+    font-size: 11px;
+}
+
+.notification-empty span {
+    color: var(--text-secondary);
+    font-size: 9px;
+}
 
 /* =========================================
    LAYOUT
@@ -218,7 +686,6 @@
     min-height: calc(100vh - 72px);
     display: flex;
 }
-
 
 /* =========================================
    SIDEBAR
@@ -231,8 +698,11 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 28px 16px;
-    border-right: 1px solid #e2e6eb;
-    background: var(--white);
+    border-right: 1px solid var(--border-color);
+    background: var(--surface);
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .sidebar-section {
@@ -243,7 +713,7 @@
     display: block;
     padding: 0 13px;
     margin-bottom: 12px;
-    color: #969eaa;
+    color: var(--text-secondary);
     font-size: 8px;
     font-weight: 750;
     letter-spacing: 0.14em;
@@ -262,18 +732,18 @@
     min-height: 43px;
     padding: 0 13px;
     border-radius: 6px;
-    color: #66707f;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 11px;
     font-weight: 600;
     transition:
-        background 0.2s ease,
+        background-color 0.2s ease,
         color 0.2s ease;
 }
 
 .dashboard-navigation a:hover,
 .dashboard-navigation a.active {
-    background: #f8eaea;
+    background: var(--surface-secondary);
     color: var(--red);
 }
 
@@ -294,8 +764,8 @@
     gap: 12px;
     margin-top: 25px;
     padding: 13px;
-    border-top: 1px solid #e8ebef;
-    color: #777f8b;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 11px;
     font-weight: 600;
@@ -304,7 +774,6 @@
 .sidebar-signout span {
     font-size: 16px;
 }
-
 
 /* =========================================
    MAIN CONTENT
@@ -320,7 +789,6 @@
     margin: 0 auto;
     padding: 50px 0 70px;
 }
-
 
 /* =========================================
    INTRO
@@ -345,7 +813,7 @@
 
 .dashboard-intro h1 {
     margin: 0;
-    color: var(--navy);
+    color: var(--text-primary);
     font-size: clamp(2rem, 4vw, 2.9rem);
     line-height: 1.08;
     letter-spacing: -0.04em;
@@ -353,7 +821,7 @@
 
 .dashboard-intro p {
     margin: 10px 0 0;
-    color: #77808e;
+    color: var(--text-secondary);
     font-size: 12px;
 }
 
@@ -362,16 +830,15 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 5px;
-    color: #858e9a;
+    color: var(--text-secondary);
     font-size: 8px;
     letter-spacing: 0.1em;
 }
 
 .dashboard-date strong {
-    color: var(--navy);
+    color: var(--text-primary);
     font-size: 10px;
 }
-
 
 /* =========================================
    QUICK ACTIONS
@@ -391,16 +858,18 @@
     align-items: center;
     gap: 8px;
     padding: 0 15px;
-    border: 1px solid #dfe4e9;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
-    background: #fff;
-    color: var(--navy);
+    background: var(--surface);
+    color: var(--text-primary);
     cursor: pointer;
     font-family: inherit;
     font-size: 10px;
     font-weight: 650;
     transition:
+        background-color 0.25s ease,
         border-color 0.2s ease,
+        color 0.25s ease,
         transform 0.2s ease;
     text-decoration: none;
 }
@@ -409,7 +878,7 @@
 .dashboard-actions .quick-action:first-child {
     border-color: var(--red);
     background: var(--red);
-    color: var(--white);
+    color: #ffffff;
 }
 
 .dashboard-actions button:hover,
@@ -421,7 +890,6 @@
 .dashboard-actions span {
     font-size: 15px;
 }
-
 
 /* =========================================
    SECTION
@@ -442,7 +910,7 @@
 .dashboard-section-heading > div > span {
     display: block;
     margin-bottom: 6px;
-    color: #949ca8;
+    color: var(--text-secondary);
     font-size: 8px;
     font-weight: 750;
     letter-spacing: 0.14em;
@@ -450,7 +918,7 @@
 
 .dashboard-section-heading h2 {
     margin: 0;
-    color: var(--navy);
+    color: var(--text-primary);
     font-size: 21px;
     letter-spacing: -0.025em;
 }
@@ -465,7 +933,6 @@
     font-size: 10px;
     font-weight: 700;
 }
-
 
 /* =========================================
    ACCOUNT CARDS
@@ -484,12 +951,20 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 25px;
-    border: 1px solid #e0e4e9;
+    border: 1px solid var(--border-color);
     border-radius: 9px;
-    background: var(--white);
+    background: var(--surface);
     box-shadow:
-        0 7px 25px
-        rgba(22, 33, 49, 0.035);
+        0 7px 25px rgba(0, 0, 0, 0.035);
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+html.dark .account-card {
+    box-shadow:
+        0 7px 25px rgba(0, 0, 0, 0.22);
 }
 
 .account-card:first-child {
@@ -503,13 +978,13 @@
 }
 
 .account-type {
-    color: var(--navy);
+    color: var(--text-primary);
     font-size: 12px;
     font-weight: 700;
 }
 
 .account-number {
-    color: #89919d;
+    color: var(--text-secondary);
     font-size: 10px;
 }
 
@@ -521,14 +996,14 @@
 }
 
 .account-balance span {
-    color: #949ca8;
+    color: var(--text-secondary);
     font-size: 8px;
     font-weight: 700;
     letter-spacing: 0.1em;
 }
 
 .account-balance strong {
-    color: var(--navy);
+    color: var(--text-primary);
     font-size: 31px;
     font-weight: 650;
     letter-spacing: -0.04em;
@@ -539,7 +1014,7 @@
     align-items: center;
     justify-content: space-between;
     padding-top: 16px;
-    border-top: 1px solid #edf0f3;
+    border-top: 1px solid var(--border-color);
 }
 
 .account-card-bottom span {
@@ -558,16 +1033,15 @@
     font-weight: 700;
 }
 
-
 /* =========================================
    TRANSACTIONS
 ========================================= */
 
 .transactions-card {
     overflow: hidden;
-    border: 1px solid #e0e4e9;
+    border: 1px solid var(--border-color);
     border-radius: 9px;
-    background: var(--white);
+    background: var(--surface);
 }
 
 .transaction-row {
@@ -576,7 +1050,7 @@
     align-items: center;
     gap: 14px;
     padding: 0 23px;
-    border-bottom: 1px solid #edf0f3;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .transaction-row:last-child {
@@ -590,8 +1064,8 @@
     flex-shrink: 0;
     place-items: center;
     border-radius: 50%;
-    background: #f0f2f5;
-    color: #707986;
+    background: var(--surface-secondary);
+    color: var(--text-secondary);
     font-size: 15px;
     font-weight: 600;
 }
@@ -606,14 +1080,14 @@
 
 .transaction-info strong {
     overflow: hidden;
-    color: var(--navy);
+    color: var(--text-primary);
     font-size: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .transaction-info span {
-    color: #949ca7;
+    color: var(--text-secondary);
     font-size: 9px;
 }
 
@@ -624,13 +1098,12 @@
 }
 
 .transaction-amount {
-    color: var(--navy);
+    color: var(--text-primary);
 }
 
 .transaction-positive {
-    color: #378141;
+    color: #4f9a58;
 }
-
 
 /* =========================================
    SECURITY
@@ -641,9 +1114,12 @@
     align-items: center;
     gap: 15px;
     padding: 20px 22px;
-    border: 1px solid #e0e5ea;
+    border: 1px solid var(--border-color);
     border-radius: 9px;
-    background: #fff;
+    background: var(--surface);
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 .security-shield {
@@ -659,18 +1135,22 @@
     font-weight: 700;
 }
 
+html.dark .security-shield {
+    background: #1f3022;
+}
+
 .dashboard-security div:nth-child(2) {
     flex: 1;
 }
 
 .dashboard-security strong {
-    color: var(--navy);
+    color: var(--text-primary);
     font-size: 11px;
 }
 
 .dashboard-security p {
     margin: 4px 0 0;
-    color: #818a96;
+    color: var(--text-secondary);
     font-size: 9px;
     line-height: 1.5;
 }
@@ -685,7 +1165,6 @@
     font-weight: 700;
 }
 
-
 /* =========================================
    SIDEBAR OVERLAY
 ========================================= */
@@ -693,7 +1172,6 @@
 .dashboard-sidebar-overlay {
     display: none;
 }
-
 
 /* =========================================
    TABLET / MOBILE
@@ -716,7 +1194,6 @@
         gap: 12px;
     }
 
-
     /* =====================================
        HAMBURGER
     ===================================== */
@@ -724,7 +1201,6 @@
     .dashboard-menu-button {
         display: flex;
     }
-
 
     /* =====================================
        SIDEBAR
@@ -737,14 +1213,10 @@
         bottom: 0;
         width: 235px;
         z-index: 180;
-
         transform: translateX(-100%);
         visibility: hidden;
-
         box-shadow:
-            10px 0 30px
-            rgba(20, 30, 45, 0.15);
-
+            10px 0 30px rgba(0, 0, 0, 0.15);
         transition:
             transform 0.25s ease,
             visibility 0.25s ease;
@@ -754,7 +1226,6 @@
         transform: translateX(0);
         visibility: visible;
     }
-
 
     /* =====================================
        OVERLAY
@@ -767,17 +1238,12 @@
         right: 0;
         bottom: 0;
         z-index: 140;
-
         border: 0;
         padding: 0;
-
-        background:
-            rgba(5, 27, 70, 0.18);
-
+        background: rgba(0, 0, 0, 0.35);
         cursor: pointer;
     }
 }
-
 
 /* =========================================
    SMALL MOBILE
@@ -798,7 +1264,6 @@
         gap: 10px;
     }
 
-
     /* =====================================
        HAMBURGER
     ===================================== */
@@ -811,7 +1276,6 @@
     .dashboard-menu-button span {
         width: 20px;
     }
-
 
     /* =====================================
        LOGO
@@ -826,7 +1290,6 @@
         height: 34px;
         font-size: 17px;
     }
-
 
     /* =====================================
        HEADER ACTIONS
@@ -856,7 +1319,6 @@
         height: 29px;
     }
 
-
     /* =====================================
        SIDEBAR
     ===================================== */
@@ -870,7 +1332,6 @@
         top: 65px;
     }
 
-
     /* =====================================
        CONTENT
     ===================================== */
@@ -879,7 +1340,6 @@
         width: calc(100% - 30px);
         padding-top: 32px;
     }
-
 
     /* =====================================
        INTRO
@@ -905,7 +1365,6 @@
         align-items: flex-start;
     }
 
-
     /* =====================================
        QUICK ACTIONS
     ===================================== */
@@ -922,7 +1381,6 @@
         padding: 0 13px;
         font-size: 9px;
     }
-
 
     /* =====================================
        ACCOUNTS
@@ -946,7 +1404,6 @@
         font-size: 29px;
     }
 
-
     /* =====================================
        SECTIONS
     ===================================== */
@@ -964,7 +1421,6 @@
     .dashboard-section-heading h2 {
         font-size: 19px;
     }
-
 
     /* =====================================
        TRANSACTIONS
@@ -991,7 +1447,6 @@
         font-size: 10px;
     }
 
-
     /* =====================================
        SECURITY
     ===================================== */
@@ -1007,6 +1462,23 @@
     }
 }
 
+    /* =====================================
+       SEARCH
+    ===================================== */
+
+    .dashboard-search-panel {
+        position: fixed;
+        top: 65px;
+        right: 15px;
+        left: 15px;
+        width: auto;
+        max-width: none;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .dashboard-search-results {
+        max-height: calc(100vh - 230px);
+    }
 
 /* =========================================
    VERY SMALL MOBILE
@@ -1026,7 +1498,6 @@
         gap: 7px;
     }
 
-
     /* =====================================
        HAMBURGER
     ===================================== */
@@ -1041,7 +1512,6 @@
         width: 18px;
     }
 
-
     /* =====================================
        LOGO
     ===================================== */
@@ -1051,7 +1521,6 @@
         height: 32px;
         font-size: 16px;
     }
-
 
     /* =====================================
        HEADER ACTIONS
@@ -1077,7 +1546,6 @@
         height: 28px;
     }
 
-
     /* =====================================
        SIDEBAR
     ===================================== */
@@ -1091,7 +1559,6 @@
         top: 65px;
     }
 
-
     /* =====================================
        CONTENT
     ===================================== */
@@ -1100,7 +1567,6 @@
         width: calc(100% - 24px);
         padding-top: 27px;
     }
-
 
     /* =====================================
        INTRO
@@ -1124,7 +1590,6 @@
         font-size: 10px;
     }
 
-
     /* =====================================
        QUICK ACTIONS
     ===================================== */
@@ -1145,7 +1610,6 @@
     .dashboard-actions span {
         font-size: 14px;
     }
-
 
     /* =====================================
        ACCOUNTS
@@ -1186,7 +1650,6 @@
         font-size: 8px;
     }
 
-
     /* =====================================
        SECTIONS
     ===================================== */
@@ -1198,7 +1661,6 @@
     .dashboard-section-heading h2 {
         font-size: 18px;
     }
-
 
     /* =====================================
        TRANSACTIONS
@@ -1229,7 +1691,6 @@
         font-size: 9px;
     }
 
-
     /* =====================================
        SECURITY
     ===================================== */
@@ -1258,3 +1719,66 @@
     }
 }
 
+/* =========================================
+   NOTIFICATIONS — MOBILE
+========================================= */
+
+@media (max-width: 650px) {
+
+    .dashboard-notification-panel {
+        position: fixed;
+        top: 65px;
+        right: 15px;
+        width: min(360px, calc(100vw - 30px));
+        max-width: none;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .notification-panel-list {
+        max-height: calc(100vh - 150px);
+    }
+}
+
+@media (max-width: 420px) {
+
+    .dashboard-notification-panel {
+        top: 65px;
+        right: 10px;
+        width: calc(100vw - 20px);
+    }
+
+    .notification-panel-header {
+        padding: 16px 14px 13px;
+    }
+
+    .dashboard-notification-item {
+        padding: 13px 14px;
+    }
+
+    .notification-item-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+    /* =====================================
+       SEARCH
+    ===================================== */
+
+    .dashboard-search-panel {
+        top: 65px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .dashboard-search-header {
+        padding: 16px 14px 13px;
+    }
+
+    .dashboard-search-input-wrapper {
+        margin: 13px 14px;
+    }
+
+    .dashboard-search-result {
+        padding: 12px 14px;
+    }
