@@ -89,12 +89,11 @@ interface AdminDashboardData {
 
 
 function AdminDashboardContent() {
-
-    const {
-        user,
-        token,
-        logout,
-    } = useAuth();
+const {
+    adminUser,
+    adminToken,
+    adminLogout,
+} = useAuth();
 
 
     const [
@@ -134,8 +133,8 @@ function AdminDashboardContent() {
                             method: "GET",
 
                             headers: {
-                                Authorization:
-                                    `Bearer ${token}`,
+                               Authorization:
+                                   `Bearer ${adminToken}`,
                             },
                         }
                     );
@@ -150,7 +149,7 @@ function AdminDashboardContent() {
                     response.status === 403
                 ) {
 
-                    logout();
+                    adminLogout();
 
                     return;
 
@@ -195,11 +194,11 @@ function AdminDashboardContent() {
         };
 
 
-        if (token) {
-            loadDashboard();
-        }
+       if (adminToken) {
+    loadDashboard();
+}
 
-    }, [token, logout]);
+    }, [adminToken, adminLogout]);
 
 
     const formatCurrency = (
@@ -235,10 +234,10 @@ function AdminDashboardContent() {
     };
 
 
-    if (
-        !user ||
-        user.role !== "admin"
-    ) {
+   if (
+    !adminUser ||
+    adminUser.role !== "admin"
+) {
 
         return (
             <Navigate
@@ -281,13 +280,13 @@ function AdminDashboardContent() {
                 <div className="admin-dashboard-header-right">
 
                     <span className="admin-dashboard-admin-name">
-                        {user.firstName} {user.lastName}
+                        {adminUser.firstName} {adminUser.lastName}
                     </span>
 
                     <button
                         type="button"
                         className="admin-dashboard-logout"
-                        onClick={logout}
+                        onClick={adminLogout}
                     >
                         Sign Out
                     </button>

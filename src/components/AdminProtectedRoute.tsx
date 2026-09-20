@@ -1,8 +1,14 @@
-import { Navigate } from "react-router-dom";
+import {
+    Navigate,
+} from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+import {
+    useAuth,
+} from "../context/AuthContext";
 
-import type { ReactNode } from "react";
+import type {
+    ReactNode,
+} from "react";
 
 
 interface AdminProtectedRouteProps {
@@ -15,12 +21,16 @@ function AdminProtectedRoute({
 }: AdminProtectedRouteProps) {
 
     const {
-        user,
-        isAuthenticated,
+        adminUser,
+        isAdminAuthenticated,
     } = useAuth();
 
 
-    if (!isAuthenticated) {
+    /* =====================================
+       ADMIN NOT AUTHENTICATED
+    ===================================== */
+
+    if (!isAdminAuthenticated) {
 
         return (
             <Navigate
@@ -28,19 +38,24 @@ function AdminProtectedRoute({
                 replace
             />
         );
-
     }
 
 
-    if (user?.role !== "admin") {
+    /* =====================================
+       ADMIN SESSION INVALID
+    ===================================== */
+
+    if (
+        !adminUser ||
+        adminUser.role !== "admin"
+    ) {
 
         return (
             <Navigate
-                to="/dashboard"
+                to="/admin/login"
                 replace
             />
         );
-
     }
 
 
@@ -49,3 +64,4 @@ function AdminProtectedRoute({
 
 
 export default AdminProtectedRoute;
+

@@ -18,11 +18,36 @@ interface User {
 
 
 interface AuthContextType {
+    /* ==============================
+       CUSTOMER AUTHENTICATION
+    ============================== */
+
     user: User | null;
     token: string | null;
     isAuthenticated: boolean;
-    login: (token: string, user: User) => void;
+
+    login: (
+        token: string,
+        user: User
+    ) => void;
+
     logout: () => void;
+
+
+    /* ==============================
+       ADMIN AUTHENTICATION
+    ============================== */
+
+    adminUser: User | null;
+    adminToken: string | null;
+    isAdminAuthenticated: boolean;
+
+    adminLogin: (
+        token: string,
+        user: User
+    ) => void;
+
+    adminLogout: () => void;
 }
 
 
@@ -37,7 +62,12 @@ interface AuthProviderProps {
 }
 
 
+/* =========================================
+   CUSTOMER STORAGE
+========================================= */
+
 function getStoredUser(): User | null {
+
     const storedUser =
         localStorage.getItem(
             "capital-bank-user"
@@ -48,10 +78,15 @@ function getStoredUser(): User | null {
     }
 
     try {
-        return JSON.parse(storedUser) as User;
+
+        return JSON.parse(
+            storedUser
+        ) as User;
+
     } catch (error) {
+
         console.error(
-            "Unable to restore stored user:",
+            "Unable to restore stored customer:",
             error
         );
 
@@ -65,22 +100,70 @@ function getStoredUser(): User | null {
 
 
 function getStoredToken(): string | null {
+
     return localStorage.getItem(
         "capital-bank-token"
     );
 }
 
 
+/* =========================================
+   ADMIN STORAGE
+========================================= */
+
+function getStoredAdminUser(): User | null {
+
+    const storedAdminUser =
+        localStorage.getItem(
+            "capital-bank-admin-user"
+        );
+
+    if (!storedAdminUser) {
+        return null;
+    }
+
+    try {
+
+        return JSON.parse(
+            storedAdminUser
+        ) as User;
+
+    } catch (error) {
+
+        console.error(
+            "Unable to restore stored administrator:",
+            error
+        );
+
+        localStorage.removeItem(
+            "capital-bank-admin-user"
+        );
+
+        return null;
+    }
+}
+
+
+function getStoredAdminToken(): string | null {
+
+    return localStorage.getItem(
+        "capital-bank-admin-token"
+    );
+}
+
+
+/* =========================================
+   AUTH PROVIDER
+========================================= */
+
 export function AuthProvider({
     children,
 }: AuthProviderProps) {
 
-    /*
-     * Restore authentication BEFORE the first render.
-     *
-     * This prevents protected routes from seeing
-     * token === null for one render after refresh.
-     */
+
+    /* =====================================
+       CUSTOMER STATE
+    ===================================== */
 
     const [token, setToken] =
         useState<string | null>(
@@ -93,6 +176,26 @@ export function AuthProvider({
             getStoredUser
         );
 
+
+    /* =====================================
+       ADMIN STATE
+    ===================================== */
+
+    const [adminToken, setAdminToken] =
+        useState<string | null>(
+            getStoredAdminToken
+        );
+
+
+    const [adminUser, setAdminUser] =
+        useState<User | null>(
+            getStoredAdminUser
+        );
+
+
+    /* =====================================
+       CUSTOMER LOGIN
+    ===================================== */
 
     const login = (
         newToken: string,
@@ -114,6 +217,10 @@ export function AuthProvider({
     };
 
 
+    /* =====================================
+       CUSTOMER LOGOUT
+    ===================================== */
+
     const logout = () => {
 
         setToken(null);
@@ -133,15 +240,80 @@ export function AuthProvider({
     };
 
 
+    /* =====================================
+       ADMIN LOGIN
+    ===================================== */
+
+    const adminLogin = (
+        newToken: string,
+        newUser: User
+    ) => {
+
+        setAdminToken(newToken);
+        setAdminUser(newUser);
+
+        localStorage.setItem(
+            "capital-bank-admin-token",
+            newToken
+        );
+
+        localStorage.setItem(
+            "capital-bank-admin-user",
+            JSON.stringify(newUser)
+        );
+    };
+
+
+    /* =====================================
+       ADMIN LOGOUT
+    ===================================== */
+
+    const adminLogout = () => {
+
+        setAdminToken(null);
+        setAdminUser(null);
+
+        localStorage.removeItem(
+            "capital-bank-admin-token"
+        );
+
+        localStorage.removeItem(
+            "capital-bank-admin-user"
+        );
+    };
+
+
     return (
         <AuthContext.Provider
             value={{
+
+                /* Customer */
+
                 user,
+
                 token,
+
                 isAuthenticated:
                     Boolean(token),
+
                 login,
+
                 logout,
+
+
+                /* Administrator */
+
+                adminUser,
+
+                adminToken,
+
+                isAdminAuthenticated:
+                    Boolean(adminToken),
+
+                adminLogin,
+
+                adminLogout,
+
             }}
         >
             {children}
@@ -149,6 +321,10 @@ export function AuthProvider({
     );
 }
 
+
+/* =========================================
+   USE AUTH
+========================================= */
 
 export function useAuth() {
 

@@ -11,7 +11,9 @@ import {
     useNavigate,
 } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+import {
+    useAuth,
+} from "../context/AuthContext";
 
 import "./AdminLogin.css";
 
@@ -29,10 +31,11 @@ export default function AdminLogin() {
 
     const navigate = useNavigate();
 
+
     const {
-        user,
-        isAuthenticated,
-        login,
+        adminUser,
+        isAdminAuthenticated,
+        adminLogin,
     } = useAuth();
 
 
@@ -41,15 +44,18 @@ export default function AdminLogin() {
         setClientNumber,
     ] = useState("");
 
+
     const [
         password,
         setPassword,
     ] = useState("");
 
+
     const [
         error,
         setError,
     ] = useState("");
+
 
     const [
         loading,
@@ -57,10 +63,15 @@ export default function AdminLogin() {
     ] = useState(false);
 
 
+    /* =====================================
+       ALREADY AUTHENTICATED ADMIN
+    ===================================== */
+
     if (
-        isAuthenticated &&
-        user?.role === "admin"
+        isAdminAuthenticated &&
+        adminUser?.role === "admin"
     ) {
+
         return (
             <Navigate
                 to="/admin"
@@ -69,6 +80,10 @@ export default function AdminLogin() {
         );
     }
 
+
+    /* =====================================
+       ADMIN LOGIN
+    ===================================== */
 
     const handleSubmit = async (
         event: FormEvent<HTMLFormElement>
@@ -96,6 +111,7 @@ export default function AdminLogin() {
                         body: JSON.stringify({
                             clientNumber:
                                 clientNumber.trim(),
+
                             password,
                         }),
                     }
@@ -106,7 +122,11 @@ export default function AdminLogin() {
                 await response.json();
 
 
-            if (!response.ok || !data.success) {
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
                 throw new Error(
                     data.message ||
                     "Administrator login failed."
@@ -118,13 +138,20 @@ export default function AdminLogin() {
                 !data.user ||
                 data.user.role !== "admin"
             ) {
+
                 throw new Error(
                     "This account does not have administrator access."
                 );
             }
 
 
-            login(
+            /* ==============================
+               IMPORTANT:
+               Store admin credentials in
+               admin-specific storage.
+            ============================== */
+
+            adminLogin(
                 data.token,
                 data.user
             );
@@ -137,6 +164,7 @@ export default function AdminLogin() {
                 }
             );
 
+
         } catch (error) {
 
             setError(
@@ -148,7 +176,6 @@ export default function AdminLogin() {
         } finally {
 
             setLoading(false);
-
         }
     };
 
@@ -159,11 +186,13 @@ export default function AdminLogin() {
             <section className="admin-login-card">
 
                 <div className="admin-login-brand">
+
                     <div className="admin-login-logo">
                         C
                     </div>
 
                     <div>
+
                         <h1>
                             Capital Bank
                         </h1>
@@ -171,7 +200,9 @@ export default function AdminLogin() {
                         <p>
                             Administrator Portal
                         </p>
+
                     </div>
+
                 </div>
 
 
@@ -194,12 +225,14 @@ export default function AdminLogin() {
 
 
                 {error && (
+
                     <div
                         className="admin-login-error"
                         role="alert"
                     >
                         {error}
                     </div>
+
                 )}
 
 
@@ -211,6 +244,7 @@ export default function AdminLogin() {
                     <label htmlFor="admin-client-number">
                         Administrator Client Number
                     </label>
+
 
                     <input
                         id="admin-client-number"
@@ -230,6 +264,7 @@ export default function AdminLogin() {
                     <label htmlFor="admin-password">
                         Password
                     </label>
+
 
                     <input
                         id="admin-password"
