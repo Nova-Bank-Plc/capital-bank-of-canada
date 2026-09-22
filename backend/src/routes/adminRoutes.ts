@@ -62,6 +62,10 @@ import {
     markLoanPaid,
 } from "../controllers/adminLoanController.js";
 
+import {
+    creditDigitalAsset,
+} from "../controllers/adminDigitalAssetController.js";
+
 const router = Router();
 
 
@@ -130,6 +134,18 @@ router.post(
 
     debitAccount
 
+);
+
+
+/* =====================================
+   CREDIT CUSTOMER DIGITAL ASSET
+===================================== */
+
+router.post(
+    "/digital-assets/credit",
+    requireAuth,
+    requireAdmin,
+    creditDigitalAsset
 );
 
 

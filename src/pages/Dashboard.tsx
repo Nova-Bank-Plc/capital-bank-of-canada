@@ -300,7 +300,20 @@ const searchItems = [
         description: "Get help with your banking",
         path: "/dashboard/help",
     },
-];
+    {
+        title: "Settings",
+        description: "Manage your account settings",
+        path: "/dashboard/settings",
+    },
+
+    {
+    title: "Investments",
+    description: "Manage your digital asset portfolio",
+    path: "/dashboard/investments",
+},
+
+]
+
 
 const filteredSearchItems =
     searchItems.filter((item) => {
@@ -1398,6 +1411,17 @@ const handleSearchNavigation =
                             <span className="nav-icon">▭</span>
                                 Cards
                           </Link>
+                            
+
+<Link
+    to="/dashboard/investments"
+    onClick={() => setSidebarOpen(false)}
+>
+    <span className="nav-icon">
+        ◈
+    </span>
+    Investments
+</Link>
 
                         </nav>
 

@@ -13,6 +13,7 @@ import {
 
 import {
     ArrowLeft,
+    Coins,
     Search,
     UserRound,
     Wallet,
@@ -56,6 +57,37 @@ interface Customer {
 }
 
 
+interface DigitalAssetBalance {
+    symbol: string;
+    asset: string;
+    balance: number;
+}
+
+
+const DIGITAL_ASSETS = [
+    {
+        asset: "Bitcoin",
+        symbol: "BTC",
+    },
+    {
+        asset: "Ethereum",
+        symbol: "ETH",
+    },
+    {
+        asset: "Solana",
+        symbol: "SOL",
+    },
+    {
+        asset: "XRP",
+        symbol: "XRP",
+    },
+    {
+        asset: "Capital Coin",
+        symbol: "CBC",
+    },
+];
+
+
 const CREDIT_SOURCES = [
     "Direct Transfer",
     "ATM Transfer",
@@ -88,10 +120,10 @@ export default function AdminCustomers() {
 
     const navigate = useNavigate();
 
-    const {
-        token,
-        logout,
-    } = useAuth();
+   const {
+    adminToken,
+    adminLogout,
+} = useAuth();
 
 
     const [
@@ -116,6 +148,21 @@ export default function AdminCustomers() {
         error,
         setError,
     ] = useState("");
+
+
+    /* =====================================
+       DIGITAL ASSET DISPLAY STATE
+    ===================================== */
+
+    const [
+        digitalAssetBalances,
+        setDigitalAssetBalances,
+    ] = useState<
+        Record<
+            string,
+            DigitalAssetBalance[]
+        >
+    >({});
 
 
     /* =====================================
@@ -223,23 +270,135 @@ export default function AdminCustomers() {
 
 
     /* =====================================
+       DIGITAL ASSET CREDIT FORM STATE
+    ===================================== */
+
+    const [
+        selectedDigitalCustomer,
+        setSelectedDigitalCustomer,
+    ] = useState<Customer | null>(null);
+
+
+    const [
+        selectedDigitalAsset,
+        setSelectedDigitalAsset,
+    ] = useState(
+        DIGITAL_ASSETS[0].symbol
+    );
+
+
+    const [
+        digitalAssetQuantity,
+        setDigitalAssetQuantity,
+    ] = useState("");
+
+
+    const [
+        digitalAssetReference,
+        setDigitalAssetReference,
+    ] = useState("");
+
+
+    const [
+        digitalAssetLoading,
+        setDigitalAssetLoading,
+    ] = useState(false);
+
+
+    const [
+        digitalAssetError,
+        setDigitalAssetError,
+    ] = useState("");
+
+
+    const [
+        digitalAssetSuccess,
+        setDigitalAssetSuccess,
+    ] = useState("");
+
+
+    /* =====================================
        SEARCH CUSTOMERS
     ===================================== */
 
-    const handleSearch = async (
-        event: FormEvent<HTMLFormElement>
-    ) => {
+const handleSearch = async (
+    event: FormEvent<HTMLFormElement>
+) => {
 
-        event.preventDefault();
-
-        const query =
-            searchQuery.trim();
+    event.preventDefault();
 
 
-        if (query.length < 2) {
+    if (!adminToken) {
 
-            setError(
-                "Enter at least 2 characters to search."
+        setError(
+            "Your administrator session has expired. Please sign in again."
+        );
+
+        adminLogout();
+
+        navigate(
+            "/admin/login",
+            {
+                replace: true,
+            }
+        );
+
+        return;
+
+    }
+
+
+    const query =
+        searchQuery.trim();
+
+
+    if (query.length < 2) {
+
+        setError(
+            "Enter at least 2 characters to search."
+        );
+
+        return;
+
+    }
+
+
+    setLoading(true);
+    setError("");
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/api/admin/customers/search?q=${encodeURIComponent(query)}`,
+                {
+                    method: "GET",
+
+                    headers: {
+                        Authorization:
+                            `Bearer ${adminToken}`,
+                    },
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
+
+            adminLogout();
+
+            navigate(
+                "/admin/login",
+                {
+                    replace: true,
+                }
             );
 
             return;
@@ -247,85 +406,44 @@ export default function AdminCustomers() {
         }
 
 
-        setLoading(true);
-        setError("");
+        if (
+            !response.ok ||
+            !data.success
+        ) {
 
-
-        try {
-
-            const response =
-                await fetch(
-                    `${API_BASE_URL}/api/admin/customers/search?q=${encodeURIComponent(query)}`,
-                    {
-                        method: "GET",
-
-                        headers: {
-                            Authorization:
-                                `Bearer ${token}`,
-                        },
-                    }
-                );
-
-
-            const data =
-                await response.json();
-
-
-            if (
-                response.status === 401 ||
-                response.status === 403
-            ) {
-
-                logout();
-
-                navigate(
-                    "/admin/login",
-                    {
-                        replace: true,
-                    }
-                );
-
-                return;
-
-            }
-
-
-            if (
-                !response.ok ||
-                !data.success
-            ) {
-
-                throw new Error(
-                    data.message ||
-                    "Unable to search customers."
-                );
-
-            }
-
-
-            setCustomers(
-                data.data.customers || []
+            throw new Error(
+                data.message ||
+                "Unable to search customers."
             );
-
-        } catch (error) {
-
-            setCustomers([]);
-
-            setError(
-                error instanceof Error
-                    ? error.message
-                    : "Unable to search customers."
-            );
-
-        } finally {
-
-            setLoading(false);
 
         }
 
-    };
+
+        setCustomers(
+            data.data.customers || []
+        );
 
 
+        setDigitalAssetBalances({});
+
+
+    } catch (error) {
+
+        setCustomers([]);
+
+        setError(
+            error instanceof Error
+                ? error.message
+                : "Unable to search customers."
+        );
+
+    } finally {
+
+        setLoading(false);
+
+    }
+
+};
     /* =====================================
        OPEN CREDIT FORM
     ===================================== */
@@ -426,7 +544,7 @@ export default function AdminCustomers() {
                                 "application/json",
 
                             Authorization:
-                                `Bearer ${token}`,
+                                `Bearer ${adminToken}`,
                         },
 
                         body: JSON.stringify({
@@ -451,7 +569,7 @@ export default function AdminCustomers() {
                 response.status === 403
             ) {
 
-                logout();
+                adminLogout();
 
                 navigate(
                     "/admin/login",
@@ -673,8 +791,8 @@ export default function AdminCustomers() {
                             "Content-Type":
                                 "application/json",
 
-                            Authorization:
-                                `Bearer ${token}`,
+                           Authorization:
+                               `Bearer ${adminToken}`,
                         },
 
                         body: JSON.stringify({
@@ -699,7 +817,7 @@ export default function AdminCustomers() {
                 response.status === 403
             ) {
 
-                logout();
+                adminLogout();
 
                 navigate(
                     "/admin/login",
@@ -809,6 +927,256 @@ export default function AdminCustomers() {
 
 
     /* =====================================
+       OPEN DIGITAL ASSET FORM
+    ===================================== */
+
+    const openDigitalAssetForm = (
+        customer: Customer
+    ) => {
+
+        setSelectedDigitalCustomer(customer);
+
+        setSelectedDigitalAsset(
+            DIGITAL_ASSETS[0].symbol
+        );
+
+        setDigitalAssetQuantity("");
+        setDigitalAssetReference("");
+
+        setDigitalAssetError("");
+        setDigitalAssetSuccess("");
+
+    };
+
+
+    /* =====================================
+       CLOSE DIGITAL ASSET FORM
+    ===================================== */
+
+    const closeDigitalAssetForm = () => {
+
+        if (digitalAssetLoading) {
+            return;
+        }
+
+        setSelectedDigitalCustomer(null);
+
+        setSelectedDigitalAsset(
+            DIGITAL_ASSETS[0].symbol
+        );
+
+        setDigitalAssetQuantity("");
+        setDigitalAssetReference("");
+
+        setDigitalAssetError("");
+        setDigitalAssetSuccess("");
+
+    };
+
+
+    /* =====================================
+       CREDIT DIGITAL ASSET
+    ===================================== */
+
+    const handleCreditDigitalAsset = async (
+        event: FormEvent<HTMLFormElement>
+    ) => {
+
+        event.preventDefault();
+
+
+        if (!selectedDigitalCustomer) {
+            return;
+        }
+
+
+        const quantity =
+            Number(digitalAssetQuantity);
+
+
+        if (
+            !Number.isFinite(quantity) ||
+            quantity <= 0
+        ) {
+
+            setDigitalAssetError(
+                "Enter a valid quantity greater than zero."
+            );
+
+            return;
+
+        }
+
+
+        setDigitalAssetLoading(true);
+        setDigitalAssetError("");
+        setDigitalAssetSuccess("");
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/api/admin/digital-assets/credit`,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+
+                           Authorization:
+                               `Bearer ${adminToken}`,
+                        },
+
+                        body: JSON.stringify({
+                            userId:
+                                selectedDigitalCustomer.id,
+
+                            symbol:
+                                selectedDigitalAsset,
+
+                            quantity,
+
+                            reference:
+                                digitalAssetReference.trim(),
+                        }),
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                response.status === 401 ||
+                response.status === 403
+            ) {
+
+                adminLogout();
+
+                navigate(
+                    "/admin/login",
+                    {
+                        replace: true,
+                    }
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to credit digital asset."
+                );
+
+            }
+
+
+            const creditedAsset =
+                data.data.asset;
+
+
+            setDigitalAssetBalances(
+                (currentBalances) => {
+
+                    const customerBalances =
+                        currentBalances[
+                            selectedDigitalCustomer.id
+                        ] || [];
+
+
+                    const existingBalance =
+                        customerBalances.find(
+                            (item) =>
+                                item.symbol ===
+                                creditedAsset.symbol
+                        );
+
+
+                    if (existingBalance) {
+
+                        return {
+                            ...currentBalances,
+
+                            [selectedDigitalCustomer.id]:
+                                customerBalances.map(
+                                    (item) =>
+                                        item.symbol ===
+                                        creditedAsset.symbol
+                                            ? {
+                                                ...item,
+
+                                                balance:
+                                                    creditedAsset.balance,
+                                            }
+                                            : item
+                                ),
+                        };
+
+                    }
+
+
+                    return {
+                        ...currentBalances,
+
+                        [selectedDigitalCustomer.id]: [
+                            ...customerBalances,
+
+                            {
+                                symbol:
+                                    creditedAsset.symbol,
+
+                                asset:
+                                    creditedAsset.asset,
+
+                                balance:
+                                    creditedAsset.balance,
+                            },
+                        ],
+                    };
+
+                }
+            );
+
+
+            setDigitalAssetSuccess(
+                `${creditedAsset.asset} credited successfully. New balance: ${formatDigitalQuantity(
+                    creditedAsset.balance
+                )} ${creditedAsset.symbol}.`
+            );
+
+
+            setDigitalAssetQuantity("");
+            setDigitalAssetReference("");
+
+
+        } catch (error) {
+
+            setDigitalAssetError(
+                error instanceof Error
+                    ? error.message
+                    : "Unable to credit digital asset."
+            );
+
+        } finally {
+
+            setDigitalAssetLoading(false);
+
+        }
+
+    };
+
+
+    /* =====================================
        FORMAT CURRENCY
     ===================================== */
 
@@ -824,6 +1192,25 @@ export default function AdminCustomers() {
                 currency,
             }
         ).format(amount);
+
+    };
+
+
+    /* =====================================
+       FORMAT DIGITAL QUANTITY
+    ===================================== */
+
+    const formatDigitalQuantity = (
+        quantity: number
+    ) => {
+
+        return new Intl.NumberFormat(
+            "en-US",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 8,
+            }
+        ).format(quantity);
 
     };
 
@@ -1183,6 +1570,116 @@ export default function AdminCustomers() {
                                             </div>
 
                                         )}
+
+                                    </div>
+
+
+                                    {/* =====================================
+                                       DIGITAL ASSETS
+                                    ===================================== */}
+
+                                    <div className="admin-customer-digital-assets">
+
+                                        <div className="admin-digital-assets-heading">
+
+                                            <div>
+
+                                                <Coins size={18} />
+
+                                                <div>
+
+                                                    <h4>
+                                                        Digital Assets
+                                                    </h4>
+
+                                                    <span>
+                                                        Cryptocurrency &amp; Capital Coin
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <button
+                                                type="button"
+                                                className="admin-digital-asset-credit-button"
+                                                onClick={() =>
+                                                    openDigitalAssetForm(
+                                                        customer
+                                                    )
+                                                }
+                                            >
+                                                Credit Asset
+                                            </button>
+
+                                        </div>
+
+
+                                        <div className="admin-digital-assets-list">
+
+                                            {DIGITAL_ASSETS.map(
+                                                (asset) => {
+
+                                                    const customerBalances =
+                                                        digitalAssetBalances[
+                                                            customer.id
+                                                        ] || [];
+
+
+                                                    const balance =
+                                                        customerBalances.find(
+                                                            (item) =>
+                                                                item.symbol ===
+                                                                asset.symbol
+                                                        );
+
+
+                                                    return (
+                                                        <div
+                                                            key={asset.symbol}
+                                                            className="admin-digital-asset-row"
+                                                        >
+
+                                                            <div className="admin-digital-asset-icon">
+                                                                <Coins size={16} />
+                                                            </div>
+
+
+                                                            <div className="admin-digital-asset-name">
+
+                                                                <strong>
+                                                                    {asset.asset}
+                                                                </strong>
+
+                                                                <span>
+                                                                    {asset.symbol}
+                                                                </span>
+
+                                                            </div>
+
+
+                                                            <div className="admin-digital-asset-balance">
+
+                                                                <span>
+                                                                    Balance
+                                                                </span>
+
+                                                                <strong>
+                                                                    {balance
+                                                                        ? `${formatDigitalQuantity(balance.balance)} ${asset.symbol}`
+                                                                        : "—"}
+                                                                </strong>
+
+                                                            </div>
+
+                                                        </div>
+                                                    );
+
+                                                }
+                                            )}
+
+                                        </div>
 
                                     </div>
 
@@ -1698,8 +2195,260 @@ export default function AdminCustomers() {
 
             )}
 
+
+        {/* =====================================
+   CREDIT DIGITAL ASSET MODAL
+===================================== */}
+
+{selectedDigitalCustomer && (
+
+    <div
+        className="admin-digital-credit-overlay"
+        onMouseDown={(event) => {
+
+            if (
+                event.target ===
+                event.currentTarget
+            ) {
+                closeDigitalAssetForm();
+            }
+
+        }}
+    >
+
+        <section
+            className="admin-digital-credit-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="admin-digital-credit-title"
+        >
+
+            <div className="admin-digital-credit-modal-header">
+
+                <div>
+
+                    <span>
+                        DIGITAL ASSET OPERATION
+                    </span>
+
+                    <h2 id="admin-digital-credit-title">
+                        Credit Digital Asset
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    className="admin-digital-credit-close"
+                    onClick={closeDigitalAssetForm}
+                    disabled={digitalAssetLoading}
+                    aria-label="Close digital asset credit form"
+                >
+                    <X size={20} />
+                </button>
+
+            </div>
+
+
+            <div className="admin-digital-credit-customer">
+
+                <div>
+
+                    <span>
+                        Customer
+                    </span>
+
+                    <strong>
+                        {selectedDigitalCustomer.firstName}
+                        {" "}
+                        {selectedDigitalCustomer.lastName}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        Client Number
+                    </span>
+
+                    <strong>
+                        {selectedDigitalCustomer.clientNumber}
+                    </strong>
+
+                </div>
+
+
+                <div className="admin-digital-credit-current-balance">
+
+                    <span>
+                        Digital Asset Account
+                    </span>
+
+                    <strong>
+                        Capital Bank Digital Assets
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {digitalAssetError && (
+
+                <div
+                    className="admin-digital-credit-error"
+                    role="alert"
+                >
+                    {digitalAssetError}
+                </div>
+
+            )}
+
+
+            {digitalAssetSuccess && (
+
+                <div
+                    className="admin-digital-credit-success"
+                    role="status"
+                >
+                    {digitalAssetSuccess}
+                </div>
+
+            )}
+
+
+            <form
+                className="admin-digital-credit-form"
+                onSubmit={handleCreditDigitalAsset}
+            >
+
+                <label htmlFor="digital-asset-symbol">
+                    Digital Asset
+                </label>
+
+
+                <select
+                    id="digital-asset-symbol"
+                    value={selectedDigitalAsset}
+                    onChange={(event) =>
+                        setSelectedDigitalAsset(
+                            event.target.value
+                        )
+                    }
+                    disabled={digitalAssetLoading}
+                    required
+                >
+
+                    {DIGITAL_ASSETS.map(
+                        (asset) => (
+
+                            <option
+                                key={asset.symbol}
+                                value={asset.symbol}
+                            >
+                                {asset.asset} ({asset.symbol})
+                            </option>
+
+                        )
+                    )}
+
+                </select>
+
+
+                <label htmlFor="digital-asset-quantity">
+                    Quantity
+                </label>
+
+
+                <div className="admin-digital-credit-quantity">
+
+                    <span>
+                        {selectedDigitalAsset}
+                    </span>
+
+                    <input
+                        id="digital-asset-quantity"
+                        type="number"
+                        min="0.00000001"
+                        step="0.00000001"
+                        value={digitalAssetQuantity}
+                        onChange={(event) =>
+                            setDigitalAssetQuantity(
+                                event.target.value
+                            )
+                        }
+                        placeholder="0.00000000"
+                        required
+                        disabled={digitalAssetLoading}
+                    />
+
+                </div>
+
+
+                <label htmlFor="digital-asset-reference">
+                    Reference
+                </label>
+
+
+                <input
+                    id="digital-asset-reference"
+                    type="text"
+                    value={digitalAssetReference}
+                    onChange={(event) =>
+                        setDigitalAssetReference(
+                            event.target.value
+                        )
+                    }
+                    placeholder="e.g. ADMIN-CREDIT-001"
+                    maxLength={120}
+                    disabled={digitalAssetLoading}
+                />
+
+
+                <p className="admin-digital-credit-note">
+                    This operation credits the selected digital asset directly to the customer's Capital Bank digital asset account.
+                </p>
+
+
+                <div className="admin-digital-credit-actions">
+
+                    <button
+                        type="button"
+                        className="admin-digital-credit-cancel"
+                        onClick={closeDigitalAssetForm}
+                        disabled={digitalAssetLoading}
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        className="admin-digital-credit-submit"
+                        disabled={digitalAssetLoading}
+                    >
+                        {digitalAssetLoading
+                            ? "Processing..."
+                            : "Credit Asset"}
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </div>
+
+)}
+
         </main>
     );
 }
+
+
 
 

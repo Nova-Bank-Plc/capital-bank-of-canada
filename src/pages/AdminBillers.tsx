@@ -118,10 +118,10 @@ interface PaymentOptionForm {
 function AdminBillersContent() {
 
     const {
-        user,
-        token,
-        logout,
-    } = useAuth();
+    adminUser,
+    adminToken,
+    adminLogout,
+} = useAuth();
 
 
     /* =========================================
@@ -239,7 +239,7 @@ function AdminBillersContent() {
 
     const loadBillers = async () => {
 
-        if (!token) {
+        if (!adminToken) {
             return;
         }
 
@@ -259,7 +259,7 @@ function AdminBillersContent() {
 
                         headers: {
                             Authorization:
-                                `Bearer ${token}`,
+                                `Bearer ${adminToken}`,
                         },
                     }
                 );
@@ -274,7 +274,7 @@ function AdminBillersContent() {
                 response.status === 403
             ) {
 
-                logout();
+                adminLogout();
 
                 return;
 
@@ -322,10 +322,12 @@ function AdminBillersContent() {
 
 
     useEffect(() => {
+    if (!adminToken) {
+        return;
+    }
 
-        loadBillers();
-
-    }, [token]);
+    loadBillers();
+}, [adminToken]);
 
 
     /* =========================================
@@ -405,7 +407,7 @@ function AdminBillersContent() {
         event.preventDefault();
 
 
-        if (!token) {
+        if (!adminToken) {
             return;
         }
 
@@ -443,7 +445,7 @@ function AdminBillersContent() {
                         headers: {
 
                             Authorization:
-                                `Bearer ${token}`,
+                                `Bearer ${adminToken}`,
 
                             "Content-Type":
                                 "application/json",
@@ -477,7 +479,7 @@ function AdminBillersContent() {
                 response.status === 403
             ) {
 
-                logout();
+                adminLogout();
 
                 return;
 
@@ -540,7 +542,7 @@ function AdminBillersContent() {
         biller: Biller
     ) => {
 
-        if (!token) {
+        if (!adminToken) {
             return;
         }
 
@@ -567,7 +569,7 @@ function AdminBillersContent() {
                         headers: {
 
                             Authorization:
-                                `Bearer ${token}`,
+                                `Bearer ${adminToken}`,
 
                             "Content-Type":
                                 "application/json",
@@ -595,7 +597,7 @@ function AdminBillersContent() {
                 response.status === 403
             ) {
 
-                logout();
+                adminLogout();
 
                 return;
 
@@ -738,7 +740,7 @@ function AdminBillersContent() {
 
 
             if (
-                !token ||
+                !adminToken ||
                 !paymentOptionBillerId
             ) {
 
@@ -782,7 +784,7 @@ function AdminBillersContent() {
                             headers: {
 
                                 Authorization:
-                                    `Bearer ${token}`,
+                                    `Bearer ${adminToken}`,
 
                                 "Content-Type":
                                     "application/json",
@@ -813,7 +815,7 @@ function AdminBillersContent() {
                                        response.status === 403
                 ) {
 
-                    logout();
+                    adminLogout();
 
                     return;
 
@@ -878,7 +880,7 @@ function AdminBillersContent() {
             option: PaymentOption
         ) => {
 
-            if (!token) {
+            if (!adminToken) {
                 return;
             }
 
@@ -906,8 +908,7 @@ function AdminBillersContent() {
 
                             headers: {
 
-                                Authorization:
-                                    `Bearer ${token}`,
+                                Authorization: `Bearer ${adminToken}`,
 
                                 "Content-Type":
                                     "application/json",
@@ -936,7 +937,7 @@ function AdminBillersContent() {
                     response.status === 403
                 ) {
 
-                    logout();
+                   adminLogout();
 
                     return;
 
@@ -1042,16 +1043,9 @@ function AdminBillersContent() {
     /* =========================================
        ACCESS CHECK
     ========================================= */
-
-    if (
-        !user ||
-        user.role !== "admin"
-    ) {
-
-        return null;
-
-    }
-
+if (!adminUser || adminUser.role !== "admin") {
+    return null;
+}
 
     return (
 
@@ -1095,15 +1089,15 @@ function AdminBillersContent() {
                 <div className="admin-billers-header-right">
 
                     <span className="admin-billers-admin-name">
-                        {user.firstName}{" "}
-                        {user.lastName}
+                        {adminUser.firstName}{" "}
+                        {adminUser.lastName}
                     </span>
 
 
                     <button
                         type="button"
                         className="admin-billers-logout"
-                        onClick={logout}
+                        onClick={adminLogout}
                     >
                         Sign Out
                     </button>

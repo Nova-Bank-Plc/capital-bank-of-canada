@@ -12,6 +12,7 @@ interface ThemeContextValue {
     darkMode: boolean;
 
     toggleDarkMode: () => void;
+
 }
 
 
@@ -24,12 +25,13 @@ const ThemeContext =
 interface ThemeProviderProps {
 
     children: ReactNode;
+
 }
 
 
-export const ThemeProvider = ({
+export function ThemeProvider({
     children,
-}: ThemeProviderProps) => {
+}: ThemeProviderProps) {
 
     const [
         darkMode,
@@ -41,17 +43,8 @@ export const ThemeProvider = ({
                 "capital-bank-theme"
             );
 
-        if (savedTheme === "dark") {
-            return true;
-        }
+        return savedTheme === "dark";
 
-        if (savedTheme === "light") {
-            return false;
-        }
-
-        return window.matchMedia(
-            "(prefers-color-scheme: dark)"
-        ).matches;
     });
 
 
@@ -63,73 +56,72 @@ export const ThemeProvider = ({
 
         if (darkMode) {
 
-            root.classList.add(
-                "dark"
-            );
-
-            localStorage.setItem(
-                "capital-bank-theme",
-                "dark"
-            );
+            root.classList.add("dark");
 
         } else {
 
-            root.classList.remove(
-                "dark"
-            );
+            root.classList.remove("dark");
 
-            localStorage.setItem(
-                "capital-bank-theme",
-                "light"
-            );
         }
+
+
+        localStorage.setItem(
+            "capital-bank-theme",
+            darkMode
+                ? "dark"
+                : "light"
+        );
 
     }, [
         darkMode,
     ]);
 
 
-    const toggleDarkMode =
-        () => {
+    const toggleDarkMode = () => {
 
-            setDarkMode(
-                current =>
-                    !current
-            );
+        setDarkMode(
+            current =>
+                !current
+        );
 
-        };
+    };
 
 
     return (
+
         <ThemeContext.Provider
             value={{
                 darkMode,
                 toggleDarkMode,
             }}
         >
+
             {children}
+
         </ThemeContext.Provider>
+
     );
-};
+
+}
 
 
-export const useTheme =
-    (): ThemeContextValue => {
+export function useTheme() {
 
-        const context =
-            useContext(
-                ThemeContext
-            );
-
-
-        if (!context) {
-
-            throw new Error(
-                "useTheme must be used inside ThemeProvider."
-            );
-        }
+    const context =
+        useContext(
+            ThemeContext
+        );
 
 
-        return context;
-    };
+    if (!context) {
 
+        throw new Error(
+            "useTheme must be used within a ThemeProvider"
+        );
+
+    }
+
+
+    return context;
+
+}

@@ -14,6 +14,8 @@ import adminRoutes from "./routes/adminRoutes.js";
 import notificationRoutes from "./routes/notificationRoutes.js";
 import billPaymentRoutes from "./routes/billPaymentRoutes.js";
 import supportRoutes from "./routes/supportRoutes.js";
+import digitalAssetRoutes from "./routes/digitalAssetRoutes.js";
+import adminDigitalAssetRoutes from "./routes/adminDigitalAssetRoutes.js";
 
 dotenv.config();
 
@@ -49,9 +51,19 @@ app.use(
     cardRoutes
 );
 
+app.use(
+    "/api/digital-assets",
+    digitalAssetRoutes,
+);
+
 app.use("/api/accounts", accountRoutes);
 
 app.use("/api/admin", adminRoutes);
+
+app.use(
+    "/api/admin/digital-assets",
+    adminDigitalAssetRoutes,
+);
 
 app.use(
     "/api/transfers",

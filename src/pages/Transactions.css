@@ -1,13 +1,20 @@
 /* =========================================
    CAPITAL BANK OF CANADA
-
-   HELP CENTRE + CUSTOMER SUPPORT
+   CUSTOMER TRANSACTIONS
 ========================================= */
 
-.help-center-page {
+
+/* =========================================
+   PAGE
+========================================= */
+
+.transactions-page {
     min-height: 100vh;
     background: var(--page-bg);
     color: var(--text-primary);
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 
@@ -15,56 +22,72 @@
    HEADER
 ========================================= */
 
-.help-center-header {
+.transactions-header {
     position: sticky;
     top: 0;
     z-index: 100;
-    min-height: 72px;
+    height: 72px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    padding: 0 32px;
+    padding: 0 28px;
+
+    border-bottom: 1px solid var(--border-color);
 
     background: var(--surface);
-    border-bottom: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
 }
 
-.help-center-header-left {
+
+.transactions-header-left {
     display: flex;
     align-items: center;
     gap: 18px;
+
+    min-width: 0;
 }
 
-.help-center-back {
-    width: 40px;
-    height: 40px;
+
+.transactions-back {
+    width: 38px;
+    height: 38px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 10px;
+    flex-shrink: 0;
 
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+    background: var(--surface);
     color: var(--text-primary);
-    text-decoration: none;
-    background: var(--page-bg);
 
-    font-size: 1.25rem;
+    font-size: 20px;
+    line-height: 1;
+    text-decoration: none;
 
     transition:
-        background 0.2s ease,
-        color 0.2s ease;
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease;
 }
 
-.help-center-back:hover {
-    background: var(--red);
-    color: #ffffff;
+
+.transactions-back:hover {
+    background: var(--surface-secondary);
+    transform: translateX(-2px);
 }
 
-.help-center-logo {
+
+.transactions-logo {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -73,84 +96,8 @@
     text-decoration: none;
 }
 
-.help-center-logo-mark {
-    width: 38px;
-    height: 38px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 10px;
-
-    background: var(--red);
-    color: #ffffff;
-
-    font-family: Georgia, serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.help-center-logo-text {
-    display: flex;
-    flex-direction: column;
-
-    font-size: 0.95rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-}
-
-.help-center-logo-text small {
-    margin-top: 2px;
-
-    font-size: 0.48rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-
-    opacity: 0.65;
-}
-
-.help-center-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.help-center-theme-button {
-    width: 40px;
-    height: 40px;
-
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-
-    background: var(--surface);
-    color: var(--text-primary);
-
-    cursor: pointer;
-
-    font-size: 1.1rem;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.help-center-theme-button:hover {
-    background: var(--page-bg);
-}
-
-.help-center-profile {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-
-    color: var(--text-primary);
-
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.help-center-avatar {
+.transactions-logo-mark {
     width: 36px;
     height: 36px;
 
@@ -158,29 +105,154 @@
     align-items: center;
     justify-content: center;
 
+    flex-shrink: 0;
+
+    border-radius: 7px;
+
+    background: var(--red);
+    color: #ffffff;
+
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 800;
+}
+
+
+.transactions-logo-text {
+    display: flex;
+    flex-direction: column;
+
+    color: var(--text-primary);
+
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: 0.08em;
+}
+
+
+.transactions-logo-text small {
+    margin-top: 3px;
+
+    color: var(--text-secondary);
+
+    font-family: var(--font-body);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+
+/* =========================================
+   HEADER ACTIONS
+========================================= */
+
+.transactions-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+.transactions-theme-button {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+    background: var(--surface);
+    color: var(--text-primary);
+
+    cursor: pointer;
+
+    font-size: 17px;
+    line-height: 1;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease;
+}
+
+
+.transactions-theme-button:hover {
+    background: var(--surface-secondary);
+    transform: translateY(-1px);
+}
+
+
+.transactions-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--text-primary);
+
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+.transactions-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
     border-radius: 50%;
 
     background: var(--red);
     color: #ffffff;
 
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-family: var(--font-heading);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
 }
 
-.help-center-signout {
-    border: 0;
-    background: transparent;
 
-    color: var(--text-secondary);
+.transactions-signout {
+    min-height: 36px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+    background: var(--surface);
+    color: var(--text-primary);
 
     cursor: pointer;
 
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 650;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
 }
 
-.help-center-signout:hover {
-    color: var(--red);
+
+.transactions-signout:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #ffffff;
 }
 
 
@@ -188,14 +260,14 @@
    MAIN
 ========================================= */
 
-.help-center-main {
-    min-height: calc(100vh - 72px);
-
-    padding: 44px 24px 80px;
+.transactions-main {
+    width: 100%;
+    padding: 38px 0 70px;
 }
 
-.help-center-container {
-    width: min(1180px, 100%);
+
+.transactions-container {
+    width: min(1120px, calc(100% - 48px));
     margin: 0 auto;
 }
 
@@ -204,153 +276,360 @@
    BREADCRUMB
 ========================================= */
 
-.help-center-breadcrumb {
+.transactions-breadcrumb {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 8px;
 
-    margin-bottom: 28px;
+    margin-bottom: 27px;
 
     color: var(--text-secondary);
 
-    font-size: 0.82rem;
+    font-size: 10px;
+    font-weight: 500;
 }
 
-.help-center-breadcrumb a {
-    color: var(--red);
+
+.transactions-breadcrumb a {
+    color: var(--text-secondary);
     text-decoration: none;
-    font-weight: 600;
+
+    transition: color 0.2s ease;
 }
 
-.help-center-breadcrumb a:hover {
-    text-decoration: underline;
+
+.transactions-breadcrumb a:hover {
+    color: var(--red);
 }
 
-.help-center-breadcrumb strong {
+
+.transactions-breadcrumb span {
+    color: var(--border-color);
+}
+
+
+.transactions-breadcrumb strong {
     color: var(--text-primary);
+    font-weight: 700;
 }
 
 
 /* =========================================
-   HERO
+   INTRO
 ========================================= */
 
-.help-center-hero {
-    margin-bottom: 34px;
+.transactions-intro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin-bottom: 30px;
 }
 
-.help-center-eyebrow {
+
+.transactions-eyebrow {
     display: block;
 
     margin-bottom: 8px;
 
     color: var(--red);
 
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 800;
     letter-spacing: 0.13em;
 }
 
-.help-center-hero h1 {
-    margin: 0 0 10px;
+
+.transactions-intro h1 {
+    margin: 0;
 
     color: var(--text-primary);
 
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 1.05;
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: -0.035em;
 }
 
-.help-center-hero p {
-    max-width: 650px;
 
-    margin: 0;
+.transactions-intro p {
+    max-width: 600px;
+
+    margin: 9px 0 0;
 
     color: var(--text-secondary);
 
-    line-height: 1.6;
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+
+.transactions-dashboard-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    min-height: 40px;
+
+    padding: 0 16px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 7px;
+
+    background: var(--surface);
+    color: var(--text-primary);
+
+    font-family: var(--font-body);
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.2s ease;
+}
+
+
+.transactions-dashboard-link:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: #ffffff;
+
+    transform: translateY(-1px);
 }
 
 
 /* =========================================
-   HELP CATEGORY GRID
+   ERROR
 ========================================= */
 
-.help-center-grid {
-    display: grid;
+.transactions-error {
+    margin-bottom: 20px;
 
-    grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+    padding: 14px 16px;
 
-    gap: 16px;
+    border: 1px solid rgba(177, 18, 38, 0.28);
+    border-radius: 8px;
 
-    margin-bottom: 56px;
+    background: rgba(177, 18, 38, 0.07);
+    color: var(--red-dark);
+
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
-.help-card {
+
+html.dark .transactions-error {
+    background: rgba(177, 18, 38, 0.16);
+    color: #ff8b99;
+    border-color: rgba(255, 139, 153, 0.24);
+}
+
+
+/* =========================================
+   TRANSACTIONS PANEL
+========================================= */
+
+.transactions-panel {
     overflow: hidden;
 
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 10px;
 
     background: var(--surface);
 
-    box-shadow: var(--shadow-sm);
+    box-shadow:
+        0 7px 25px rgba(0, 0, 0, 0.035);
 
     transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-.help-card:hover {
-    border-color: rgba(177, 18, 38, 0.35);
+
+html.dark .transactions-panel {
+    box-shadow:
+        0 7px 25px rgba(0, 0, 0, 0.22);
 }
 
-.help-card.open {
-    border-color: var(--red);
-}
 
-.help-card-button {
-    width: 100%;
+/* =========================================
+   PANEL HEADER
+========================================= */
 
-    display: grid;
+.transactions-panel-header {
+    min-height: 82px;
 
-    grid-template-columns: 44px minmax(0, 1fr) 28px;
-
+    display: flex;
     align-items: center;
+    justify-content: space-between;
 
-    gap: 14px;
+    gap: 20px;
 
-    padding: 20px;
+    padding: 18px 23px;
 
-    border: 0;
+    border-bottom: 1px solid var(--border-color);
 
-    background: transparent;
+    background: var(--surface);
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease;
+}
+
+
+.transactions-panel-header > div > span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--red);
+
+    font-family: var(--font-body);
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+
+.transactions-panel-header h2 {
+    margin: 0;
 
     color: var(--text-primary);
 
-    text-align: left;
-
-    cursor: pointer;
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
-.help-card-icon {
-    width: 42px;
-    height: 42px;
+
+.transactions-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 28px;
+
+    padding: 0 10px;
+
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+
+    background: var(--surface-secondary);
+    color: var(--text-secondary);
+
+    white-space: nowrap;
+
+    font-family: var(--font-body);
+    font-size: 9px;
+    font-weight: 650;
+}
+
+
+/* =========================================
+   TRANSACTION LIST
+========================================= */
+
+.transactions-list {
+    width: 100%;
+}
+
+
+.transaction-history-row {
+    min-height: 78px;
+
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto auto;
+    align-items: center;
+
+    column-gap: 15px;
+
+    padding: 13px 23px;
+
+    border-bottom: 1px solid var(--border-color);
+
+    background: var(--surface);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.25s ease;
+}
+
+
+.transaction-history-row:last-child {
+    border-bottom: none;
+}
+
+
+.transaction-history-row:hover {
+    background: var(--surface-secondary);
+}
+
+
+/* =========================================
+   TRANSACTION ICON
+========================================= */
+
+.transaction-history-icon {
+    width: 34px;
+    height: 34px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    border-radius: 12px;
+    flex-shrink: 0;
 
-    background: var(--page-bg);
-    color: var(--red);
+    border-radius: 50%;
 
-    font-size: 1rem;
-    font-weight: 800;
+    font-size: 16px;
+    font-weight: 700;
 }
 
-.help-card-title {
+
+.transaction-history-icon.credit {
+    background: rgba(79, 154, 88, 0.12);
+    color: #4f9a58;
+}
+
+
+.transaction-history-icon.debit {
+    background: rgba(177, 18, 38, 0.10);
+    color: var(--red);
+}
+
+
+html.dark .transaction-history-icon.credit {
+    background: rgba(79, 154, 88, 0.18);
+    color: #79c981;
+}
+
+
+html.dark .transaction-history-icon.debit {
+    background: rgba(213, 42, 62, 0.16);
+    color: #ff7b8a;
+}
+
+
+/* =========================================
+   TRANSACTION INFORMATION
+========================================= */
+
+.transaction-history-info {
     min-width: 0;
 
     display: flex;
@@ -359,888 +638,269 @@
     gap: 5px;
 }
 
-.help-card-title strong {
+
+.transaction-history-info strong {
+    overflow: hidden;
+
     color: var(--text-primary);
 
-    font-size: 0.98rem;
+    font-family: var(--font-body);
+    font-size: 11px;
     font-weight: 700;
+    line-height: 1.35;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.help-card-title small {
+
+.transaction-history-info span {
+    overflow: hidden;
+
     color: var(--text-secondary);
 
-    font-size: 0.78rem;
-    line-height: 1.5;
-}
-
-.help-card-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: var(--red);
-
-    font-size: 1.25rem;
+    font-family: var(--font-body);
+    font-size: 9px;
     font-weight: 500;
-}
+    line-height: 1.4;
 
-.help-card-content {
-    padding: 0 20px 18px;
-
-    border-top: 1px solid var(--border-color);
-}
-
-.help-question {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 15px;
-
-    padding: 14px 4px;
-
-    border: 0;
-    border-bottom: 1px solid var(--border-color);
-
-    background: transparent;
-
-    color: var(--text-primary);
-
-    text-align: left;
-
-    cursor: pointer;
-
-    font-family: inherit;
-    font-size: 0.84rem;
-}
-
-.help-question:last-child {
-    border-bottom: 0;
-}
-
-.help-question:hover {
-    color: var(--red);
-}
-
-.help-question span:last-child {
-    flex-shrink: 0;
-
-    color: var(--red);
-
-    font-size: 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
 /* =========================================
-   SUPPORT SECTION
+   STATUS
 ========================================= */
 
-.help-support-section {
-    margin-top: 10px;
-    margin-bottom: 56px;
-}
-
-.help-support-heading {
+.transaction-history-status {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: flex-end;
 
-    gap: 30px;
-
-    margin-bottom: 24px;
+    min-width: 82px;
 }
 
-.help-support-heading > div {
-    min-width: 0;
+
+.transaction-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 24px;
+
+    padding: 0 9px;
+
+    border-radius: 999px;
+
+    font-family: var(--font-body);
+    font-size: 8px;
+    font-weight: 750;
+    line-height: 1;
+
+    text-transform: capitalize;
+    white-space: nowrap;
 }
 
-.help-support-heading h2 {
-    margin: 0 0 9px;
+
+/* =========================================
+   STATUS VARIATIONS
+========================================= */
+
+.transaction-status.completed,
+.transaction-status.success,
+.transaction-status.paid {
+    background: rgba(79, 154, 88, 0.12);
+    color: #3f8247;
+}
+
+
+.transaction-status.pending,
+.transaction-status.processing {
+    background: rgba(190, 145, 42, 0.13);
+    color: #98701b;
+}
+
+
+.transaction-status.failed,
+.transaction-status.rejected,
+.transaction-status.cancelled {
+    background: rgba(177, 18, 38, 0.10);
+    color: var(--red);
+}
+
+
+html.dark .transaction-status.completed,
+html.dark .transaction-status.success,
+html.dark .transaction-status.paid {
+    background: rgba(79, 154, 88, 0.18);
+    color: #79c981;
+}
+
+
+html.dark .transaction-status.pending,
+html.dark .transaction-status.processing {
+    background: rgba(214, 171, 74, 0.18);
+    color: #e5bf64;
+}
+
+
+html.dark .transaction-status.failed,
+html.dark .transaction-status.rejected,
+html.dark .transaction-status.cancelled {
+    background: rgba(213, 42, 62, 0.16);
+    color: #ff7b8a;
+}
+
+
+/* =========================================
+   AMOUNT
+========================================= */
+
+.transaction-history-amount {
+    min-width: 112px;
 
     color: var(--text-primary);
 
-    font-size: 1.65rem;
-    line-height: 1.2;
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 750;
+    line-height: 1.3;
+
+    text-align: right;
+    white-space: nowrap;
 }
 
-.help-support-heading p {
-    margin: 0;
+
+.transaction-history-amount.positive {
+    color: #4f9a58;
+}
+
+
+html.dark .transaction-history-amount.positive {
+    color: #79c981;
+}
+
+
+/* =========================================
+   EMPTY / LOADING STATE
+========================================= */
+
+.transactions-state {
+    min-height: 260px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 40px 24px;
+
+    text-align: center;
+}
+
+
+.transactions-state strong {
+    color: var(--text-primary);
+
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 750;
+}
+
+
+.transactions-state span {
+    max-width: 390px;
 
     color: var(--text-secondary);
 
-    font-size: 0.9rem;
+    font-family: var(--font-body);
+    font-size: 10px;
     line-height: 1.6;
 }
 
-.help-contact-button {
-    flex-shrink: 0;
 
-    min-height: 43px;
-
-    padding: 11px 17px;
-
-    border: 0;
-    border-radius: 10px;
-
-    background: var(--red);
-    color: #ffffff;
-
-    cursor: pointer;
-
-    font-family: inherit;
-    font-size: 0.84rem;
-    font-weight: 700;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-.help-contact-button:hover {
-    background: var(--red-dark);
-    transform: translateY(-1px);
-}
-
-
-/* =========================================
-   SUPPORT MESSAGES
-========================================= */
-
-.help-support-success,
-.help-support-error {
-    margin-bottom: 18px;
-
-    padding: 14px 16px;
-
-    border-radius: 11px;
-
-    font-size: 0.84rem;
-    line-height: 1.5;
-}
-
-.help-support-success {
-    border: 1px solid #b7dfc8;
-    background: #effaf3;
-    color: #18794e;
-}
-
-.help-support-error {
-    border: 1px solid #efc5c5;
-    background: #fff1f1;
-    color: #b42318;
-}
-
-
-/* =========================================
-   SUPPORT FORM
-========================================= */
-
-.help-support-form {
-    margin-bottom: 24px;
-
-    padding: 24px;
-
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-
-    background: var(--surface);
-
-    box-shadow: var(--shadow-sm);
-}
-
-.help-support-form-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 16px;
-
-    margin-bottom: 18px;
-}
-
-.help-support-form label {
-    display: flex;
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-.help-support-form label > span {
-    color: var(--text-primary);
-
-    font-size: 0.78rem;
-    font-weight: 700;
-}
-
-.help-support-form input,
-.help-support-form select,
-.help-support-form textarea {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    border: 1px solid var(--border-color);
-    border-radius: 9px;
-
-    background: var(--surface);
-    color: var(--text-primary);
-
-    outline: none;
-
-    font-family: inherit;
-    font-size: 0.85rem;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-
-.help-support-form input,
-.help-support-form select {
-    min-height: 44px;
-
-    padding: 0 12px;
-}
-
-.help-support-form textarea {
-    min-height: 130px;
-
-    padding: 12px;
-
-    resize: vertical;
-}
-
-.help-support-form input::placeholder,
-.help-support-form textarea::placeholder {
-    color: var(--text-secondary);
-    opacity: 0.7;
-}
-
-.help-support-form input:focus,
-.help-support-form select:focus,
-.help-support-form textarea:focus {
-    border-color: var(--red);
-
-    box-shadow:
-        0 0 0 3px rgba(177, 18, 38, 0.08);
-}
-
-.help-support-form-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    gap: 10px;
-
-    margin-top: 18px;
-}
-
-.help-support-cancel,
-.help-support-submit {
-    min-height: 42px;
-
-    padding: 0 17px;
-
-    border-radius: 9px;
-
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 700;
-
-    cursor: pointer;
-}
-
-.help-support-cancel {
-    border: 1px solid var(--border-color);
-
-    background: var(--surface);
-
-    color: var(--text-primary);
-}
-
-.help-support-cancel:hover {
-    border-color: var(--red);
-    color: var(--red);
-}
-
-.help-support-submit {
-    border: 0;
-
-    background: var(--red);
-    color: #ffffff;
-}
-
-.help-support-submit:hover {
-    background: var(--red-dark);
-}
-
-.help-support-submit:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-
-/* =========================================
-   TICKET LIST
-========================================= */
-
-.help-ticket-list {
-    display: flex;
-    flex-direction: column;
-
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-
-    overflow: hidden;
-
-    background: var(--surface);
-
-    box-shadow: var(--shadow-sm);
-}
-
-.help-ticket-card {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 25px;
-
-    padding: 20px 22px;
-
-    border: 0;
-    border-bottom: 1px solid var(--border-color);
-
-    background: var(--surface);
-    color: var(--text-primary);
-
-    text-align: left;
-
-    cursor: pointer;
-
-    font-family: inherit;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease;
-}
-
-.help-ticket-card:last-child {
-    border-bottom: 0;
-}
-
-.help-ticket-card:hover {
-    background: var(--page-bg);
-}
-
-.help-ticket-card.selected {
-    background: var(--page-bg);
-    box-shadow: inset 3px 0 0 var(--red);
-}
-
-.help-ticket-main {
-    min-width: 0;
-}
-
-.help-ticket-number {
-    display: block;
-
-    margin-bottom: 5px;
-
-    color: var(--red);
-
-    font-size: 0.67rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-}
-
-.help-ticket-main h3 {
-    overflow: hidden;
-
-    margin: 0 0 6px;
-
-    color: var(--text-primary);
-
-    font-size: 0.92rem;
-    font-weight: 700;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.help-ticket-main p {
-    overflow: hidden;
-
-    max-width: 650px;
-
-    margin: 0;
-
-    color: var(--text-secondary);
-
-    font-size: 0.78rem;
-    line-height: 1.5;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.help-ticket-meta {
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-.help-ticket-meta small {
-    color: var(--text-secondary);
-
-    font-size: 0.7rem;
-}
-
-.help-ticket-status {
-    display: inline-flex;
-
-    align-items: center;
-
-    min-height: 25px;
-
-    padding: 4px 9px;
-
-    border-radius: 999px;
-
-    background: var(--page-bg);
-
-    color: var(--text-secondary);
-
-    font-size: 0.67rem;
-    font-weight: 700;
-}
-
-.help-ticket-status.status-open {
-    color: #18794e;
-}
-
-.help-ticket-status.status-in_progress {
-    color: #946200;
-}
-
-.help-ticket-status.status-waiting_customer {
-    color: #5b45a5;
-}
-
-.help-ticket-status.status-resolved {
-    color: #18794e;
-}
-
-.help-ticket-status.status-closed {
-    color: var(--text-secondary);
-}
-
-
-/* =========================================
-   SUPPORT STATES
-========================================= */
-
-.help-support-state,
-.help-support-empty {
-    min-height: 220px;
+.transactions-empty-icon {
+    width: 42px;
+    height: 42px;
 
     display: flex;
     align-items: center;
     justify-content: center;
-
-    flex-direction: column;
-
-    gap: 8px;
-
-    padding: 35px 24px;
-
-    text-align: center;
-
-    background: var(--surface);
-}
-
-.help-support-state {
-    color: var(--text-secondary);
-
-    font-size: 0.85rem;
-}
-
-.help-support-empty > div {
-    width: 48px;
-    height: 48px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-bottom: 4px;
-
-    border-radius: 50%;
-
-    background: var(--page-bg);
-    color: var(--text-secondary);
-
-    font-size: 1.15rem;
-}
-
-.help-support-empty h3 {
-    margin: 0;
-
-    color: var(--text-primary);
-
-    font-size: 1rem;
-}
-
-.help-support-empty p {
-    max-width: 470px;
-
-    margin: 0;
-
-    color: var(--text-secondary);
-
-    font-size: 0.82rem;
-    line-height: 1.55;
-}
-
-
-/* =========================================
-   TICKET CONVERSATION
-========================================= */
-
-.help-ticket-conversation {
-    margin-top: 22px;
-
-    overflow: hidden;
-
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-
-    background: var(--surface);
-
-    box-shadow: var(--shadow-sm);
-}
-
-.help-conversation-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 20px;
-
-    padding: 20px 22px;
-
-    border-bottom: 1px solid var(--border-color);
-}
-
-.help-conversation-header > div {
-    min-width: 0;
-}
-
-.help-conversation-header span {
-    display: block;
-
-    margin-bottom: 5px;
-
-    color: var(--red);
-
-    font-size: 0.67rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-}
-
-.help-conversation-header h2 {
-    overflow: hidden;
-
-    margin: 0;
-
-    color: var(--text-primary);
-
-    font-size: 1.05rem;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.help-conversation-header button {
-    width: 36px;
-    height: 36px;
-
-    flex-shrink: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid var(--border-color);
-    border-radius: 9px;
-
-    background: var(--surface);
-    color: var(--text-secondary);
-
-    cursor: pointer;
-
-    font-size: 1.2rem;
-}
-
-.help-conversation-header button:hover {
-    border-color: var(--red);
-    color: var(--red);
-}
-
-.help-conversation-info {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-
-    gap: 8px;
-
-    padding: 14px 22px;
-
-    border-bottom: 1px solid var(--border-color);
-
-    background: var(--page-bg);
-}
-
-.help-conversation-info > span:not(.help-ticket-status) {
-    padding: 5px 9px;
-
-    border-radius: 999px;
-
-    background: var(--surface);
-
-    color: var(--text-secondary);
-
-    font-size: 0.67rem;
-    font-weight: 600;
-}
-
-.help-message-list {
-    display: flex;
-    flex-direction: column;
-
-    gap: 16px;
-
-    max-height: 480px;
-
-    overflow-y: auto;
-
-    padding: 22px;
-}
-
-.help-message {
-    display: flex;
-
-    width: 100%;
-}
-
-.help-message.customer {
-    justify-content: flex-end;
-}
-
-.help-message.admin {
-    justify-content: flex-start;
-}
-
-.help-message-bubble {
-    max-width: 72%;
-
-    padding: 13px 15px;
-
-    border-radius: 13px;
-
-    background: var(--page-bg);
-
-    color: var(--text-primary);
-}
-
-.help-message.customer .help-message-bubble {
-    border-bottom-right-radius: 4px;
-
-    background: var(--red);
-    color: #ffffff;
-}
-
-.help-message.admin .help-message-bubble {
-    border: 1px solid var(--border-color);
-    border-bottom-left-radius: 4px;
-}
-
-.help-message-sender {
-    display: block;
 
     margin-bottom: 6px;
 
-    font-size: 0.7rem;
-    font-weight: 700;
-}
-
-.help-message-bubble p {
-    margin: 0;
-
-    font-size: 0.84rem;
-    line-height: 1.6;
-
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
-
-.help-message-bubble small {
-    display: block;
-
-    margin-top: 8px;
-
-    font-size: 0.63rem;
-    opacity: 0.65;
-}
-
-.help-reply-form {
-    display: flex;
-    align-items: flex-end;
-
-    gap: 10px;
-
-    padding: 18px 22px;
-
-    border-top: 1px solid var(--border-color);
-}
-
-.help-reply-form textarea {
-    flex: 1;
-
-    min-height: 48px;
-
-    padding: 12px;
-
-    resize: vertical;
-
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 50%;
 
-    background: var(--surface);
-    color: var(--text-primary);
+    background: var(--surface-secondary);
+    color: var(--text-secondary);
 
-    outline: none;
-
-    font-family: inherit;
-    font-size: 0.84rem;
-}
-
-.help-reply-form textarea:focus {
-    border-color: var(--red);
-
-    box-shadow:
-        0 0 0 3px rgba(177, 18, 38, 0.08);
-}
-
-.help-reply-form button {
-    flex-shrink: 0;
-
-    min-height: 48px;
-
-    padding: 0 17px;
-
-    border: 0;
-    border-radius: 10px;
-
-    background: var(--red);
-    color: #ffffff;
-
-    cursor: pointer;
-
-    font-family: inherit;
-    font-size: 0.82rem;
-    font-weight: 700;
-}
-
-.help-reply-form button:hover {
-    background: var(--red-dark);
-}
-
-.help-reply-form button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 
 /* =========================================
-   BOTTOM CONTACT SECTION
+   TABLET
 ========================================= */
 
-.help-contact {
-    display: flex;
-    align-items: center;
+@media (max-width: 800px) {
 
-    gap: 20px;
+    .transactions-header {
+        padding: 0 20px;
+    }
 
-    padding: 26px;
 
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
+    .transactions-container {
+        width: min(100% - 36px, 1120px);
+    }
 
-    background: var(--surface);
 
-    box-shadow: var(--shadow-sm);
-}
+    .transactions-intro {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
 
-.help-contact-icon {
-    width: 48px;
-    height: 48px;
 
-    flex-shrink: 0;
+    .transactions-dashboard-link {
+        align-self: flex-start;
+    }
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
-    border-radius: 50%;
+    .transaction-history-row {
+        grid-template-columns:
+            36px
+            minmax(0, 1fr)
+            auto;
 
-    background: var(--page-bg);
-    color: var(--red);
+        column-gap: 13px;
+    }
 
-    font-size: 1.1rem;
-    font-weight: 800;
-}
 
-.help-contact-content {
-    flex: 1;
-    min-width: 0;
-}
+    .transaction-history-status {
+        grid-column: 3;
+        grid-row: 1;
+        min-width: auto;
+    }
 
-.help-contact-content > span {
-    display: block;
 
-    margin-bottom: 5px;
+    .transaction-history-amount {
+        grid-column: 3;
+        grid-row: 2;
 
-    color: var(--red);
+        min-width: auto;
+    }
 
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-}
 
-.help-contact-content h2 {
-    margin: 0 0 6px;
+    .transaction-history-info {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+    }
 
-    color: var(--text-primary);
-
-    font-size: 1.1rem;
-}
-
-.help-contact-content p {
-    margin: 0;
-
-    color: var(--text-secondary);
-
-    font-size: 0.8rem;
-    line-height: 1.55;
 }
 
 
@@ -1248,195 +908,413 @@
    MOBILE
 ========================================= */
 
-@media (max-width: 760px) {
+@media (max-width: 650px) {
 
-    .help-center-header {
-        padding: 0 16px;
+    .transactions-header {
+        height: 65px;
+
+        padding: 0 15px;
     }
 
-    .help-center-logo-text {
+
+    .transactions-header-left {
+        gap: 10px;
+    }
+
+
+    .transactions-back {
+        width: 35px;
+        height: 35px;
+
+        font-size: 18px;
+    }
+
+
+    .transactions-logo-mark {
+        width: 34px;
+        height: 34px;
+
+        font-size: 18px;
+    }
+
+
+    .transactions-logo-text {
         display: none;
     }
 
-    .help-center-header-actions {
+
+    .transactions-header-actions {
         gap: 8px;
     }
 
-    .help-center-profile > span:last-child {
-        display: none;
+
+    .transactions-theme-button {
+        width: 35px;
+        height: 35px;
     }
 
-    .help-center-signout {
-        display: none;
+
+    .transactions-profile {
+        gap: 6px;
+
+        font-size: 10px;
     }
 
-    .help-center-main {
-        padding: 28px 16px 60px;
+
+    .transactions-avatar {
+        width: 32px;
+        height: 32px;
+
+        font-size: 10px;
     }
 
-    .help-center-breadcrumb {
+
+    .transactions-signout {
+        min-height: 35px;
+
+        padding: 0 10px;
+
+        font-size: 9px;
+    }
+
+
+    .transactions-main {
+        padding: 27px 0 50px;
+    }
+
+
+    .transactions-container {
+        width: calc(100% - 30px);
+    }
+
+
+    .transactions-breadcrumb {
         margin-bottom: 20px;
+
+        font-size: 9px;
     }
 
-    .help-center-grid {
-        grid-template-columns: 1fr;
 
-        gap: 12px;
-
-        margin-bottom: 44px;
+    .transactions-intro {
+        margin-bottom: 23px;
     }
 
-    .help-card-button {
-        padding: 18px;
+
+    .transactions-eyebrow {
+        margin-bottom: 7px;
+
+        font-size: 8px;
     }
 
-    .help-support-heading {
-        align-items: flex-start;
 
-        flex-direction: column;
-
-        gap: 18px;
+    .transactions-intro h1 {
+        font-size: 27px;
     }
 
-    .help-contact-button {
-        width: 100%;
+
+    .transactions-intro p {
+        margin-top: 8px;
+
+        font-size: 11px;
+        line-height: 1.6;
     }
 
-    .help-support-form {
-        padding: 18px;
-    }
 
-    .help-support-form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .help-ticket-card {
-        align-items: flex-start;
-
-        flex-direction: column;
-
-        gap: 13px;
-
-        padding: 18px;
-    }
-
-    .help-ticket-main p {
-        max-width: 100%;
-    }
-
-    .help-ticket-meta {
+    .transactions-dashboard-link {
         width: 100%;
 
-        align-items: flex-start;
+        min-height: 39px;
 
-        flex-direction: row;
-        justify-content: space-between;
+        font-size: 9px;
     }
 
-    .help-message-bubble {
-        max-width: 86%;
+
+    .transactions-panel {
+        border-radius: 9px;
     }
 
-    .help-contact {
-        align-items: flex-start;
 
-        flex-direction: column;
+    .transactions-panel-header {
+        min-height: 72px;
 
-        padding: 22px;
+        padding: 15px;
     }
 
-    .help-contact .help-contact-button {
-        width: 100%;
+
+    .transactions-panel-header h2 {
+        font-size: 14px;
     }
+
+
+    .transactions-panel-header > div > span {
+        font-size: 7px;
+    }
+
+
+    .transactions-count {
+        min-height: 25px;
+
+        padding: 0 8px;
+
+        font-size: 8px;
+    }
+
+
+    .transaction-history-row {
+        min-height: 72px;
+
+        grid-template-columns:
+            34px
+            minmax(0, 1fr)
+            auto;
+
+        column-gap: 11px;
+
+        padding: 11px 14px;
+    }
+
+
+    .transaction-history-icon {
+        width: 32px;
+        height: 32px;
+
+        font-size: 14px;
+    }
+
+
+    .transaction-history-info {
+        gap: 4px;
+    }
+
+
+    .transaction-history-info strong {
+        font-size: 10px;
+    }
+
+
+    .transaction-history-info span {
+        font-size: 8px;
+    }
+
+
+    .transaction-history-status {
+        grid-column: 3;
+        grid-row: 1;
+
+        align-self: center;
+    }
+
+
+    .transaction-history-amount {
+        grid-column: 3;
+        grid-row: 2;
+
+        font-size: 10px;
+    }
+
+
+    .transaction-status {
+        min-height: 22px;
+
+        padding: 0 7px;
+
+        font-size: 7px;
+    }
+
+
+    .transactions-state {
+        min-height: 220px;
+
+        padding: 35px 18px;
+    }
+
+
+    .transactions-state strong {
+        font-size: 12px;
+    }
+
+
+    .transactions-state span {
+        font-size: 9px;
+    }
+
 }
 
 
-@media (max-width: 480px) {
+/* =========================================
+   SMALL MOBILE
+========================================= */
 
-    .help-center-back {
-        width: 36px;
-        height: 36px;
+@media (max-width: 420px) {
+
+    .transactions-header {
+        padding: 0 10px;
     }
 
-    .help-center-logo-mark {
-        width: 36px;
-        height: 36px;
+
+    .transactions-header-actions {
+        gap: 5px;
     }
 
-    .help-center-theme-button {
-        width: 36px;
-        height: 36px;
+
+    .transactions-profile > span:last-child {
+        display: none;
     }
 
-    .help-center-avatar {
-        width: 34px;
-        height: 34px;
+
+    .transactions-signout {
+        padding: 0 8px;
+
+        font-size: 8px;
     }
 
-    .help-center-hero h1 {
-        font-size: 2rem;
+
+    .transactions-main {
+        padding-top: 22px;
     }
 
-    .help-card-button {
-        grid-template-columns:
-            38px minmax(0, 1fr) 24px;
 
-        gap: 11px;
-
-        padding: 16px;
+    .transactions-container {
+        width: calc(100% - 20px);
     }
 
-    .help-card-icon {
-        width: 38px;
-        height: 38px;
+
+    .transactions-intro h1 {
+        font-size: 24px;
     }
 
-    .help-card-title strong {
-        font-size: 0.9rem;
+
+    .transactions-intro p {
+        font-size: 10px;
     }
 
-    .help-card-title small {
-        font-size: 0.73rem;
-    }
 
-    .help-support-form-actions {
-        flex-direction: column-reverse;
-    }
-
-    .help-support-cancel,
-    .help-support-submit {
-        width: 100%;
-    }
-
-    .help-conversation-header {
-        padding: 17px;
-    }
-
-    .help-conversation-info {
-        padding: 12px 17px;
-    }
-
-    .help-message-list {
-        padding: 17px;
-    }
-
-    .help-message-bubble {
-        max-width: 90%;
-    }
-
-    .help-reply-form {
-        align-items: stretch;
+    .transactions-panel-header {
+        align-items: flex-start;
 
         flex-direction: column;
-
-        padding: 16px;
+        gap: 8px;
     }
 
-    .help-reply-form button {
-        width: 100%;
+
+    .transactions-count {
+        align-self: flex-start;
     }
 
-    .help-contact {
-        padding: 20px;
+
+    .transaction-history-row {
+        grid-template-columns:
+            31px
+            minmax(0, 1fr)
+            auto;
+
+        column-gap: 9px;
+
+        padding: 11px;
     }
+
+
+    .transaction-history-icon {
+        width: 30px;
+        height: 30px;
+
+        font-size: 13px;
+    }
+
+
+    .transaction-history-info strong {
+        font-size: 9px;
+    }
+
+
+    .transaction-history-info span {
+        font-size: 7px;
+    }
+
+
+    .transaction-status {
+        min-height: 20px;
+
+        padding: 0 6px;
+
+        font-size: 6.5px;
+    }
+
+
+    .transaction-history-amount {
+        font-size: 9px;
+    }
+
+
+    .transactions-state {
+        min-height: 200px;
+    }
+
+}
+
+
+/* =========================================
+   VERY SMALL SCREENS
+========================================= */
+
+@media (max-width: 340px) {
+
+    .transactions-header {
+        padding: 0 8px;
+    }
+
+
+    .transactions-back {
+        width: 32px;
+        height: 32px;
+    }
+
+
+    .transactions-logo-mark {
+        width: 32px;
+        height: 32px;
+    }
+
+
+    .transactions-theme-button {
+        width: 32px;
+        height: 32px;
+    }
+
+
+    .transactions-avatar {
+        width: 30px;
+        height: 30px;
+    }
+
+
+    .transactions-signout {
+        min-height: 32px;
+
+        padding: 0 7px;
+    }
+
+
+    .transaction-history-row {
+        grid-template-columns:
+            29px
+            minmax(0, 1fr)
+            auto;
+
+        column-gap: 7px;
+
+        padding: 10px 8px;
+    }
+
+
+    .transaction-history-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+
+    .transaction-history-amount {
+        font-size: 8px;
+    }
+
 }

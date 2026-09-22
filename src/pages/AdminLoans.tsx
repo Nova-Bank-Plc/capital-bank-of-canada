@@ -208,10 +208,9 @@ const getCustomerNumber = (
 
 function AdminLoansContent() {
 
-    const {
-        token,
-    } = useAuth();
-
+const {
+    adminToken,
+} = useAuth();;
 
     const [
         loans,
@@ -287,7 +286,7 @@ function AdminLoansContent() {
 
     const loadLoans = async () => {
 
-        if (!token) {
+       if (!adminToken) {
             return;
         }
 
@@ -303,8 +302,7 @@ function AdminLoansContent() {
                         method: "GET",
 
                         headers: {
-                            Authorization:
-                                `Bearer ${token}`,
+                           Authorization: `Bearer ${adminToken}`,
                         },
                     }
                 );
@@ -353,10 +351,12 @@ function AdminLoansContent() {
 
 
     useEffect(() => {
+    if (!adminToken) {
+        return;
+    }
 
-        loadLoans();
-
-    }, [token]);
+    loadLoans();
+}, [adminToken]);
 
 
     /* =====================================
@@ -568,8 +568,7 @@ function AdminLoansContent() {
                                 "Content-Type":
                                     "application/json",
 
-                                Authorization:
-                                    `Bearer ${token}`,
+                               Authorization: `Bearer ${adminToken}`,
 
                             },
 
@@ -689,7 +688,7 @@ function AdminLoansContent() {
                             headers: {
 
                                 Authorization:
-                                    `Bearer ${token}`,
+                                    `Bearer ${adminToken}`,
 
                             },
 
@@ -784,8 +783,7 @@ function AdminLoansContent() {
 
                             headers: {
 
-                                Authorization:
-                                    `Bearer ${token}`,
+                                Authorization: `Bearer ${adminToken}`,
 
                             },
 
@@ -881,7 +879,7 @@ function AdminLoansContent() {
                             headers: {
 
                                 Authorization:
-                                    `Bearer ${token}`,
+                                    `Bearer ${adminToken}`,
 
                             },
 

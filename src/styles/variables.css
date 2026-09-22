@@ -117,3 +117,51 @@ html.dark {
         0 15px 40px rgba(0, 0, 0, 0.35);
 }
 
+
+/* =========================================
+   CAPITAL BANK — ADMIN DARK THEME
+========================================= */
+
+html.admin-dark {
+
+    --black: #F5F6F8;
+    --charcoal: #E2E5E9;
+
+    --white: #111315;
+    --off-white: #191C20;
+
+    --grey: #A7ADB5;
+    --light-grey: #2A2E34;
+    --border: #343940;
+
+
+    /* =========================================
+       ADMIN DARK SURFACES
+    ========================================= */
+
+    --page-bg: #111315;
+    --surface: #191C20;
+    --surface-secondary: #20242A;
+
+    --text-primary: #F5F6F8;
+    --text-secondary: #A7ADB5;
+
+    --border-color: #343940;
+
+
+    /* =========================================
+       ADMIN TABLE COLORS
+    ========================================= */
+
+    --table-header-bg: #20242A;
+
+    --hover-bg: #242930;
+
+
+    /* =========================================
+       ADMIN DARK SHADOW
+    ========================================= */
+
+    --shadow-soft:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}

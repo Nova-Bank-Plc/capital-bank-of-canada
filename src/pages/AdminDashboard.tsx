@@ -8,9 +8,20 @@ import {
     Link,
 } from "react-router-dom";
 
-import { useAuth } from "../context/AuthContext";
+import {
+    Moon,
+    Sun,
+} from "lucide-react";
+
+import {
+    useAuth,
+} from "../context/AuthContext";
 
 import AdminProtectedRoute from "../components/AdminProtectedRoute";
+
+import {
+    useAdminTheme,
+} from "../context/AdminThemeContext";
 
 import "./AdminDashboard.css";
 
@@ -23,6 +34,10 @@ const API_BASE_URL =
             : "http://localhost:5000"
     );
 
+
+// ======================================
+// API DATA TYPES
+// ======================================
 
 interface AdminDashboardData {
 
@@ -88,12 +103,27 @@ interface AdminDashboardData {
 }
 
 
+// ======================================
+// ADMIN DASHBOARD CONTENT
+// ======================================
+
 function AdminDashboardContent() {
-const {
-    adminUser,
-    adminToken,
-    adminLogout,
-} = useAuth();
+
+    const {
+        adminUser,
+        adminToken,
+        adminLogout,
+    } = useAuth();
+
+
+    // ======================================
+    // ADMIN THEME
+    // ======================================
+
+    const {
+        adminDarkMode,
+        toggleAdminDarkMode,
+    } = useAdminTheme();
 
 
     const [
@@ -116,6 +146,10 @@ const {
     ] = useState("");
 
 
+    // ======================================
+    // LOAD ADMIN DASHBOARD
+    // ======================================
+
     useEffect(() => {
 
         const loadDashboard = async () => {
@@ -133,8 +167,8 @@ const {
                             method: "GET",
 
                             headers: {
-                               Authorization:
-                                   `Bearer ${adminToken}`,
+                                Authorization:
+                                    `Bearer ${adminToken}`,
                             },
                         }
                     );
@@ -191,15 +225,25 @@ const {
                 setLoading(false);
 
             }
+
         };
 
 
-       if (adminToken) {
-    loadDashboard();
-}
+        if (adminToken) {
 
-    }, [adminToken, adminLogout]);
+            loadDashboard();
 
+        }
+
+    }, [
+        adminToken,
+        adminLogout,
+    ]);
+
+
+    // ======================================
+    // FORMAT CURRENCY
+    // ======================================
 
     const formatCurrency = (
         amount: number
@@ -215,6 +259,10 @@ const {
 
     };
 
+
+    // ======================================
+    // FORMAT DATE
+    // ======================================
 
     const formatDate = (
         date: string
@@ -234,10 +282,14 @@ const {
     };
 
 
-   if (
-    !adminUser ||
-    adminUser.role !== "admin"
-) {
+    // ======================================
+    // ADMIN ACCESS CHECK
+    // ======================================
+
+    if (
+        !adminUser ||
+        adminUser.role !== "admin"
+    ) {
 
         return (
             <Navigate
@@ -249,8 +301,21 @@ const {
     }
 
 
+    // ======================================
+    // RENDER
+    // ======================================
+
     return (
-        <div className="admin-dashboard-page">
+
+        <div
+            className={
+                `admin-dashboard-page ${
+                    adminDarkMode
+                        ? "admin-dark-mode"
+                        : ""
+                }`
+            }
+        >
 
             {/* =====================================
                 HEADER
@@ -265,6 +330,7 @@ const {
                     </div>
 
                     <div>
+
                         <strong>
                             Capital Bank
                         </strong>
@@ -272,6 +338,7 @@ const {
                         <span>
                             Administrator Portal
                         </span>
+
                     </div>
 
                 </div>
@@ -280,13 +347,58 @@ const {
                 <div className="admin-dashboard-header-right">
 
                     <span className="admin-dashboard-admin-name">
-                        {adminUser.firstName} {adminUser.lastName}
+                        {adminUser.firstName}{" "}
+                        {adminUser.lastName}
                     </span>
+
+
+                    {/* THEME TOGGLE */}
+
+                    <button
+                        type="button"
+                        className="admin-dashboard-theme-button"
+                        onClick={
+                            toggleAdminDarkMode
+                        }
+                        aria-label={
+                            adminDarkMode
+                                ? "Switch to light mode"
+                                : "Switch to dark mode"
+                        }
+                        title={
+                            adminDarkMode
+                                ? "Switch to light mode"
+                                : "Switch to dark mode"
+                        }
+                    >
+
+                        {adminDarkMode ? (
+
+                            <Sun
+                                size={18}
+                                strokeWidth={2}
+                            />
+
+                        ) : (
+
+                            <Moon
+                                size={18}
+                                strokeWidth={2}
+                            />
+
+                        )}
+
+                    </button>
+
+
+                    {/* SIGN OUT */}
 
                     <button
                         type="button"
                         className="admin-dashboard-logout"
-                        onClick={adminLogout}
+                        onClick={
+                            adminLogout
+                        }
                     >
                         Sign Out
                     </button>
@@ -302,7 +414,10 @@ const {
 
             <div className="admin-dashboard-layout">
 
-                {/* SIDEBAR */}
+
+                {/* =====================================
+                    SIDEBAR
+                ===================================== */}
 
                 <aside className="admin-dashboard-sidebar">
 
@@ -322,11 +437,11 @@ const {
 
 
                         <Link
-                           to="/admin/customers"
-                           className="admin-sidebar-link"
+                            to="/admin/customers"
+                            className="admin-sidebar-link"
                         >
-                             Customers
-                        </Link>    
+                            Customers
+                        </Link>
 
 
                         <button
@@ -356,33 +471,37 @@ const {
                         </button>
 
 
-                     <Link
-                         to="/admin/loans"
-                         className="admin-sidebar-link"
-                     >
-                        Loans
-                     </Link>
+                        <Link
+                            to="/admin/loans"
+                            className="admin-sidebar-link"
+                        >
+                            Loans
+                        </Link>
 
 
-<Link
-    to="/admin/billers"
-    className="admin-sidebar-link"
->
-    Billers
-</Link>
+                        <Link
+                            to="/admin/billers"
+                            className="admin-sidebar-link"
+                        >
+                            Billers
+                        </Link>
 
-<Link
-    to="/admin/support"
-    className="admin-sidebar-link"
->
-    Support
-</Link>
 
-<div className="admin-sidebar-divider" />
+                        <Link
+                            to="/admin/support"
+                            className="admin-sidebar-link"
+                        >
+                            Support
+                        </Link>
 
-<div className="admin-sidebar-label">
-    WEBSITE
-</div>
+
+                        <div className="admin-sidebar-divider" />
+
+
+                        <div className="admin-sidebar-label">
+                            WEBSITE
+                        </div>
+
 
                         <button
                             type="button"
@@ -406,9 +525,16 @@ const {
                 </aside>
 
 
-                {/* CONTENT */}
+                {/* =====================================
+                    CONTENT
+                ===================================== */}
 
                 <main className="admin-dashboard-content">
+
+
+                    {/* =================================
+                        PAGE HEADING
+                    ================================= */}
 
                     <div className="admin-dashboard-heading">
 
@@ -432,7 +558,9 @@ const {
                     </div>
 
 
-                    {/* LOADING */}
+                    {/* =================================
+                        LOADING
+                    ================================= */}
 
                     {loading && (
 
@@ -443,7 +571,9 @@ const {
                     )}
 
 
-                    {/* ERROR */}
+                    {/* =================================
+                        ERROR
+                    ================================= */}
 
                     {!loading && error && (
 
@@ -457,7 +587,9 @@ const {
                     )}
 
 
-                    {/* DATA */}
+                    {/* =================================
+                        DATA
+                    ================================= */}
 
                     {!loading &&
                         !error &&
@@ -465,11 +597,13 @@ const {
 
                         <>
 
+
                             {/* =================================
                                 SUMMARY CARDS
                             ================================= */}
 
                             <section className="admin-stat-grid">
+
 
                                 <div className="admin-stat-card">
 
@@ -478,7 +612,9 @@ const {
                                     </span>
 
                                     <strong>
-                                        {dashboard.customers.total}
+                                        {
+                                            dashboard.customers.total
+                                        }
                                     </strong>
 
                                 </div>
@@ -491,7 +627,9 @@ const {
                                     </span>
 
                                     <strong>
-                                        {dashboard.accounts.total}
+                                        {
+                                            dashboard.accounts.total
+                                        }
                                     </strong>
 
                                 </div>
@@ -504,9 +642,13 @@ const {
                                     </span>
 
                                     <strong>
-                                        {formatCurrency(
-                                            dashboard.accounts.totalBalance
-                                        )}
+                                        {
+                                            formatCurrency(
+                                                dashboard
+                                                    .accounts
+                                                    .totalBalance
+                                            )
+                                        }
                                     </strong>
 
                                 </div>
@@ -519,7 +661,11 @@ const {
                                     </span>
 
                                     <strong>
-                                        {dashboard.transactions.total}
+                                        {
+                                            dashboard
+                                                .transactions
+                                                .total
+                                        }
                                     </strong>
 
                                 </div>
@@ -552,58 +698,89 @@ const {
 
                                 <div className="admin-loan-grid">
 
+
                                     <div>
+
                                         <span>
                                             Total Loans
                                         </span>
 
                                         <strong>
-                                            {dashboard.loans.total}
+                                            {
+                                                dashboard
+                                                    .loans
+                                                    .total
+                                            }
                                         </strong>
+
                                     </div>
 
 
                                     <div>
+
                                         <span>
                                             Pending
                                         </span>
 
                                         <strong>
-                                            {dashboard.loans.pending}
+                                            {
+                                                dashboard
+                                                    .loans
+                                                    .pending
+                                            }
                                         </strong>
+
                                     </div>
 
 
                                     <div>
+
                                         <span>
                                             Approved
                                         </span>
 
                                         <strong>
-                                            {dashboard.loans.approved}
+                                            {
+                                                dashboard
+                                                    .loans
+                                                    .approved
+                                            }
                                         </strong>
+
                                     </div>
 
 
                                     <div>
+
                                         <span>
                                             Active
                                         </span>
 
                                         <strong>
-                                            {dashboard.loans.active}
+                                            {
+                                                dashboard
+                                                    .loans
+                                                    .active
+                                            }
                                         </strong>
+
                                     </div>
 
 
                                     <div>
+
                                         <span>
                                             Rejected
                                         </span>
 
                                         <strong>
-                                            {dashboard.loans.rejected}
+                                            {
+                                                dashboard
+                                                    .loans
+                                                    .rejected
+                                            }
                                         </strong>
+
                                     </div>
 
                                 </div>
@@ -634,7 +811,11 @@ const {
                                 </div>
 
 
-                                {dashboard.recentCustomers.length === 0 ? (
+                                {
+                                    dashboard
+                                        .recentCustomers
+                                        .length === 0
+                                ? (
 
                                     <div className="admin-empty-state">
                                         No customers have registered yet.
@@ -649,6 +830,7 @@ const {
                                             <thead>
 
                                                 <tr>
+
                                                     <th>
                                                         Client Number
                                                     </th>
@@ -664,6 +846,7 @@ const {
                                                     <th>
                                                         Registered
                                                     </th>
+
                                                 </tr>
 
                                             </thead>
@@ -671,36 +854,54 @@ const {
 
                                             <tbody>
 
-                                                {dashboard.recentCustomers.map(
-                                                    (customer) => (
+                                                {
+                                                    dashboard
+                                                        .recentCustomers
+                                                        .map(
+                                                            (
+                                                                customer
+                                                            ) => (
 
-                                                        <tr
-                                                            key={customer._id}
-                                                        >
+                                                                <tr
+                                                                    key={
+                                                                        customer._id
+                                                                    }
+                                                                >
 
-                                                            <td>
-                                                                {customer.clientNumber}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            customer.clientNumber
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {customer.firstName}{" "}
-                                                                {customer.lastName}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            customer.firstName
+                                                                        }{" "}
+                                                                        {
+                                                                            customer.lastName
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {customer.email}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            customer.email
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {formatDate(
-                                                                    customer.createdAt
-                                                                )}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            formatDate(
+                                                                                customer.createdAt
+                                                                            )
+                                                                        }
+                                                                    </td>
 
-                                                        </tr>
+                                                                </tr>
 
-                                                    )
-                                                )}
+                                                            )
+                                                        )
+                                                }
 
                                             </tbody>
 
@@ -736,7 +937,11 @@ const {
                                 </div>
 
 
-                                {dashboard.recentTransactions.length === 0 ? (
+                                {
+                                    dashboard
+                                        .recentTransactions
+                                        .length === 0
+                                ? (
 
                                     <div className="admin-empty-state">
                                         No transactions have been recorded yet.
@@ -751,6 +956,7 @@ const {
                                             <thead>
 
                                                 <tr>
+
                                                     <th>
                                                         Name
                                                     </th>
@@ -774,6 +980,7 @@ const {
                                                     <th>
                                                         Date
                                                     </th>
+
                                                 </tr>
 
                                             </thead>
@@ -781,45 +988,65 @@ const {
 
                                             <tbody>
 
-                                                {dashboard.recentTransactions.map(
-                                                    (transaction) => (
+                                                {
+                                                    dashboard
+                                                        .recentTransactions
+                                                        .map(
+                                                            (
+                                                                transaction
+                                                            ) => (
 
-                                                        <tr
-                                                            key={transaction._id}
-                                                        >
+                                                                <tr
+                                                                    key={
+                                                                        transaction._id
+                                                                    }
+                                                                >
 
-                                                            <td>
-                                                                {transaction.name}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            transaction.name
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {transaction.transactionType}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            transaction.transactionType
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {transaction.direction}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            transaction.direction
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {formatCurrency(
-                                                                    transaction.amount
-                                                                )}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            formatCurrency(
+                                                                                transaction.amount
+                                                                            )
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {transaction.status}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            transaction.status
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {formatDate(
-                                                                    transaction.createdAt
-                                                                )}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            formatDate(
+                                                                                transaction.createdAt
+                                                                            )
+                                                                        }
+                                                                    </td>
 
-                                                        </tr>
+                                                                </tr>
 
-                                                    )
-                                                )}
+                                                            )
+                                                        )
+                                                }
 
                                             </tbody>
 
@@ -855,7 +1082,11 @@ const {
                                 </div>
 
 
-                                {dashboard.recentLoans.length === 0 ? (
+                                {
+                                    dashboard
+                                        .recentLoans
+                                        .length === 0
+                                ? (
 
                                     <div className="admin-empty-state">
                                         No loan applications have been submitted yet.
@@ -870,6 +1101,7 @@ const {
                                             <thead>
 
                                                 <tr>
+
                                                     <th>
                                                         Application
                                                     </th>
@@ -893,6 +1125,7 @@ const {
                                                     <th>
                                                         Date
                                                     </th>
+
                                                 </tr>
 
                                             </thead>
@@ -900,45 +1133,66 @@ const {
 
                                             <tbody>
 
-                                                {dashboard.recentLoans.map(
-                                                    (loan) => (
+                                                {
+                                                    dashboard
+                                                        .recentLoans
+                                                        .map(
+                                                            (
+                                                                loan
+                                                            ) => (
 
-                                                        <tr
-                                                            key={loan._id}
-                                                        >
+                                                                <tr
+                                                                    key={
+                                                                        loan._id
+                                                                    }
+                                                                >
 
-                                                            <td>
-                                                                {loan.applicationNumber}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            loan.applicationNumber
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {loan.loanType}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            loan.loanType
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {formatCurrency(
-                                                                    loan.requestedAmount
-                                                                )}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            formatCurrency(
+                                                                                loan.requestedAmount
+                                                                            )
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {loan.termMonths} months
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            loan.termMonths
+                                                                        }{" "}
+                                                                        months
+                                                                    </td>
 
-                                                            <td>
-                                                                {loan.status}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            loan.status
+                                                                        }
+                                                                    </td>
 
-                                                            <td>
-                                                                {formatDate(
-                                                                    loan.applicationDate
-                                                                )}
-                                                            </td>
+                                                                    <td>
+                                                                        {
+                                                                            formatDate(
+                                                                                loan.applicationDate
+                                                                            )
+                                                                        }
+                                                                    </td>
 
-                                                        </tr>
+                                                                </tr>
 
-                                                    )
-                                                )}
+                                                            )
+                                                        )
+                                                }
 
                                             </tbody>
 
@@ -959,16 +1213,26 @@ const {
             </div>
 
         </div>
+
     );
 }
 
+
+// ======================================
+// ADMIN DASHBOARD ROUTE
+// ======================================
 
 export default function AdminDashboard() {
 
     return (
+
         <AdminProtectedRoute>
+
             <AdminDashboardContent />
+
         </AdminProtectedRoute>
+
     );
 
 }
+
