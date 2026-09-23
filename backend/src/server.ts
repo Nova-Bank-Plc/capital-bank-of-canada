@@ -24,6 +24,19 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ================================
+// SECURITY HEADERS
+// ================================
+
+app.use((req, res, next) => {
+    res.setHeader(
+        "X-Content-Type-Options",
+        "nosniff"
+    );
+
+    next();
+});
+
+// ================================
 // MIDDLEWARE
 // ================================
 
@@ -87,7 +100,6 @@ app.get("/api/health", (_req, res) => {
     });
 });
 
-
 app.use(
     "/api/notifications",
     notificationRoutes
@@ -103,7 +115,9 @@ app.use(express.static(publicPath));
 
 // React Router fallback
 app.get("/{*splat}", (_req, res) => {
-    res.sendFile(path.join(publicPath, "index.html"));
+    res.sendFile(
+        path.join(publicPath, "index.html")
+    );
 });
 
 // ================================
@@ -113,9 +127,14 @@ app.get("/{*splat}", (_req, res) => {
 connectDatabase()
     .then(() => {
         app.listen(PORT, () => {
-            console.log(`Capital Bank API running on port ${PORT}`);
+            console.log(
+                `Capital Bank API running on port ${PORT}`
+            );
         });
     })
     .catch((error: unknown) => {
-        console.error("Failed to start Capital Bank API:", error);
+        console.error(
+            "Failed to start Capital Bank API:",
+            error
+        );
     });
