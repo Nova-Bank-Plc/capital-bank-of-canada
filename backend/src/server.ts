@@ -42,7 +42,10 @@ app.use((req, res, next) => {
 
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: [
+            "http://localhost:5173",
+            "https://capital-bank-of-canada.vercel.app",
+        ],
         credentials: true,
     })
 );
