@@ -8,7 +8,6 @@ import User from "../models/User.js";
 dotenv.config();
 
 
-
 const createAdmin = async () => {
 
     try {
@@ -86,19 +85,11 @@ const createAdmin = async () => {
             });
 
 
+        /* =================================
+           PROMOTE EXISTING USER
+        ================================= */
+
         if (existingUser) {
-
-            existingUser.role =
-                "admin";
-
-            await existingUser.save();
-
-
-            console.log(
-                `✅ Existing user ${normalizedEmail} has been promoted to administrator.`
-            );
-
-        } else {
 
             const hashedPassword =
                 await bcrypt.hash(
@@ -107,15 +98,53 @@ const createAdmin = async () => {
                 );
 
 
-            let clientNumber =
-                "";
+            existingUser.role =
+                "admin";
 
 
-            let clientNumberExists =
-                true;
+            existingUser.password =
+                hashedPassword;
 
 
-            while (clientNumberExists) {
+            await existingUser.save();
+
+
+            console.log(
+                `✅ Existing user ${normalizedEmail} has been promoted to administrator.`
+            );
+
+            console.log(
+                `✅ Administrator password has been updated from ADMIN_PASSWORD.`
+            );
+
+            console.log(
+                `Administrator client number: ${existingUser.clientNumber}`
+            );
+
+        }
+
+
+        /* =================================
+           CREATE NEW ADMIN
+        ================================= */
+
+        else {
+
+            const hashedPassword =
+                await bcrypt.hash(
+                    adminPassword,
+                    12
+                );
+
+
+            let clientNumber = "";
+
+            let clientNumberExists = true;
+
+
+            while (
+                clientNumberExists
+            ) {
 
                 clientNumber =
                     `ADM-${Math.floor(
@@ -167,6 +196,7 @@ const createAdmin = async () => {
                 `✅ Administrator created: ${admin.email}`
             );
 
+
             console.log(
                 `Administrator client number: ${admin.clientNumber}`
             );
@@ -184,8 +214,10 @@ const createAdmin = async () => {
 
         process.exit(0);
 
+    }
 
-    } catch (error) {
+
+    catch (error) {
 
         console.error(
             "❌ Admin provisioning failed:",
@@ -195,7 +227,9 @@ const createAdmin = async () => {
 
         await mongoose
             .disconnect()
-            .catch(() => undefined);
+            .catch(
+                () => undefined
+            );
 
 
         process.exit(1);
