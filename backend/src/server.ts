@@ -16,7 +16,7 @@ import billPaymentRoutes from "./routes/billPaymentRoutes.js";
 import supportRoutes from "./routes/supportRoutes.js";
 import digitalAssetRoutes from "./routes/digitalAssetRoutes.js";
 import adminDigitalAssetRoutes from "./routes/adminDigitalAssetRoutes.js";
-import adminProvisionRoute from "./routes/adminProvisionRoute.js";
+
 
 dotenv.config();
 
@@ -82,10 +82,6 @@ app.use(
     adminDigitalAssetRoutes,
 );
 
-app.use(
-    "/api/admin-provision",
-    adminProvisionRoute,
-);
 
 app.use(
     "/api/transfers",
