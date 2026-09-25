@@ -19,7 +19,7 @@ import adminDigitalAssetRoutes from "./routes/adminDigitalAssetRoutes.js";
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 
 const PORT = process.env.PORT || 5000;
 
@@ -127,17 +127,19 @@ app.get("/{*splat}", (_req, res) => {
 // DATABASE + SERVER
 // ================================
 
-connectDatabase()
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(
-                `Capital Bank API running on port ${PORT}`
+if (!process.env.VERCEL) {
+    connectDatabase()
+        .then(() => {
+            app.listen(PORT, () => {
+                console.log(
+                    `Capital Bank API running on port ${PORT}`
+                );
+            });
+        })
+        .catch((error: unknown) => {
+            console.error(
+                "Failed to start Capital Bank API:",
+                error
             );
         });
-    })
-    .catch((error: unknown) => {
-        console.error(
-            "Failed to start Capital Bank API:",
-            error
-        );
-    });
+}
